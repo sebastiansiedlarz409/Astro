@@ -62,8 +62,8 @@ namespace Astro
                 options.Cookie.HttpOnly = true;
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
 
-                options.LoginPath = "/Account/Login";
-                options.AccessDeniedPath = "/Account/Login";
+                options.LoginPath = "/Home/Index";
+                options.AccessDeniedPath = "/Home/Index";
                 options.SlidingExpiration = true;
             });
 
