@@ -3,8 +3,6 @@
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 
-@model Astro.Models.LoginViewModel
-
     <ul class="navbar-nav">
         @if (SignInManager.IsSignedIn(User))
         {
@@ -23,8 +21,8 @@
                 <a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Register">Rejestracja</a>
             </li>
             <form asp-controller="Account" asp-action="Login" class="form-inline nav-item" style="padding-left:23px">
-                <input asp-for="Email" class="form-control mr-sm-2" type="email" placeholder="Email" aria-label="Email" required>
-                <input asp-for="Password" class="form-control mr-sm-2" type="password" placeholder="Hasło" aria-label="Hasło" required>
+                <input name="Email" class="form-control mr-sm-2" type="email" placeholder="Email" aria-label="Email" required>
+                <input name="Password" class="form-control mr-sm-2" type="password" placeholder="Hasło" aria-label="Hasło" required>
                 <button class="btn btn-outline-danger my-2 my-sm-0" type="submit">Zaloguj</button>
             </form>
         }

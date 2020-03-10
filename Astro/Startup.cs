@@ -14,6 +14,8 @@ using Microsoft.Extensions.Hosting;
 using Astro.DAL.DBContext;
 using Astro.DAL.Models;
 using Astro.DAL.Configuration;
+using Astro.BLL.JSONParsers;
+using Astro.DAL.APICLIENT;
 
 namespace Astro
 {
@@ -66,6 +68,10 @@ namespace Astro
                 options.AccessDeniedPath = "/Home/Index";
                 options.SlidingExpiration = true;
             });
+
+            services.AddScoped<JSONParse>();
+            services.AddSingleton<NASAApi>();
+            services.AddScoped<AstroDbContext>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
