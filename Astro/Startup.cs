@@ -16,6 +16,7 @@ using Astro.DAL.Models;
 using Astro.DAL.Configuration;
 using Astro.BLL.JSONParsers;
 using Astro.DAL.APICLIENT;
+using Astro.BLL.Tools;
 
 namespace Astro
 {
@@ -72,6 +73,7 @@ namespace Astro
             services.AddScoped<JSONParse>();
             services.AddSingleton<NASAApi>();
             services.AddScoped<AstroDbContext>();
+            services.AddSingleton<DateFormater>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();

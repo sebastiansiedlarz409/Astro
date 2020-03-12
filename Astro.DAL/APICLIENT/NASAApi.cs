@@ -28,5 +28,24 @@ namespace Astro.DAL.APICLIENT
 
             return result;
         }
+
+        public string GetEpicJson()
+        {
+            string result = "";
+
+            WebRequest request = WebRequest.Create(
+              "https://api.nasa.gov/EPIC/api/natural?api_key=" + _apiKey);
+
+            WebResponse response = request.GetResponse();
+
+            using (Stream dataStream = response.GetResponseStream())
+            {
+                StreamReader reader = new StreamReader(dataStream);
+                result = reader.ReadToEnd();
+            }
+            response.Close();
+
+            return result;
+        }
     }
 }
