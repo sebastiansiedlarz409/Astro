@@ -4,7 +4,6 @@ using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Astro.BLL.JSONParsers
 {
@@ -32,10 +31,10 @@ namespace Astro.BLL.JSONParsers
                 UrlHd = !(json.ContainsKey("hdurl")) ? !(json.ContainsKey("url")) ? "brak" : json.SelectToken("url").Value<string>() : json.SelectToken("hdurl").Value<string>()
             };
 
-            SavaInDataBase(apod);
+            SavaApodInDataBase(apod);
         }
 
-        private void SavaInDataBase(APOD apod)
+        private void SavaApodInDataBase(APOD apod)
         {
             APOD check = _context.APOD.FirstOrDefault(t => t.Date.Equals(apod.Date));
 
@@ -44,6 +43,23 @@ namespace Astro.BLL.JSONParsers
                 _context.APOD.Add(apod);
                 _context.SaveChanges();
             }
+
+            //remove old ones
+            List<APOD> APODs = _context.APOD.ToList();
+
+            if (APODs.Count < 10)
+                return;
+
+            foreach (APOD item in APODs)
+            {
+                DateTime apodDate = new DateTime(Int32.Parse(item.Date.Split("-")[0]), Int32.Parse(item.Date.Split("-")[1]), Int32.Parse(item.Date.Split("-")[2]));
+                var a = (DateTime.Now - apodDate).Days;
+                if ((DateTime.Now - apodDate).Days > 10)
+                {
+                    _context.APOD.Remove(item);
+                }
+            }
+            _context.SaveChanges();
         }
     }
 }
