@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Astro.DAL.Models
 {
-    public class Library
+    public class Gallery
     {
         public string Url { get; set; }
 

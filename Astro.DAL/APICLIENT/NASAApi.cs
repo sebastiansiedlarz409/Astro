@@ -12,7 +12,7 @@ namespace Astro.DAL.APICLIENT
 
         public string GetTodaysApodJson()
         {
-            string result = "";
+            string result = null;
 
             WebRequest request = WebRequest.Create(
               "https://api.nasa.gov/planetary/apod?api_key="+_apiKey);
@@ -31,10 +31,32 @@ namespace Astro.DAL.APICLIENT
 
         public string GetEpicJson()
         {
-            string result = "";
+            string result = null;
 
             WebRequest request = WebRequest.Create(
               "https://api.nasa.gov/EPIC/api/natural?api_key=" + _apiKey);
+
+            WebResponse response = request.GetResponse();
+
+            using (Stream dataStream = response.GetResponseStream())
+            {
+                StreamReader reader = new StreamReader(dataStream);
+                result = reader.ReadToEnd();
+            }
+            response.Close();
+
+            return result;
+        }
+        public string GetGalleryJson(string search)
+        {
+            string result = null;
+
+            //when try to find empty string
+            if (search is null)
+                return result;
+
+            WebRequest request = WebRequest.Create(
+              "https://images-api.nasa.gov/search?q="+search);
 
             WebResponse response = request.GetResponse();
 

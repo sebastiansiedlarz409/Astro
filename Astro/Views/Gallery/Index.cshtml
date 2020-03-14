@@ -1,0 +1,75 @@
+﻿@model List<Astro.DAL.Models.Gallery>
+@{
+    ViewData["Title"] = "Galeria";
+}
+
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        margin: 0;
+        font-family: Arial;
+    }
+
+    .header {
+        text-align: center;
+        padding: 32px;
+    }
+
+    .row {
+        display: -ms-flexbox; /* IE10 */
+        display: flex;
+        -ms-flex-wrap: wrap; /* IE10 */
+        flex-wrap: wrap;
+        padding: 0 4px;
+    }
+
+    .column {
+        -ms-flex: 25%; /* IE10 */
+        flex: 25%;
+        max-width: 25%;
+        padding: 0 4px;
+    }
+
+    .column img {
+        margin-top: 8px;
+        vertical-align: middle;
+        width: 100%;
+    }
+</style>
+
+<div class="header">
+    <h1>Galeria zdjęć NASA</h1>
+</div>
+
+<form asp-controller="Gallery" asp-action="Search">
+    <div class="input-group mb-3">
+        <input name="search" type="text" class="form-control" placeholder="Szukaj" aria-label="Szukaj" aria-describedby="basic-addon2">
+        <div class="input-group-append">
+            <input type="submit" value="Szukaj" class="btn btn-outline-danger" style="width:250px" />
+        </div>
+    </div>
+</form>
+
+
+
+<div class="row">
+
+    @{
+        int k = 0;
+        for (int i = 0; i < 4; i++)
+        {
+            <div class="column">
+
+                @for (int j = 0; j < Model.Count() / 4; j++)
+                {
+                    <img src="@Model[k].Url" style="width:100%" onclick="window.open(this.src)">
+                    k++;
+                }
+
+            </div>
+        }
+    }
+</div>

@@ -21,6 +21,9 @@ namespace Astro.BLL.JSONParsers
 
         public void GetTodayApodData(string data)
         {
+            if (data is null)
+                return;
+
             JObject json = JObject.Parse(data);
 
             APOD apod = new APOD()
@@ -67,6 +70,9 @@ namespace Astro.BLL.JSONParsers
 
         public void GetEpicData(string data)
         {
+            if (data is null)
+                return;
+
             JArray json = JArray.Parse(data);
 
             string epicLink = "https://epic.gsfc.nasa.gov/archive/natural/";
@@ -116,6 +122,39 @@ namespace Astro.BLL.JSONParsers
                 }
             }
             _context.SaveChanges();
+        }
+
+        public List<Gallery> GetGalleryImages(string data)
+        {
+            List<Gallery> galleryImages = new List<Gallery>();
+
+            if (data is null)
+                return galleryImages;
+
+            JObject json = JObject.Parse(data);
+            JArray items = json.SelectToken("collection").Value<JObject>().SelectToken("items").Value<JArray>();
+
+            for (int i = 0; i < items.Count; i++)
+            {
+
+                JObject temp = JObject.Parse(items[i].ToString());
+
+                if (temp.SelectToken("links") is null || temp.SelectToken("data") is null)
+                    continue;
+
+                JObject links = JObject.Parse(temp.SelectToken("links").Value<JArray>()[0].ToString());
+                JObject dataValue = JObject.Parse(temp.SelectToken("data").Value<JArray>()[0].ToString());
+
+                Gallery gallery = new Gallery()
+                {
+                    Url = links.SelectToken("href").Value<string>(),
+                    Description = dataValue.SelectToken("title").Value<string>()
+                };
+
+                galleryImages.Add(gallery);
+            }
+
+            return galleryImages;
         }
     }
 }
