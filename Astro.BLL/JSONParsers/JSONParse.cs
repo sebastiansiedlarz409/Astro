@@ -156,5 +156,41 @@ namespace Astro.BLL.JSONParsers
 
             return galleryImages;
         }
+
+        public void GetAsteroidsNeoWsData(string data)
+        {
+            if (data is null)
+                return;
+
+            JArray json = JObject.Parse(data).SelectToken("near_earth_objects").Value<JArray>();
+
+            for (int i = 0; i< json.Count; i++)
+            {
+                JObject jObject = JObject.Parse(json[i].ToString());
+
+                AsteroidsNeoWs asteroids = new AsteroidsNeoWs()
+                {
+                    Name = !(jObject.ContainsKey("name")) ? "brak" : jObject.SelectToken("name").Value<string>(),
+                    Url = !(jObject.ContainsKey("nasa_jpl_url")) ? "brak" : jObject.SelectToken("nasa_jpl_url").Value<string>(),
+                    Size = !(jObject.ContainsKey("absolute_magnitude_h")) ? "brak" : jObject.SelectToken("absolute_magnitude_h").Value<string>(),
+                    Dangerous = !(jObject.ContainsKey("is_potentially_hazardous_asteroid")) ? "brak" : jObject.SelectToken("is_potentially_hazardous_asteroid").Value<string>(),
+                    FirstObservation = !(jObject.ContainsKey("orbital_data")) ? "brak" : !(jObject.SelectToken("orbital_data").Value<JObject>().ContainsKey("first_observation_date")) ? "brak" : jObject.SelectToken("orbital_data").Value<JObject>().SelectToken("first_observation_date").Value<string>(),
+                    LastObservation = !(jObject.ContainsKey("orbital_data")) ? "brak" : !(jObject.SelectToken("orbital_data").Value<JObject>().ContainsKey("last_observation_date")) ? "brak" : jObject.SelectToken("orbital_data").Value<JObject>().SelectToken("last_observation_date").Value<string>(),
+                };
+
+                SavaAsteroidsNeoWsInDataBase(asteroids);
+            }
+        }
+
+        private void SavaAsteroidsNeoWsInDataBase(AsteroidsNeoWs asteroids)
+        {
+            AsteroidsNeoWs check = _context.AsteroidsNeoWs.FirstOrDefault(t => t.Name.Equals(asteroids.Name));
+
+            if (check is null)
+            {
+                _context.AsteroidsNeoWs.Add(asteroids);
+                _context.SaveChanges();
+            }
+        }
     }
 }

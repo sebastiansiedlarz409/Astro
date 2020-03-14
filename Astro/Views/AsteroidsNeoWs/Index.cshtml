@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Astro.DAL.Models.AsteroidsNeoWs>
+@{
+    ViewData["Title"] = "Obiekty blisko ziemi";
+}
+
+<style>
+    .btn {
+        background-color:#000080 !important;
+    }
+</style>
+
+<h1 style="text-align:center">Obiekty blisko ziemi</h1>
+
+@foreach(var item in Model)
+{
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>Nazwa:</th>
+            <td style="color:@(item.Dangerous.Equals("True")?"#FF0000":"")">@item.Name @(item.Dangerous.Equals("True") ? "(NIEBEZPIECZNE)" : "")</td>
+            <th>Rozmiar:</th>
+            <td>@item.Size</td>
+        </tr>
+        <tr>
+            <td><a href="@item.Url" class="btn btn-info" style="width: 200px">Link</a></td>
+        </tr>
+        <tr>
+            <th>Data pierwszej obserwacji:</th>
+            <td>@item.FirstObservation</td>
+            <th>Data ostatniej obserwacji:</th>
+            <td>@item.LastObservation</td>
+        </tr>
+    </table>
+    <br />
+    <br />
+}
