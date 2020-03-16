@@ -192,5 +192,46 @@ namespace Astro.BLL.JSONParsers
                 _context.SaveChanges();
             }
         }
+
+        public void GetInsightData(string data)
+        {
+            JObject json = JObject.Parse(data);
+
+            JArray keys = json.SelectToken("sol_keys").Value<JArray>();
+
+            for(int i = 0; i < keys.Count; i++)
+            {
+                JObject jObject = json.SelectToken(keys[i].ToString()).Value<JObject>();
+
+                Insight insight = new Insight()
+                {
+                    Number = keys[i].ToString(),
+                    Date = !(jObject.ContainsKey("First_UTC")) ? "brak" : jObject.SelectToken("First_UTC").Value<string>(),
+                    Season = !(jObject.ContainsKey("Season")) ? "brak" : jObject.SelectToken("Season").Value<string>(),
+                    MaxTemp = !(jObject.ContainsKey("AT")) ? "brak" : jObject.SelectToken("AT").Value<JObject>().SelectToken("mx").Value<string>(),
+                    AvgTemp = !(jObject.ContainsKey("AT")) ? "brak" : jObject.SelectToken("AT").Value<JObject>().SelectToken("av").Value<string>(),
+                    MinTemp = !(jObject.ContainsKey("AT")) ? "brak" : jObject.SelectToken("AT").Value<JObject>().SelectToken("mn").Value<string>(),
+                    MaxWind = !(jObject.ContainsKey("HWS")) ? "brak" : jObject.SelectToken("HWS").Value<JObject>().SelectToken("mx").Value<string>(),
+                    AvgWind = !(jObject.ContainsKey("HWS")) ? "brak" : jObject.SelectToken("HWS").Value<JObject>().SelectToken("av").Value<string>(),
+                    MinWind = !(jObject.ContainsKey("HWS")) ? "brak" : jObject.SelectToken("HWS").Value<JObject>().SelectToken("mn").Value<string>(),
+                    MaxPress = !(jObject.ContainsKey("PRE")) ? "brak" : jObject.SelectToken("PRE").Value<JObject>().SelectToken("mx").Value<string>(),
+                    AvgPress = !(jObject.ContainsKey("PRE")) ? "brak" : jObject.SelectToken("PRE").Value<JObject>().SelectToken("av").Value<string>(),
+                    MinPress = !(jObject.ContainsKey("PRE")) ? "brak" : jObject.SelectToken("PRE").Value<JObject>().SelectToken("mn").Value<string>()
+                };
+
+                SavaInsightBase(insight);
+            }
+        }
+
+        private void SavaInsightBase(Insight insight)
+        {
+            Insight check = _context.Insights.FirstOrDefault(t => t.Date.Equals(insight.Date));
+
+            if(check is null)
+            {
+                _context.Insights.Add(insight);
+                _context.SaveChanges();
+            }
+        }
     }
 }

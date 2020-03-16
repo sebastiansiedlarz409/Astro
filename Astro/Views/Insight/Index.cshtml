@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Astro.DAL.Models.Insight>
+@{
+    ViewData["Title"] = "Pogoda na Marsie";
+}
+
+<h1 style="text-align:center">Pogoda na Marsie</h1>
+
+@foreach(var item in Model)
+{
+    <table class="table table-bordered table-striped">
+        <tr>
+            <th>Identyfikator:</th>
+            <td>@item.Number</td>
+            <th>Data pomiarów:</th>
+            <td>@item.Date</td>
+        </tr>
+        <tr>
+            <th>Temperatura:</th>
+            <th>Wiatr:</th>
+            <th colspan="2">Ciśnienie:</th>
+        </tr>
+        <tr>
+            <td>@item.MaxTemp</td>
+            <td>@item.MaxWind</td>
+            <td colspan="2">@item.MaxPress</td>
+        </tr>
+        <tr>
+            <td>@item.AvgTemp</td>
+            <td>@item.AvgWind</td>
+            <td colspan="2">@item.AvgPress</td>
+        </tr>
+        <tr>
+            <td>@item.MinTemp</td>
+            <td>@item.MinWind</td>
+            <td colspan="2">@item.MinPress</td>
+        </tr>
+    </table>
+    <br />
+    <br />
+}

@@ -46,6 +46,18 @@ namespace Astro.DAL.APICLIENT
             return result;
         }
 
+        public string GetInsightJson()
+        {
+            string result = null;
+
+            WebRequest request = WebRequest.Create(
+              "https://api.nasa.gov/insight_weather/?api_key=" + _apiKey + "&feedtype=json&ver=1.0");
+
+            result = DownloadData(request);
+
+            return result;
+        }
+
         public string GetGalleryJson(string search)
         {
             string result = null;
