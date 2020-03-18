@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Astro.DAL.Models
+﻿namespace Astro.DAL.Models
 {
     public class EPIC
     {

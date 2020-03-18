@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Astro.DAL.DBContext;
+﻿using System.Threading.Tasks;
 using Astro.DAL.Models;
 using Astro.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -15,19 +11,11 @@ namespace Astro.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly AstroDbContext _context;
 
-        public AccountController(
-            UserManager<User> userManager,
-            SignInManager<User> signInManager,
-            RoleManager<IdentityRole> roleManager,
-            AstroDbContext context)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
-            _roleManager = roleManager;
-            _context = context;
         }
 
         public IActionResult Login()

@@ -2,9 +2,6 @@
 using Astro.DAL.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Astro.DAL.DBContext
 {
@@ -15,6 +12,7 @@ namespace Astro.DAL.DBContext
 
         }
 
+        public DbSet<CalendarEvent> CalendarEvents { get; set; }
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Topic> Topics { get; set; }
         public DbSet<User> User { get; set; }

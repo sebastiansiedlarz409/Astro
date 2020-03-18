@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Astro.DAL.Migrations
 {
     [DbContext(typeof(AstroDbContext))]
-    [Migration("20200308121537_AddApiTables")]
-    partial class AddApiTables
+    [Migration("20200317084522_InitializeDataBase")]
+    partial class InitializeDataBase
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -82,6 +82,27 @@ namespace Astro.DAL.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AsteroidsNeoWs");
+                });
+
+            modelBuilder.Entity("Astro.DAL.Models.CalendarEvent", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("EndDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("StartDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("CalendarEvents");
                 });
 
             modelBuilder.Entity("Astro.DAL.Models.Comment", b =>
@@ -313,15 +334,15 @@ namespace Astro.DAL.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "d33bfe24-d45f-4ce1-b20b-32a80e1729ef",
-                            ConcurrencyStamp = "9ab3b85e-9aeb-4716-9324-7473c19ed2b7",
+                            Id = "6b33de29-5075-4696-a224-7a5d5686553e",
+                            ConcurrencyStamp = "cd108f1c-bd60-4578-a69b-b08561a70f65",
                             Name = "Administrator",
                             NormalizedName = "ADMINISTRATOR"
                         },
                         new
                         {
-                            Id = "bf28ec92-63e1-4099-b0d0-e99846b83ae0",
-                            ConcurrencyStamp = "8df45cce-38a0-4fe9-9a8e-70a77c4899ae",
+                            Id = "148b4ef8-1051-45e1-83a6-445e7100c3fe",
+                            ConcurrencyStamp = "51bba7a3-8b37-4017-8543-9ad7ca2862f8",
                             Name = "User",
                             NormalizedName = "USER"
                         });

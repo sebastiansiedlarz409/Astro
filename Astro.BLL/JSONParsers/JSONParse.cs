@@ -2,21 +2,19 @@
 using Astro.DAL.DBContext;
 using Astro.DAL.Models;
 using Newtonsoft.Json.Linq;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace Astro.BLL.JSONParsers
 {
     public class JSONParse
     {
-        private AstroDbContext _context;
         private DateFormater _dateFormater;
+        private APIDbRepository _repository;
 
-        public JSONParse(AstroDbContext context, DateFormater dateFormater)
+        public JSONParse(DateFormater dateFormater, APIDbRepository repository)
         {
-            _context = context;
             _dateFormater = dateFormater;
+            _repository = repository;
         }
 
         public void GetTodayApodData(string data)
@@ -37,35 +35,7 @@ namespace Astro.BLL.JSONParsers
                 UrlHd = !(json.ContainsKey("hdurl")) ? !(json.ContainsKey("url")) ? "brak" : json.SelectToken("url").Value<string>() : json.SelectToken("hdurl").Value<string>()
             };
 
-            SavaApodInDataBase(apod);
-        }
-
-        private void SavaApodInDataBase(APOD apod)
-        {
-            APOD check = _context.APOD.FirstOrDefault(t => t.Date.Equals(apod.Date));
-
-            if(check is null)
-            {
-                _context.APOD.Add(apod);
-                _context.SaveChanges();
-            }
-
-            //remove old ones
-            List<APOD> APODs = _context.APOD.ToList();
-
-            if (APODs.Count < 10)
-                return;
-
-            foreach (APOD item in APODs)
-            {
-                DateTime apodDate = new DateTime(Int32.Parse(item.Date.Split("-")[0]), Int32.Parse(item.Date.Split("-")[1]), Int32.Parse(item.Date.Split("-")[2]));
-
-                if ((DateTime.Now - apodDate).Days > 10)
-                {
-                    _context.APOD.Remove(item);
-                }
-            }
-            _context.SaveChanges();
+            _repository.SavaApodInDataBase(apod);
         }
 
         public void GetEpicData(string data)
@@ -77,7 +47,7 @@ namespace Astro.BLL.JSONParsers
 
             string epicLink = "https://epic.gsfc.nasa.gov/archive/natural/";
 
-            for (int i = 0;i < json.Count; i++)
+            for (int i = 0; i < json.Count; i++)
             {
                 JObject jObject = JObject.Parse(json[i].ToString());
                 EPIC epic = new EPIC()
@@ -89,39 +59,8 @@ namespace Astro.BLL.JSONParsers
 
                 epic.ImageName = epicLink + _dateFormater.FormatEPIC(epic.Date) + "/png/" + epic.ImageName + ".png";
 
-                SavaEpicInDataBase(epic);
+                _repository.SavaEpicInDataBase(epic);
             }
-        }
-
-        private void SavaEpicInDataBase(EPIC epic)
-        {
-            EPIC check = _context.EPIC.FirstOrDefault(t => t.Date.Equals(epic.Date));
-
-            if (check is null)
-            {
-                _context.EPIC.Add(epic);
-                _context.SaveChanges();
-            }
-
-            //remove old ones
-            List<EPIC> EPICs = _context.EPIC.ToList();
-
-            if (EPICs.Count < 10)
-                return;
-
-            foreach(EPIC item in EPICs)
-            {
-                string date = item.Date;
-                date = date.Split(" ")[0];
-
-                DateTime apodDate = new DateTime(Int32.Parse(date.Split("-")[0]), Int32.Parse(date.Split("-")[1]), Int32.Parse(date.Split("-")[2]));
-
-                if ((DateTime.Now - apodDate).Days > 15)
-                {
-                    _context.EPIC.Remove(item);
-                }
-            }
-            _context.SaveChanges();
         }
 
         public List<Gallery> GetGalleryImages(string data)
@@ -178,23 +117,15 @@ namespace Astro.BLL.JSONParsers
                     LastObservation = !(jObject.ContainsKey("orbital_data")) ? "brak" : !(jObject.SelectToken("orbital_data").Value<JObject>().ContainsKey("last_observation_date")) ? "brak" : jObject.SelectToken("orbital_data").Value<JObject>().SelectToken("last_observation_date").Value<string>(),
                 };
 
-                SavaAsteroidsNeoWsInDataBase(asteroids);
-            }
-        }
-
-        private void SavaAsteroidsNeoWsInDataBase(AsteroidsNeoWs asteroids)
-        {
-            AsteroidsNeoWs check = _context.AsteroidsNeoWs.FirstOrDefault(t => t.Name.Equals(asteroids.Name));
-
-            if (check is null)
-            {
-                _context.AsteroidsNeoWs.Add(asteroids);
-                _context.SaveChanges();
+                _repository.SavaAsteroidsNeoWsInDataBase(asteroids);
             }
         }
 
         public void GetInsightData(string data)
         {
+            if (data is null)
+                return;
+
             JObject json = JObject.Parse(data);
 
             JArray keys = json.SelectToken("sol_keys").Value<JArray>();
@@ -219,18 +150,7 @@ namespace Astro.BLL.JSONParsers
                     MinPress = !(jObject.ContainsKey("PRE")) ? "brak" : jObject.SelectToken("PRE").Value<JObject>().SelectToken("mn").Value<string>()
                 };
 
-                SavaInsightBase(insight);
-            }
-        }
-
-        private void SavaInsightBase(Insight insight)
-        {
-            Insight check = _context.Insights.FirstOrDefault(t => t.Date.Equals(insight.Date));
-
-            if(check is null)
-            {
-                _context.Insights.Add(insight);
-                _context.SaveChanges();
+                _repository.SavaInsightBase(insight);
             }
         }
     }

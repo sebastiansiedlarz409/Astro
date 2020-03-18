@@ -74,6 +74,7 @@ namespace Astro
             services.AddSingleton<NASAApi>();
             services.AddScoped<AstroDbContext>();
             services.AddSingleton<DateFormater>();
+            services.AddScoped<APIDbRepository>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
@@ -95,6 +96,7 @@ namespace Astro
                 app.UseHsts();
             }
             app.UseHttpsRedirection();
+            app.UseDefaultFiles();
             app.UseStaticFiles();
 
             app.UseRouting();
