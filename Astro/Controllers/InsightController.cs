@@ -5,6 +5,7 @@ using Astro.DAL.APICLIENT;
 using Astro.DAL.DBContext;
 using Astro.DAL.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Astro.Controllers
 {
@@ -25,7 +26,7 @@ namespace Astro.Controllers
         {
             _JSONParse.GetInsightData(_NASAAPpi.GetInsightJson());
 
-            List<Insight> insights = _context.Insights.ToList();
+            List<Insight> insights = _context.Insights.AsNoTracking().ToList();
 
             return View(insights);
         }

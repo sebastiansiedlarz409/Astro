@@ -5,6 +5,7 @@ using Astro.DAL.APICLIENT;
 using Astro.DAL.DBContext;
 using Astro.DAL.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Astro.Controllers
 {
@@ -25,7 +26,7 @@ namespace Astro.Controllers
         {
             _JSONParse.GetAsteroidsNeoWsData(_NASAAPpi.GetAsteroidsNeoWsJson());
 
-            List<AsteroidsNeoWs> asteroidsList = _context.AsteroidsNeoWs.ToList();
+            List<AsteroidsNeoWs> asteroidsList = _context.AsteroidsNeoWs.AsNoTracking().ToList();
 
             return View(asteroidsList);
         }

@@ -7,11 +7,11 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Astro</title>
+    <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
-<body style="background-color: #aaa9a9">
+<body style="overflow:scroll">
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" style="background-color: #000080">
             <div class="container">
@@ -36,7 +36,7 @@
                             </li>
                         }
                         <li class="nav-item">
-                            <a class="nav-link text-light" asp-area="" asp-controller="Forum" asp-action="Index">Forum</a>
+                            <a class="nav-link text-light" asp-area="" asp-controller="Forum" asp-action="MainPage">Forum</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -63,7 +63,6 @@
         </main>
     </div>
 
-    <script src="_framework/blazor.server.js"></script>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>

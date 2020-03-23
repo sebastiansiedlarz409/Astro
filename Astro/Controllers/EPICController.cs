@@ -5,6 +5,7 @@ using Astro.DAL.APICLIENT;
 using Astro.DAL.DBContext;
 using Astro.DAL.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Astro.Controllers
 {
@@ -25,7 +26,7 @@ namespace Astro.Controllers
         {
             _JSONParse.GetEpicData(_NASAAPpi.GetEpicJson());
 
-            List<EPIC> epicList = _context.EPIC.ToList();
+            List<EPIC> epicList = _context.EPIC.AsNoTracking().ToList();
 
             return View(epicList);
         }

@@ -5,6 +5,7 @@ using Astro.DAL.APICLIENT;
 using Astro.DAL.DBContext;
 using Astro.DAL.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Astro.Controllers
 {
@@ -25,7 +26,7 @@ namespace Astro.Controllers
         {
             _JSONParse.GetTodayApodData(_NASAAPpi.GetTodaysApodJson());
 
-            List<APOD> apodList = _context.APOD.ToList();
+            List<APOD> apodList = _context.APOD.AsNoTracking().OrderByDescending(t=>t.Id).ToList();
 
             return View(apodList);
         }

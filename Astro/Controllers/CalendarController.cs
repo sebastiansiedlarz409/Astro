@@ -3,6 +3,7 @@ using System.Linq;
 using Astro.DAL.DBContext;
 using Astro.DAL.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Astro.Controllers
 {
@@ -21,14 +22,14 @@ namespace Astro.Controllers
         [HttpGet]
         public IEnumerable<CalendarItem> Get()
         {
-            return _context.CalendarEvents.ToList().Select(t => (CalendarItem)t);
+            return _context.CalendarEvents.AsNoTracking().ToList().Select(t => (CalendarItem)t);
         }
 
         //GET api/Calendar/1
         [HttpGet("{id}")]
         public CalendarItem Get(int id)
         {
-            return (CalendarItem)_context.CalendarEvents.FirstOrDefault(t => t.Id == id);
+            return (CalendarItem)_context.CalendarEvents.AsNoTracking().FirstOrDefault(t => t.Id == id);
         }
 
         //POST api/Calendar

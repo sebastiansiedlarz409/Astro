@@ -1,4 +1,5 @@
 ﻿using Astro.DAL.Models;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,7 +17,7 @@ namespace Astro.DAL.DBContext
 
         public void SavaApodInDataBase(APOD apod)
         {
-            APOD check = _context.APOD.FirstOrDefault(t => t.Date.Equals(apod.Date));
+            APOD check = _context.APOD.AsNoTracking().FirstOrDefault(t => t.Date.Equals(apod.Date));
 
             if (check is null)
             {
@@ -44,7 +45,7 @@ namespace Astro.DAL.DBContext
 
         public void SavaEpicInDataBase(EPIC epic)
         {
-            EPIC check = _context.EPIC.FirstOrDefault(t => t.Date.Equals(epic.Date));
+            EPIC check = _context.EPIC.AsNoTracking().FirstOrDefault(t => t.Date.Equals(epic.Date));
 
             if (check is null)
             {
@@ -75,7 +76,7 @@ namespace Astro.DAL.DBContext
 
         public void SavaAsteroidsNeoWsInDataBase(AsteroidsNeoWs asteroids)
         {
-            AsteroidsNeoWs check = _context.AsteroidsNeoWs.FirstOrDefault(t => t.Name.Equals(asteroids.Name));
+            AsteroidsNeoWs check = _context.AsteroidsNeoWs.AsNoTracking().FirstOrDefault(t => t.Name.Equals(asteroids.Name));
 
             if (check is null)
             {
@@ -86,7 +87,7 @@ namespace Astro.DAL.DBContext
 
         public void SavaInsightBase(Insight insight)
         {
-            Insight check = _context.Insights.FirstOrDefault(t => t.Date.Equals(insight.Date));
+            Insight check = _context.Insights.AsNoTracking().FirstOrDefault(t => t.Date.Equals(insight.Date));
 
             if (check is null)
             {
