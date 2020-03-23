@@ -31,12 +31,8 @@ namespace Astro.Controllers
             if (ModelState.IsValid)
             {
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, lockoutOnFailure: false);
-                if (result.Succeeded)
-                {
-                    return RedirectToAction("Index", "Home");
-                }
             }
-            return View(model);
+            return RedirectToAction("MainPage", "Forum");
         }
 
         public IActionResult Register()
@@ -64,7 +60,7 @@ namespace Astro.Controllers
 
                     _userManager.AddToRoleAsync(newUser, "User").Wait();
 
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("MainPage", "Forum");
                 }
 
             }
@@ -76,7 +72,7 @@ namespace Astro.Controllers
         {
             await _signInManager.SignOutAsync();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("MainPage", "Forum");
         }
     }
 }

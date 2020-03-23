@@ -65,8 +65,8 @@ namespace Astro
                 options.Cookie.HttpOnly = true;
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(5);
 
-                options.LoginPath = "/Home/Index";
-                options.AccessDeniedPath = "/Home/Index";
+                options.LoginPath = "/Forum/MainPage";
+                options.AccessDeniedPath = "/Forum/MainPage";
                 options.SlidingExpiration = true;
             });
 
@@ -78,7 +78,6 @@ namespace Astro
 
             services.AddControllersWithViews();
             services.AddRazorPages();
-            services.AddServerSideBlazor();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -108,8 +107,7 @@ namespace Astro
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapRazorPages();
+                    pattern: "{controller=Forum}/{action=MainPage}/{id?}");
             });
 
             //seed admin when app is run first time
