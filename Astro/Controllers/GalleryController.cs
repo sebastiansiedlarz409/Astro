@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Astro.BLL.JSONParsers;
 using Astro.DAL.APICLIENT;
 using Astro.DAL.Models;
@@ -8,8 +10,8 @@ namespace Astro.Controllers
 {
     public class GalleryController : Controller
     {
-        private JSONParse _JSONParse;
-        private NASAApi _NASAAPpi;
+        private readonly JSONParse _JSONParse;
+        private readonly NASAApi _NASAAPpi;
 
         public GalleryController(JSONParse JSONParse, NASAApi NASAApi)
         {
@@ -25,11 +27,11 @@ namespace Astro.Controllers
         }
 
         [HttpPost]
-        public IActionResult Search(string search)
+        public async Task<IActionResult> Search(string search)
         {
-            List<Gallery> galleryImages = _JSONParse.GetGalleryImages(_NASAAPpi.GetGalleryJson(search));
+            IEnumerable<Gallery> galleryImages = _JSONParse.GetGalleryImages(await _NASAAPpi.GetGalleryJson(search));
 
-            return View("Index", galleryImages);
+            return View("Index", galleryImages.ToList());
         }
     }
 }

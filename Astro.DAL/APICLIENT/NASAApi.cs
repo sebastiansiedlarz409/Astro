@@ -1,89 +1,83 @@
-﻿using System.IO;
-using System.Net;
+﻿using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Astro.DAL.APICLIENT
 {
     public class NASAApi
     {
-        private string _apiKey = "O832RalDsOHeIhuMw3VEUvBvVOCI9LG2eF4TyzZw";
+        private readonly string _apiKey = "O832RalDsOHeIhuMw3VEUvBvVOCI9LG2eF4TyzZw";
+        private readonly HttpClient _client;
 
-        public string GetTodaysApodJson()
+        public NASAApi(HttpClient client)
         {
-            string result = null;
+            _client = client;
+        }
 
-            WebRequest request = WebRequest.Create(
-              "https://api.nasa.gov/planetary/apod?api_key="+_apiKey);
+        public async Task<string> GetTodaysApodJson()
+        {
+            string request =
+              "https://api.nasa.gov/planetary/apod?api_key=" + _apiKey;
 
-            result = DownloadData(request);
+            string result = await DownloadData(request);
 
             return result;
         }
 
-        public string GetEpicJson()
+        public async Task<string> GetEpicJson()
         {
-            string result = null;
+            string request =
+              "https://api.nasa.gov/EPIC/api/natural?api_key=" + _apiKey;
 
-            WebRequest request = WebRequest.Create(
-              "https://api.nasa.gov/EPIC/api/natural?api_key=" + _apiKey);
-
-            result = DownloadData(request);
+            string result = await DownloadData(request);
 
             return result;
         }
 
-        public string GetAsteroidsNeoWsJson()
+        public async Task<string> GetAsteroidsNeoWsJson()
         {
-            string result = null;
+            string request =
+              "https://api.nasa.gov/neo/rest/v1/neo/browse?api_key=" + _apiKey;
 
-            WebRequest request = WebRequest.Create(
-              "https://api.nasa.gov/neo/rest/v1/neo/browse?api_key=" + _apiKey);
-
-            result = DownloadData(request);
+            string result = await DownloadData(request);
 
             return result;
         }
 
-        public string GetInsightJson()
+        public async Task<string> GetInsightJson()
         {
-            string result = null;
+            string request =
+              "https://api.nasa.gov/insight_weather/?api_key=" + _apiKey + "&feedtype=json&ver=1.0";
 
-            WebRequest request = WebRequest.Create(
-              "https://api.nasa.gov/insight_weather/?api_key=" + _apiKey + "&feedtype=json&ver=1.0");
-
-            result = DownloadData(request);
+            string result = await DownloadData(request);
 
             return result;
         }
 
-        public string GetGalleryJson(string search)
+        public ValueTask<string> GetGalleryJson(string search)
         {
             string result = null;
 
             //when try to find empty string
             if (search is null)
-                return result;
+                return new ValueTask<string>(result);
 
-            WebRequest request = WebRequest.Create(
-              "https://images-api.nasa.gov/search?q=" + search);
+            string request =
+              "https://images-api.nasa.gov/search?q=" + search;
 
-            result = DownloadData(request);
-
-            return result;
+            return new ValueTask<string>(DownloadData(request));
         }
 
-        private string DownloadData(WebRequest request)
+        private async Task<string> DownloadData(string request)
         {
             string result = null;
-
-            WebResponse response = request.GetResponse();
-
-            using (Stream dataStream = response.GetResponseStream())
+            try
             {
-                StreamReader reader = new StreamReader(dataStream);
-                result = reader.ReadToEnd();
+                result = await _client.GetStringAsync(request);
             }
-            response.Close();
-
+            catch
+            {
+                return result;
+            }
             return result;
         }
     }

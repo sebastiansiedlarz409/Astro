@@ -7,13 +7,13 @@
 @inject UserManager<User> UserManager
 
 @{
-    ViewData["Title"] = Model.Title.Substring(0, 10) + "...";
+    ViewData["Title"] = "Forum";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>@Model.Title</h1>
+<h2>@Model.Title</h2>
 
-<h5>@Model.Date @Model.User.Email</h5>
+<h6>@Model.Date @Model.User.Email</h6>
 
 @if (SignInManager.IsSignedIn(User))
 {
@@ -26,12 +26,20 @@
 {
     <table class="table table-striped table-bordered">
         <tr>
-            <td width="20%">
-                @item.User.Email
+            <td width="25%" style="font-size:15px">
+                <b>@item.User.UserName</b>
+                <br />
+                <b>Dołączył:</b> @item.User.RegisterDate
+                <br />
+                <b>Online:</b> @item.User.LastLoginDate
+                <br />
+                <b>Tematy:</b> @item.User.TopicsCount <b>Komentarze:</b> @item.User.CommentsCount
             </td>
             <td>
                 <div id=@("CommentContent"+item.Id)>
                     @item.Content
+                    <hr />
+                    @item.Date
                 </div>
 
                 <div id=@("EditCommentForm"+item.Id) style="display:none">

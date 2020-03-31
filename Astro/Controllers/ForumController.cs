@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Astro.DAL.DBContext;
 using Astro.DAL.Models;
 using Astro.Models;
@@ -22,9 +23,10 @@ namespace Astro.Controllers
             _context = context;
         }
 
-        public IActionResult MainPage()
+        public async Task<IActionResult> MainPage()
         {
-            List<Topic> topics = _context.Topics.AsNoTracking().Include(t => t.User).OrderByDescending(t=>t.Id).ToList();
+            List<Topic> topics = await _context.Topics.AsNoTracking().Include(t => t.User).OrderByDescending(t => t.Id)
+                .ToListAsync();
 
             return View(topics);
         }
@@ -37,11 +39,11 @@ namespace Astro.Controllers
 
         [Authorize]
         [HttpPost]
-        public IActionResult AddTopic(AddTopicViewModel model)
+        public async Task<IActionResult> AddTopic(AddTopicViewModel model)
         {
             if (ModelState.IsValid)
             {
-                User user = _context.User.FirstOrDefault(t=>t.Id.Equals(_userManager.GetUserId(User)));
+                User user = await _context.User.FirstOrDefaultAsync(t => t.Id.Equals(_userManager.GetUserId(User)));
 
                 Topic topic = new Topic()
                 {
@@ -59,29 +61,34 @@ namespace Astro.Controllers
                     Topic = topic
                 };
 
-                _context.Add(topic);
-                _context.Add(comment);
-                _context.SaveChanges();
+                user.TopicsCount++;
+                user.CommentsCount++;
+
+                _context.Update(user);
+                await _context.AddAsync(topic);
+                await _context.AddAsync(comment);
+                await _context.SaveChangesAsync();
 
                 return RedirectToAction("ShowTopic", new { id = topic.Id });
             }
             return View(model);
         }
 
-        public IActionResult ShowTopic(int id)
+        public async Task<IActionResult> ShowTopic(int id)
         {
-            Topic topic = _context.Topics.AsNoTracking().Include(t => t.Comments).ThenInclude(t=>t.User).Include(t => t.User).FirstOrDefault(t => t.Id == id);
+            Topic topic = await _context.Topics.AsNoTracking().Include(t => t.Comments).ThenInclude(t => t.User)
+                .Include(t => t.User).FirstOrDefaultAsync(t => t.Id == id);
 
             return View(topic);
         }
 
         [Authorize]
         [HttpPost]
-        public IActionResult AddComment(int topicId, string comment)
+        public async Task<IActionResult> AddComment(int topicId, string comment)
         {
-            Topic topic = _context.Topics.FirstOrDefault(t => t.Id == topicId);
+            Topic topic = await _context.Topics.FirstOrDefaultAsync(t => t.Id == topicId);
 
-            User user = _context.User.FirstOrDefault(t => t.Id.Equals(_userManager.GetUserId(User)));
+            User user = await _context.User.FirstOrDefaultAsync(t => t.Id.Equals(_userManager.GetUserId(User)));
 
             Comment newComment = new Comment()
             {
@@ -91,64 +98,82 @@ namespace Astro.Controllers
                 Topic = topic
             };
 
-            _context.Add(newComment);
-            _context.SaveChanges();
+            user.CommentsCount++;
+
+            _context.Update(user);
+            await _context.AddAsync(newComment);
+            await _context.SaveChangesAsync();
 
             return RedirectToAction("ShowTopic", new { id = topicId });
         }
 
         [Authorize]
         [HttpPost]
-        public IActionResult EditComment(int id, int topicId, string comment)
+        public async Task<IActionResult> EditComment(int id, int topicId, string comment)
         {
-            Comment editComment = _context.Comments.FirstOrDefault(t => t.Id == id);
+            Comment editComment = await _context.Comments.FirstOrDefaultAsync(t => t.Id == id);
 
             editComment.Content = comment;
             editComment.Date = DateTime.Now.ToString();
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return RedirectToAction("ShowTopic", new { id = topicId });
         }
 
         [Authorize(Roles = "Administrator")]
-        public IActionResult DeleteTopic(int id)
+        public async Task<IActionResult> DeleteTopic(int id)
         {
-            Topic topic = _context.Topics.Include(t=>t.Comments).FirstOrDefault(t => t.Id == id);
+            Topic topic = await _context.Topics.Include(t => t.Comments).ThenInclude(t => t.User)
+                .FirstOrDefaultAsync(t => t.Id == id);
 
-            foreach(Comment comment in topic.Comments)
+            User user = topic.User;
+
+            foreach (Comment comment in topic.Comments)
             {
+                User commentAuthor = comment.User;
+                commentAuthor.CommentsCount--;
+
+                _context.Update(commentAuthor);
                 _context.Remove(comment);
             }
 
+            user.TopicsCount--;
+
+            _context.Update(user);
+
             _context.Remove(topic);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return RedirectToAction("MainPage");
         }
 
-        [Authorize(Roles="Administrator")]
-        public IActionResult DeleteComment(int id, int topicId)
+        [Authorize(Roles = "Administrator")]
+        public async Task<IActionResult> DeleteComment(int id, int topicId)
         {
-            Comment comment = _context.Comments.FirstOrDefault(t => t.Id == id);
+            Comment comment = await _context.Comments.Include(t => t.User).FirstOrDefaultAsync(t => t.Id == id);
 
+            User user = comment.User;
+            user.CommentsCount--;
+
+            _context.Update(user);
             _context.Remove(comment);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return RedirectToAction("ShowTopic", new { id = topicId });
         }
 
         [Authorize]
-        public IActionResult ChangeRate(int id, bool up)
+        public async Task<IActionResult> ChangeRate(int id, bool up)
         {
-            Topic topic = _context.Topics.FirstOrDefault(t => t.Id == id);
+            Topic topic = await _context.Topics.FirstOrDefaultAsync(t => t.Id == id);
 
             if (up)
                 topic.Rate++;
             else
                 topic.Rate--;
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return RedirectToAction("ShowTopic", new { id = id });
         }

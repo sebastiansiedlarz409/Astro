@@ -1,9 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using Astro.DAL.DBContext;
 using Astro.DAL.Models;
 using Astro.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Astro.Controllers
 {
@@ -11,11 +14,13 @@ namespace Astro.Controllers
     {
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
+        private readonly AstroDbContext _context;
 
-        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager)
+        public AccountController(UserManager<User> userManager, SignInManager<User> signInManager, AstroDbContext context)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _context = context;
         }
 
         [AllowAnonymous]
@@ -31,6 +36,15 @@ namespace Astro.Controllers
             if (ModelState.IsValid)
             {
                 var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, lockoutOnFailure: false);
+
+                if (result.Succeeded)
+                {
+                    User user = await _context.User.FirstOrDefaultAsync(t => t.Email.Equals(model.Email));
+                    user.LastLoginDate = DateTime.Now.ToString();
+
+                    _context.Update(user);
+                    await _context.SaveChangesAsync();
+                }
             }
             return RedirectToAction("MainPage", "Forum");
         }
@@ -49,7 +63,8 @@ namespace Astro.Controllers
                 User newUser = new User
                 {
                     UserName = model.UserName,
-                    Email = model.Email
+                    Email = model.Email,
+                    RegisterDate = DateTime.Now.ToString()
                 };
 
                 var result = await _userManager.CreateAsync(newUser, model.Password);

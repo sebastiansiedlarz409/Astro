@@ -2,59 +2,62 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
 
 namespace Astro.DAL.DBContext
 {
     public class APIDbRepository
     {
-        private AstroDbContext _context;
+        private readonly AstroDbContext _context;
 
         public APIDbRepository(AstroDbContext context)
         {
             _context = context;
         }
 
-        public void SavaApodInDataBase(APOD apod)
+        public async Task SavaApodInDataBase(APOD apod)
         {
-            APOD check = _context.APOD.AsNoTracking().FirstOrDefault(t => t.Date.Equals(apod.Date));
+            APOD check = await _context.APOD.AsNoTracking().FirstOrDefaultAsync(t => t.Date.Equals(apod.Date));
 
             if (check is null)
             {
-                _context.APOD.Add(apod);
-                _context.SaveChanges();
+                await _context.APOD.AddAsync(apod);
+                await _context.SaveChangesAsync();
             }
 
             //remove old ones
-            List<APOD> APODs = _context.APOD.ToList();
+            List<APOD> APODs = await _context.APOD.ToListAsync();
 
             if (APODs.Count < 10)
                 return;
 
             foreach (APOD item in APODs)
             {
-                DateTime apodDate = new DateTime(Int32.Parse(item.Date.Split("-")[0]), Int32.Parse(item.Date.Split("-")[1]), Int32.Parse(item.Date.Split("-")[2]));
+                DateTime apodDate =
+                    new DateTime(Int32.Parse(item.Date.Split("-")[0]),
+                    Int32.Parse(item.Date.Split("-")[1]),
+                    Int32.Parse(item.Date.Split("-")[2]));
 
                 if ((DateTime.Now - apodDate).Days > 10)
                 {
                     _context.APOD.Remove(item);
                 }
             }
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void SavaEpicInDataBase(EPIC epic)
+        public async Task SavaEpicInDataBase(EPIC epic)
         {
-            EPIC check = _context.EPIC.AsNoTracking().FirstOrDefault(t => t.Date.Equals(epic.Date));
+            EPIC check = await _context.EPIC.AsNoTracking().FirstOrDefaultAsync(t => t.Date.Equals(epic.Date));
 
             if (check is null)
             {
-                _context.EPIC.Add(epic);
-                _context.SaveChanges();
+                await _context.EPIC.AddAsync(epic);
+                await _context.SaveChangesAsync();
             }
 
             //remove old ones
-            List<EPIC> EPICs = _context.EPIC.ToList();
+            List<EPIC> EPICs = await _context.EPIC.ToListAsync();
 
             if (EPICs.Count < 10)
                 return;
@@ -64,35 +67,39 @@ namespace Astro.DAL.DBContext
                 string date = item.Date;
                 date = date.Split(" ")[0];
 
-                DateTime apodDate = new DateTime(Int32.Parse(date.Split("-")[0]), Int32.Parse(date.Split("-")[1]), Int32.Parse(date.Split("-")[2]));
+                DateTime apodDate =
+                    new DateTime(Int32.Parse(date.Split("-")[0]),
+                    Int32.Parse(date.Split("-")[1]),
+                    Int32.Parse(date.Split("-")[2]));
 
                 if ((DateTime.Now - apodDate).Days > 15)
                 {
                     _context.EPIC.Remove(item);
                 }
             }
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
-        public void SavaAsteroidsNeoWsInDataBase(AsteroidsNeoWs asteroids)
+        public async Task SavaAsteroidsNeoWsInDataBase(AsteroidsNeoWs asteroids)
         {
-            AsteroidsNeoWs check = _context.AsteroidsNeoWs.AsNoTracking().FirstOrDefault(t => t.Name.Equals(asteroids.Name));
+            AsteroidsNeoWs check = await _context.AsteroidsNeoWs.AsNoTracking()
+                .FirstOrDefaultAsync(t => t.Name.Equals(asteroids.Name));
 
             if (check is null)
             {
-                _context.AsteroidsNeoWs.Add(asteroids);
-                _context.SaveChanges();
+                await _context.AsteroidsNeoWs.AddAsync(asteroids);
+                await _context.SaveChangesAsync();
             }
         }
 
-        public void SavaInsightBase(Insight insight)
+        public async Task SavaInsightBase(Insight insight)
         {
-            Insight check = _context.Insights.AsNoTracking().FirstOrDefault(t => t.Date.Equals(insight.Date));
+            Insight check = await _context.Insights.AsNoTracking().FirstOrDefaultAsync(t => t.Date.Equals(insight.Date));
 
             if (check is null)
             {
-                _context.Insights.Add(insight);
-                _context.SaveChanges();
+                await _context.Insights.AddAsync(insight);
+                await _context.SaveChangesAsync();
             }
         }
     }

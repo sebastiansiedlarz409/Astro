@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Astro.BLL.JSONParsers;
 using Astro.DAL.APICLIENT;
 using Astro.DAL.DBContext;
@@ -11,9 +12,9 @@ namespace Astro.Controllers
 {
     public class APODController : Controller
     {
-        private JSONParse _JSONParse;
-        private NASAApi _NASAAPpi;
-        private AstroDbContext _context;
+        private readonly JSONParse _JSONParse;
+        private readonly NASAApi _NASAAPpi;
+        private readonly AstroDbContext _context;
 
         public APODController(JSONParse JSONParse, NASAApi NASAApi, AstroDbContext context)
         {
@@ -22,11 +23,11 @@ namespace Astro.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            _JSONParse.GetTodayApodData(_NASAAPpi.GetTodaysApodJson());
+            await _JSONParse.GetTodayApodData(await _NASAAPpi.GetTodaysApodJson());
 
-            List<APOD> apodList = _context.APOD.AsNoTracking().OrderByDescending(t=>t.Id).ToList();
+            List<APOD> apodList = await _context.APOD.AsNoTracking().OrderByDescending(t => t.Id).ToListAsync();
 
             return View(apodList);
         }

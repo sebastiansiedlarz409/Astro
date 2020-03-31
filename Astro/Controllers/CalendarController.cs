@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Astro.DAL.DBContext;
 using Astro.DAL.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +12,7 @@ namespace Astro.Controllers
     [ApiController]
     public class CalendarController : ControllerBase
     {
-        private AstroDbContext _context;
+        private readonly AstroDbContext _context;
 
         public CalendarController(AstroDbContext context)
         {
@@ -20,26 +21,28 @@ namespace Astro.Controllers
 
         //GET api/Calendar
         [HttpGet]
-        public IEnumerable<CalendarItem> Get()
+        public async Task<IEnumerable<CalendarItem>> Get()
         {
-            return _context.CalendarEvents.AsNoTracking().ToList().Select(t => (CalendarItem)t);
+            List<CalendarEvent> calendarEvents = await _context.CalendarEvents.AsNoTracking().ToListAsync();
+
+            return calendarEvents.ToList().Select(t => (CalendarItem)t);
         }
 
         //GET api/Calendar/1
         [HttpGet("{id}")]
-        public CalendarItem Get(int id)
+        public async Task<CalendarItem> Get(int id)
         {
-            return (CalendarItem)_context.CalendarEvents.AsNoTracking().FirstOrDefault(t => t.Id == id);
+            return (CalendarItem)await _context.CalendarEvents.AsNoTracking().FirstOrDefaultAsync(t => t.Id == id);
         }
 
         //POST api/Calendar
         [HttpPost]
-        public ObjectResult Post([FromForm]CalendarItem item)
+        public async Task<ObjectResult> Post([FromForm]CalendarItem item)
         {
             CalendarEvent calendarEvent = (CalendarEvent)item;
-            
-            _context.CalendarEvents.Add(calendarEvent);
-            _context.SaveChanges();
+
+            await _context.CalendarEvents.AddAsync(calendarEvent);
+            await _context.SaveChangesAsync();
 
             return Ok(new
             {
@@ -50,18 +53,18 @@ namespace Astro.Controllers
 
         //PUT api/Calendar/1
         [HttpPut("{id}")]
-        public ObjectResult Put(int id, [FromForm] CalendarItem item)
+        public async Task<ObjectResult> Put(int id, [FromForm] CalendarItem item)
         {
             CalendarEvent calendarEvent = (CalendarEvent)item;
 
-            CalendarEvent oldCalendarEvent = _context.CalendarEvents.FirstOrDefault(t => t.Id == id);
+            CalendarEvent oldCalendarEvent = await _context.CalendarEvents.FirstOrDefaultAsync(t => t.Id == id);
 
             oldCalendarEvent.Name = calendarEvent.Name;
             oldCalendarEvent.StartDate = calendarEvent.StartDate;
             oldCalendarEvent.EndDate = calendarEvent.EndDate;
 
             _context.CalendarEvents.Update(oldCalendarEvent);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             return Ok(new
             {
@@ -71,14 +74,14 @@ namespace Astro.Controllers
 
         //DELETE api/Calendar/1
         [HttpDelete("{id}")]
-        public ObjectResult Delete(int id)
+        public async Task<ObjectResult> Delete(int id)
         {
-            CalendarEvent calendarEvent = _context.CalendarEvents.FirstOrDefault(t => t.Id == id);
+            CalendarEvent calendarEvent = await _context.CalendarEvents.FirstOrDefaultAsync(t => t.Id == id);
 
-            if(calendarEvent != null)
+            if (calendarEvent != null)
             {
                 _context.CalendarEvents.Remove(calendarEvent);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
 
             return Ok(new

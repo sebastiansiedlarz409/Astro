@@ -1,12 +1,7 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -17,6 +12,7 @@ using Astro.DAL.Configuration;
 using Astro.BLL.JSONParsers;
 using Astro.DAL.APICLIENT;
 using Astro.BLL.Tools;
+using System.Net.Http;
 
 namespace Astro
 {
@@ -70,11 +66,13 @@ namespace Astro
                 options.SlidingExpiration = true;
             });
 
-            services.AddScoped<JSONParse>();
-            services.AddSingleton<NASAApi>();
-            services.AddScoped<AstroDbContext>();
-            services.AddSingleton<DateFormater>();
-            services.AddScoped<APIDbRepository>();
+            services.AddTransient<JSONParse>();
+            services.AddTransient<NASAApi>();
+            services.AddTransient<AstroDbContext>();
+            services.AddScoped<DateFormater>();
+            services.AddTransient<APIDbRepository>();
+            services.AddTransient<HttpClient>();
+            services.AddTransient<JSONtools>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();

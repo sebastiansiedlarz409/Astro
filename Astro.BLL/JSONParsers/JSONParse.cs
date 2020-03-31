@@ -3,42 +3,46 @@ using Astro.DAL.DBContext;
 using Astro.DAL.Models;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Astro.BLL.JSONParsers
 {
     public class JSONParse
     {
-        private DateFormater _dateFormater;
-        private APIDbRepository _repository;
+        private readonly DateFormater _dateFormater;
+        private readonly APIDbRepository _repository;
+        private readonly JSONtools _jsonTools;
 
-        public JSONParse(DateFormater dateFormater, APIDbRepository repository)
+        public JSONParse(DateFormater dateFormater, APIDbRepository repository, JSONtools jsonTools)
         {
             _dateFormater = dateFormater;
             _repository = repository;
+            _jsonTools = jsonTools;
         }
 
-        public void GetTodayApodData(string data)
+        public async Task GetTodayApodData(string data)
         {
             if (data is null)
                 return;
 
-            JObject json = JObject.Parse(data);
+            JObject jObject = JObject.Parse(data);
 
             APOD apod = new APOD()
             {
-                Author = !(json.ContainsKey("copyright")) ? "brak" : json.SelectToken("copyright").Value<string>(),
-                Date = !(json.ContainsKey("date")) ? "brak" : json.SelectToken("date").Value<string>(),
-                Description = !(json.ContainsKey("explanation")) ? "brak" : json.SelectToken("explanation").Value<string>(),
-                MediaType = !(json.ContainsKey("media_type")) ? "brak" : json.SelectToken("media_type").Value<string>(),
-                Title = !(json.ContainsKey("title")) ? "brak" : json.SelectToken("title").Value<string>(),
-                Url = !(json.ContainsKey("url")) ? "brak" : json.SelectToken("url").Value<string>(),
-                UrlHd = !(json.ContainsKey("hdurl")) ? !(json.ContainsKey("url")) ? "brak" : json.SelectToken("url").Value<string>() : json.SelectToken("hdurl").Value<string>()
+                Author = _jsonTools.GetValue<string>(jObject, "copyright"),
+                Date = _jsonTools.GetValue<string>(jObject, "date"),
+                Description = _jsonTools.GetValue<string>(jObject, "explanation"),
+                MediaType = _jsonTools.GetValue<string>(jObject, "media_type"),
+                Title = _jsonTools.GetValue<string>(jObject, "title"),
+                Url = _jsonTools.GetValue<string>(jObject, "url"),
+                UrlHd = _jsonTools.GetValue<string>(jObject, "hdurl")
             };
 
-            _repository.SavaApodInDataBase(apod);
+            await _repository.SavaApodInDataBase(apod);
         }
 
-        public void GetEpicData(string data)
+        public async Task GetEpicData(string data)
         {
             if (data is null)
                 return;
@@ -52,105 +56,99 @@ namespace Astro.BLL.JSONParsers
                 JObject jObject = JObject.Parse(json[i].ToString());
                 EPIC epic = new EPIC()
                 {
-                    ImageName = !(jObject.ContainsKey("image")) ? "brak" : jObject.SelectToken("image").Value<string>(),
-                    Date = !(jObject.ContainsKey("date")) ? "brak" : jObject.SelectToken("date").Value<string>(),
-                    Description = !(jObject.ContainsKey("caption")) ? "brak" : jObject.SelectToken("caption").Value<string>(),
+                    ImageName = _jsonTools.GetValue<string>(jObject, "image"),
+                    Date = _jsonTools.GetValue<string>(jObject, "date"),
+                    Description = _jsonTools.GetValue<string>(jObject, "caption")
                 };
 
                 epic.ImageName = epicLink + _dateFormater.FormatEPIC(epic.Date) + "/png/" + epic.ImageName + ".png";
 
-                _repository.SavaEpicInDataBase(epic);
+                await _repository.SavaEpicInDataBase(epic);
             }
         }
 
-        public List<Gallery> GetGalleryImages(string data)
+        public IEnumerable<Gallery> GetGalleryImages(string data)
         {
-            List<Gallery> galleryImages = new List<Gallery>();
-
-            if (data is null)
-                return galleryImages;
-
             JObject json = JObject.Parse(data);
-            JArray items = json.SelectToken("collection").Value<JObject>().SelectToken("items").Value<JArray>();
+            JArray items = _jsonTools.GetJArray(_jsonTools.GetJObject(json, "collection"), "items");
 
             for (int i = 0; i < items.Count; i++)
             {
-
                 JObject temp = JObject.Parse(items[i].ToString());
 
                 if (temp.SelectToken("links") is null || temp.SelectToken("data") is null)
                     continue;
 
-                JObject links = JObject.Parse(temp.SelectToken("links").Value<JArray>()[0].ToString());
-                JObject dataValue = JObject.Parse(temp.SelectToken("data").Value<JArray>()[0].ToString());
+                JObject links = JObject.Parse(_jsonTools.GetJArray(temp, "links")[0].ToString());
+                JObject dataValue = JObject.Parse(_jsonTools.GetJArray(temp, "data")[0].ToString());
 
                 Gallery gallery = new Gallery()
                 {
-                    Url = links.SelectToken("href").Value<string>(),
-                    Description = dataValue.SelectToken("title").Value<string>()
+                    Url = _jsonTools.GetValue<string>(links, "href"),
+                    Description = _jsonTools.GetValue<string>(dataValue, "title")
                 };
 
-                galleryImages.Add(gallery);
+                yield return gallery;
             }
-
-            return galleryImages;
         }
 
-        public void GetAsteroidsNeoWsData(string data)
+        public async Task GetAsteroidsNeoWsData(string data)
         {
             if (data is null)
                 return;
 
-            JArray json = JObject.Parse(data).SelectToken("near_earth_objects").Value<JArray>();
+            JArray json = _jsonTools.GetJArray(JObject.Parse(data), "near_earth_objects");
 
-            for (int i = 0; i< json.Count; i++)
+            for (int i = 0; i < json.Count; i++)
             {
                 JObject jObject = JObject.Parse(json[i].ToString());
 
                 AsteroidsNeoWs asteroids = new AsteroidsNeoWs()
                 {
-                    Name = !(jObject.ContainsKey("name")) ? "brak" : jObject.SelectToken("name").Value<string>(),
-                    Url = !(jObject.ContainsKey("nasa_jpl_url")) ? "brak" : jObject.SelectToken("nasa_jpl_url").Value<string>(),
-                    Size = !(jObject.ContainsKey("absolute_magnitude_h")) ? "brak" : jObject.SelectToken("absolute_magnitude_h").Value<string>(),
-                    Dangerous = !(jObject.ContainsKey("is_potentially_hazardous_asteroid")) ? "brak" : jObject.SelectToken("is_potentially_hazardous_asteroid").Value<string>(),
-                    FirstObservation = !(jObject.ContainsKey("orbital_data")) ? "brak" : !(jObject.SelectToken("orbital_data").Value<JObject>().ContainsKey("first_observation_date")) ? "brak" : jObject.SelectToken("orbital_data").Value<JObject>().SelectToken("first_observation_date").Value<string>(),
-                    LastObservation = !(jObject.ContainsKey("orbital_data")) ? "brak" : !(jObject.SelectToken("orbital_data").Value<JObject>().ContainsKey("last_observation_date")) ? "brak" : jObject.SelectToken("orbital_data").Value<JObject>().SelectToken("last_observation_date").Value<string>(),
+                    Name = _jsonTools.GetValue<string>(jObject, "name"),
+                    Url = _jsonTools.GetValue<string>(jObject, "nasa_jpl_url"),
+                    Size = _jsonTools.GetValue<string>(jObject, "absolute_magnitude_h"),
+                    Dangerous = _jsonTools.GetValue<string>(jObject, "is_potentially_hazardous_asteroid"),
+                    FirstObservation = _jsonTools.GetValue<string>(_jsonTools.GetJObject(jObject, "orbital_data"),
+                    "first_observation_date"),
+                    LastObservation = _jsonTools.GetValue<string>(_jsonTools.GetJObject(jObject, "orbital_data"),
+                    "last_observation_date")
                 };
 
-                _repository.SavaAsteroidsNeoWsInDataBase(asteroids);
+                await _repository.SavaAsteroidsNeoWsInDataBase(asteroids);
             }
         }
 
-        public void GetInsightData(string data)
+        public async Task GetInsightData(string data)
         {
             if (data is null)
                 return;
 
             JObject json = JObject.Parse(data);
 
-            JArray keys = json.SelectToken("sol_keys").Value<JArray>();
+            JArray keys = _jsonTools.GetJArray(json, "sol_keys");
 
-            for(int i = 0; i < keys.Count; i++)
+            for (int i = 0; i < keys.Count; i++)
             {
                 JObject jObject = json.SelectToken(keys[i].ToString()).Value<JObject>();
 
                 Insight insight = new Insight()
                 {
                     Number = keys[i].ToString(),
-                    Date = !(jObject.ContainsKey("First_UTC")) ? "brak" : jObject.SelectToken("First_UTC").Value<string>(),
-                    Season = !(jObject.ContainsKey("Season")) ? "brak" : jObject.SelectToken("Season").Value<string>(),
-                    MaxTemp = !(jObject.ContainsKey("AT")) ? "brak" : jObject.SelectToken("AT").Value<JObject>().SelectToken("mx").Value<string>(),
-                    AvgTemp = !(jObject.ContainsKey("AT")) ? "brak" : jObject.SelectToken("AT").Value<JObject>().SelectToken("av").Value<string>(),
-                    MinTemp = !(jObject.ContainsKey("AT")) ? "brak" : jObject.SelectToken("AT").Value<JObject>().SelectToken("mn").Value<string>(),
-                    MaxWind = !(jObject.ContainsKey("HWS")) ? "brak" : jObject.SelectToken("HWS").Value<JObject>().SelectToken("mx").Value<string>(),
-                    AvgWind = !(jObject.ContainsKey("HWS")) ? "brak" : jObject.SelectToken("HWS").Value<JObject>().SelectToken("av").Value<string>(),
-                    MinWind = !(jObject.ContainsKey("HWS")) ? "brak" : jObject.SelectToken("HWS").Value<JObject>().SelectToken("mn").Value<string>(),
-                    MaxPress = !(jObject.ContainsKey("PRE")) ? "brak" : jObject.SelectToken("PRE").Value<JObject>().SelectToken("mx").Value<string>(),
-                    AvgPress = !(jObject.ContainsKey("PRE")) ? "brak" : jObject.SelectToken("PRE").Value<JObject>().SelectToken("av").Value<string>(),
-                    MinPress = !(jObject.ContainsKey("PRE")) ? "brak" : jObject.SelectToken("PRE").Value<JObject>().SelectToken("mn").Value<string>()
+                    Date = _jsonTools.GetValue<string>(jObject, "First_UTC"),
+                    Season = _jsonTools.GetValue<string>(jObject, "Season"),
+                    MaxTemp = _jsonTools.GetValue<string>(_jsonTools.GetJObject(jObject, "AT"), "mx"),
+                    AvgTemp = _jsonTools.GetValue<string>(_jsonTools.GetJObject(jObject, "AT"), "av"),
+                    MinTemp = _jsonTools.GetValue<string>(_jsonTools.GetJObject(jObject, "AT"), "mn"),
+                    MaxWind = _jsonTools.GetValue<string>(_jsonTools.GetJObject(jObject, "HWS"), "mx"),
+                    AvgWind = _jsonTools.GetValue<string>(_jsonTools.GetJObject(jObject, "HWS"), "av"),
+                    MinWind = _jsonTools.GetValue<string>(_jsonTools.GetJObject(jObject, "HWS"), "mn"),
+                    MaxPress = _jsonTools.GetValue<string>(_jsonTools.GetJObject(jObject, "PRE"), "mx"),
+                    AvgPress = _jsonTools.GetValue<string>(_jsonTools.GetJObject(jObject, "PRE"), "av"),
+                    MinPress = _jsonTools.GetValue<string>(_jsonTools.GetJObject(jObject, "PRE"), "mn"),
                 };
 
-                _repository.SavaInsightBase(insight);
+                await _repository.SavaInsightBase(insight);
             }
         }
     }

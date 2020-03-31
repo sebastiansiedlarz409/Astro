@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Astro.BLL.JSONParsers;
 using Astro.DAL.APICLIENT;
 using Astro.DAL.DBContext;
@@ -11,9 +12,9 @@ namespace Astro.Controllers
 {
     public class EPICController : Controller
     {
-        private JSONParse _JSONParse;
-        private NASAApi _NASAAPpi;
-        private AstroDbContext _context;
+        private readonly JSONParse _JSONParse;
+        private readonly NASAApi _NASAAPpi;
+        private readonly AstroDbContext _context;
 
         public EPICController(JSONParse JSONParse, NASAApi NASAApi, AstroDbContext context)
         {
@@ -22,11 +23,11 @@ namespace Astro.Controllers
             _context = context;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            _JSONParse.GetEpicData(_NASAAPpi.GetEpicJson());
+            await _JSONParse.GetEpicData(await _NASAAPpi.GetEpicJson());
 
-            List<EPIC> epicList = _context.EPIC.AsNoTracking().ToList();
+            List<EPIC> epicList = await _context.EPIC.AsNoTracking().OrderByDescending(t => t.Id).ToListAsync();
 
             return View(epicList);
         }
