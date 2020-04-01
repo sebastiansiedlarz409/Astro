@@ -1,4 +1,6 @@
-﻿namespace Astro.DAL.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace Astro.DAL.Models
 {
     public class Insight
     {
@@ -7,6 +9,7 @@
         public string Number { get; set; }
 
         public string Date { get; set; }
+        public string EndDate { get; set; }
         public string MaxTemp { get; set; }
 
         public string AvgTemp { get; set; }

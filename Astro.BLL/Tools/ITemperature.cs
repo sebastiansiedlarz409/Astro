@@ -2,7 +2,7 @@
 {
     interface ITemperature
     {
-        double GetKelvinScale(double celsiusValue);
-        double GetFahrenheitScale(double celsiusValue);
+        double GetKelvinScale(double fahrenheitValue);
+        double GetCelsiusScale(double fahrenheitValue);
     }
 }

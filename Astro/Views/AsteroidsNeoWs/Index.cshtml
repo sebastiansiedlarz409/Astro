@@ -13,21 +13,19 @@
 
 @foreach(var item in Model)
 {
-    <table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped" style="background-color:@(item.Dangerous.Equals("True")?"#ff9999":"")">
         <tr>
-            <th>Nazwa:</th>
-            <td style="color:@(item.Dangerous.Equals("True")?"#FF0000":"")">@item.Name @(item.Dangerous.Equals("True") ? "(NIEBEZPIECZNE)" : "")</td>
-            <th>Rozmiar:</th>
-            <td>@item.Size</td>
-        </tr>
-        <tr>
-            <td><a href="@item.Url" class="btn btn-info" style="width: 200px">Link</a></td>
+            <th width="20%">Nazwa:</th>
+            <td width="20%">@item.Name @(item.Dangerous.Equals("True") ? "(NIEBEZPIECZNE)" : "")</td>
+            <th width="20%">Rozmiar:</th>
+            <td width="20%">@item.Size</td>
+            <td><a href="@item.Url" class="myButton" style="width:100%;text-align:center">Link</a></td>
         </tr>
         <tr>
             <th>Data pierwszej obserwacji:</th>
             <td>@item.FirstObservation</td>
             <th>Data ostatniej obserwacji:</th>
-            <td>@item.LastObservation</td>
+            <td colspan="2">@item.LastObservation</td>
         </tr>
     </table>
     <br />

@@ -136,6 +136,7 @@ namespace Astro.BLL.JSONParsers
                 {
                     Number = keys[i].ToString(),
                     Date = _jsonTools.GetValue<string>(jObject, "First_UTC"),
+                    EndDate = _jsonTools.GetValue<string>(jObject, "Last_UTC"),
                     Season = _jsonTools.GetValue<string>(jObject, "Season"),
                     MaxTemp = _jsonTools.GetValue<string>(_jsonTools.GetJObject(jObject, "AT"), "mx"),
                     AvgTemp = _jsonTools.GetValue<string>(_jsonTools.GetJObject(jObject, "AT"), "av"),

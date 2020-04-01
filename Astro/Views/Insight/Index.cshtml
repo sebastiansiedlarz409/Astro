@@ -9,29 +9,31 @@
 {
     <table class="table table-bordered table-striped">
         <tr>
-            <th>Identyfikator:</th>
-            <td>@item.Number</td>
-            <th>Data pomiarów:</th>
-            <td>@item.Date</td>
+            <th width="10%">Identyfikator:</th>
+            <td width="10%">@item.Number</td>
+            <th width="20%">Data pomiarów:</th>
+            <td width="20%">@item.Date</td>
+            <th width="20%">Koniec pomiarów:</th>
+            <td>@item.EndDate</td>
         </tr>
         <tr>
-            <th>Temperatura:</th>
-            <th>Wiatr:</th>
+            <th colspan="2">Temperatura:</th>
+            <th colspan="2">Wiatr:</th>
             <th colspan="2">Ciśnienie:</th>
         </tr>
         <tr>
-            <td>@item.MaxTemp</td>
-            <td>@item.MaxWind</td>
+            <td colspan="2">@item.MaxTemp</td>
+            <td colspan="2">@item.MaxWind</td>
             <td colspan="2">@item.MaxPress</td>
         </tr>
         <tr>
-            <td>@item.AvgTemp</td>
-            <td>@item.AvgWind</td>
+            <td colspan="2">@item.AvgTemp</td>
+            <td colspan="2">@item.AvgWind</td>
             <td colspan="2">@item.AvgPress</td>
         </tr>
         <tr>
-            <td>@item.MinTemp</td>
-            <td>@item.MinWind</td>
+            <td colspan="2">@item.MinTemp</td>
+            <td colspan="2">@item.MinWind</td>
             <td colspan="2">@item.MinPress</td>
         </tr>
     </table>

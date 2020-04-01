@@ -13,7 +13,7 @@
 
 <h2>@Model.Title</h2>
 
-<h6>@Model.Date @Model.User.Email</h6>
+<h6><b>Dodano dnia: </b>@Model.Date <b>Autor:</b> @Model.User.UserName</h6>
 
 @if (SignInManager.IsSignedIn(User))
 {
@@ -27,7 +27,7 @@
     <table class="table table-striped table-bordered">
         <tr>
             <td width="25%" style="font-size:15px">
-                <b>@item.User.UserName</b>
+                <b id=@("UserName"+item.Id) onclick="UserName(@item.Id)">@item.User.UserName</b>
                 <br />
                 <b>Dołączył:</b> @item.User.RegisterDate
                 <br />
@@ -39,7 +39,7 @@
                 <div id=@("CommentContent"+item.Id)>
                     @item.Content
                     <hr />
-                    @item.Date
+                    <b>Dodano dnia:</b> @item.Date
                 </div>
 
                 <div id=@("EditCommentForm"+item.Id) style="display:none">
@@ -47,7 +47,7 @@
                         <input type="hidden" name="id" value="@item.Id" />
                         <input type="hidden" name="topicId" value="@Model.Id" />
                         <input type="text" name="comment" value="@item.Content" class="form-control" />
-                        <input type="submit" value="Zapisz" class="btn btn-primary" />
+                        <input type="submit" value="Zapisz" class="myButton" style="margin-top:5px" />
                     </form>
                 </div>
 
@@ -55,13 +55,13 @@
             <td width="20%">
                 @if (SignInManager.IsSignedIn(User))
                 {
-                    <button class="btn btn-primary" onclick="EditComment(@item.Id)">Edytuj</button>
+                    <button class="myButton" onclick="EditComment(@item.Id)">Edytuj</button>
                 }
                 @if (User.IsInRole("Administrator"))
                 {
                     if (Model.Comments.IndexOf(item) != 0)
                     {
-                        <a asp-controller="Forum" asp-action="DeleteComment" asp-route-id="@item.Id" asp-route-topicId="@Model.Id" class="btn btn-danger">Usuń</a>
+                        <a asp-controller="Forum" asp-action="DeleteComment" asp-route-id="@item.Id" asp-route-topicId="@Model.Id" class="myButtonDanger">Usuń</a>
                     }
                 }
             </td>
@@ -76,8 +76,9 @@
     <form asp-controller="Forum" asp-action="AddComment">
         <input type="hidden" name="topicId" value="@Model.Id" />
         <label class="control-label">Treść</label>
-        <textarea name="comment" class="form-control"></textarea>
-        <input type="submit" value="Wyślij" class="btn btn-primary" />
+        <textarea name="comment" class="form-control" id="CommentTextArea"></textarea>
+        <br />
+        <input type="submit" value="Wyślij" class="myButton" />
     </form>
 }
 
@@ -94,6 +95,12 @@
             form.style.display = "none";
             content.style.display = "block";
         }
+    }
+
+    function UserName(id) {
+        content = document.getElementById("UserName" + id);
+        textarea = document.getElementById("CommentTextArea");
+        textarea.value = textarea.value + "@@" + content.innerHTML;
     }
 
 </script>
