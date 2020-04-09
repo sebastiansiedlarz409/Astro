@@ -13,19 +13,19 @@ namespace Astro.Controllers
     public class APODController : Controller
     {
         private readonly JSONParse _JSONParse;
-        private readonly NASAApi _NASAAPpi;
+        private readonly NASAApi _NASAApi;
         private readonly AstroDbContext _context;
 
         public APODController(JSONParse JSONParse, NASAApi NASAApi, AstroDbContext context)
         {
             _JSONParse = JSONParse;
-            _NASAAPpi = NASAApi;
+            _NASAApi = NASAApi;
             _context = context;
         }
 
         public async Task<IActionResult> Index()
         {
-            await _JSONParse.GetTodayApodData(await _NASAAPpi.GetTodaysApodJson());
+            await _JSONParse.GetTodayApodData(await _NASAApi.GetTodaysApodJson());
 
             List<APOD> apodList = await _context.APOD.AsNoTracking().OrderByDescending(t => t.Id).ToListAsync();
 

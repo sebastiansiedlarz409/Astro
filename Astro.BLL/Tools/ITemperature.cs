@@ -1,8 +1,8 @@
 ﻿namespace Astro.BLL.Tools
 {
-    interface ITemperature
+    public interface ITemperature
     {
-        double GetKelvinScale(double fahrenheitValue);
-        double GetCelsiusScale(double fahrenheitValue);
+        decimal GetKelvinScale(decimal fahrenheitValue);
+        decimal GetCelsiusScale(decimal fahrenheitValue);
     }
 }

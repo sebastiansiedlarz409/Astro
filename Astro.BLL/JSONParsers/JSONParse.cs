@@ -149,6 +149,28 @@ namespace Astro.BLL.JSONParsers
                     MinPress = _jsonTools.GetValue<string>(_jsonTools.GetJObject(jObject, "PRE"), "mn"),
                 };
 
+                //to not cause calculate error
+                if (insight.AvgPress.Equals("none"))
+                    insight.AvgPress = "0.0";
+                if (insight.MaxPress.Equals("none"))
+                    insight.MaxPress = "0.0";
+                if (insight.MinPress.Equals("none"))
+                    insight.MinPress = "0.0";
+
+                if (insight.AvgTemp.Equals("none"))
+                    insight.AvgTemp = "0.0";
+                if (insight.MaxTemp.Equals("none"))
+                    insight.MaxTemp = "0.0";
+                if (insight.MinTemp.Equals("none"))
+                    insight.MinTemp = "0.0";
+
+                if (insight.AvgWind.Equals("none"))
+                    insight.AvgWind = "0.0";
+                if (insight.MaxWind.Equals("none"))
+                    insight.MaxWind = "0.0";
+                if (insight.MinWind.Equals("none"))
+                    insight.MinWind = "0.0";
+
                 await _repository.SavaInsightBase(insight);
             }
         }

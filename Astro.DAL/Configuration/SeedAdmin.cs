@@ -6,8 +6,22 @@ namespace Astro.DAL.Configuration
 {
     public class SeedAdmin
     {
-        public static void Initialize(UserManager<User> userManager)
+        public static void Initialize(UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
+            IdentityRole adminRole = new IdentityRole()
+            {
+                Name = "Administrator",
+                NormalizedName = "ADMINISTRATOR"
+            };
+            IdentityRole userRole = new IdentityRole()
+            {
+                Name = "User",
+                NormalizedName = "USER"
+            };
+
+            roleManager.CreateAsync(adminRole).Wait();
+            roleManager.CreateAsync(userRole).Wait();
+
             User admin = new User()
             {
                 UserName = "admin@astro.pl",

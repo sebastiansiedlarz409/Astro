@@ -13,19 +13,19 @@ namespace Astro.Controllers
     public class AsteroidsNeoWsController : Controller
     {
         private readonly JSONParse _JSONParse;
-        private readonly NASAApi _NASAAPpi;
+        private readonly NASAApi _NASAApi;
         private readonly AstroDbContext _context;
 
         public AsteroidsNeoWsController(JSONParse JSONParse, NASAApi NASAApi, AstroDbContext context)
         {
             _JSONParse = JSONParse;
-            _NASAAPpi = NASAApi;
+            _NASAApi = NASAApi;
             _context = context;
         }
 
         public async Task<IActionResult> Index()
         {
-            await _JSONParse.GetAsteroidsNeoWsData(await _NASAAPpi.GetAsteroidsNeoWsJson());
+            await _JSONParse.GetAsteroidsNeoWsData(await _NASAApi.GetAsteroidsNeoWsJson());
 
             List<AsteroidsNeoWs> asteroidsList = await _context.AsteroidsNeoWs.AsNoTracking().ToListAsync();
 

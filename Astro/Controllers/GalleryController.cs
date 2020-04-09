@@ -11,12 +11,12 @@ namespace Astro.Controllers
     public class GalleryController : Controller
     {
         private readonly JSONParse _JSONParse;
-        private readonly NASAApi _NASAAPpi;
+        private readonly NASAApi _NASAApi;
 
         public GalleryController(JSONParse JSONParse, NASAApi NASAApi)
         {
             _JSONParse = JSONParse;
-            _NASAAPpi = NASAApi;
+            _NASAApi = NASAApi;
         }
 
         public IActionResult Index()
@@ -29,7 +29,7 @@ namespace Astro.Controllers
         [HttpPost]
         public async Task<IActionResult> Search(string search)
         {
-            IEnumerable<Gallery> galleryImages = _JSONParse.GetGalleryImages(await _NASAAPpi.GetGalleryJson(search));
+            IEnumerable<Gallery> galleryImages = _JSONParse.GetGalleryImages(await _NASAApi.GetGalleryJson(search));
 
             return View("Index", galleryImages.ToList());
         }

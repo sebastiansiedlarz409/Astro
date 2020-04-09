@@ -35,11 +35,12 @@ namespace Astro.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, lockoutOnFailure: false);
+                var user = await _context.Users.FirstOrDefaultAsync(t => t.Email.Equals(model.Email));
+
+                var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, false, lockoutOnFailure: false);
 
                 if (result.Succeeded)
                 {
-                    User user = await _context.User.FirstOrDefaultAsync(t => t.Email.Equals(model.Email));
                     user.LastLoginDate = DateTime.Now.ToString();
 
                     _context.Update(user);
@@ -71,9 +72,9 @@ namespace Astro.Controllers
 
                 if (result.Succeeded)
                 {
-                    await _signInManager.SignInAsync(newUser, isPersistent: false);
-
                     _userManager.AddToRoleAsync(newUser, "User").Wait();
+                    
+                    await _signInManager.SignInAsync(newUser, isPersistent: false);
 
                     return RedirectToAction("MainPage", "Forum");
                 }

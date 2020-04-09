@@ -22,19 +22,85 @@
             <th colspan="2">Ciśnienie:</th>
         </tr>
         <tr>
-            <td colspan="2">@item.MaxTemp</td>
-            <td colspan="2">@item.MaxWind</td>
-            <td colspan="2">@item.MaxPress</td>
+            <td colspan="2" id="maxTemp">
+                <select class="form-control">
+                    <option>@item.MaxTemp F</option>
+                    <option>@item.MaxTempC C</option>
+                    <option>@item.MaxTempK K</option>
+                </select>
+            </td>
+            <td colspan="2" id="maxWind">
+                <select class="form-control">
+                    <option>@item.MaxWind mps</option>
+                    <option>@item.MaxWindFoot foot </option>
+                    <option>@item.MaxWindYard yard</option>
+                    <option>@item.MaxWindKnot knot</option>
+                    <option>@item.MaxWindKPH kph</option>
+                    <option>@item.MaxWindMiPH mileph</option>
+                </select>
+            </td>
+            <td colspan="2" id="maxPress">
+                <select class="form-control">
+                    <option>@item.MaxPress Paskal</option>
+                    <option>@item.MaxPressBAR Bar</option>
+                    <option>@item.MaxPressPSI PSI</option>
+                    <option>@item.MaxPressAT Atm</option>
+                </select>
+            </td>
         </tr>
         <tr>
-            <td colspan="2">@item.AvgTemp</td>
-            <td colspan="2">@item.AvgWind</td>
-            <td colspan="2">@item.AvgPress</td>
+            <td colspan="2" id="avgTemp">
+                <select class="form-control">
+                    <option>@item.AvgTemp F</option>
+                    <option>@item.AvgTempC C</option>
+                    <option>@item.AvgTempK K</option>
+                </select>
+            </td>
+            <td colspan="2" id="avgWind">
+                <select class="form-control">
+                    <option>@item.AvgWind mps</option>
+                    <option>@item.AvgWindFoot foot </option>
+                    <option>@item.AvgWindYard yard</option>
+                    <option>@item.AvgWindKnot knot</option>
+                    <option>@item.AvgWindKPH kph</option>
+                    <option>@item.AvgWindMiPH mileph</option>
+                </select>
+            </td>
+            <td colspan="2" id="avgPress">
+                <select class="form-control">
+                    <option>@item.AvgPress Paskal</option>
+                    <option>@item.AvgPressBAR Bar</option>
+                    <option>@item.AvgPressPSI PSI</option>
+                    <option>@item.AvgPressAT Atm</option>
+                </select>
+            </td>
         </tr>
         <tr>
-            <td colspan="2">@item.MinTemp</td>
-            <td colspan="2">@item.MinWind</td>
-            <td colspan="2">@item.MinPress</td>
+            <td colspan="2" id="minTemp">
+                <select class="form-control">
+                    <option>@item.MinTemp F</option>
+                    <option>@item.MinTempC C</option>
+                    <option>@item.MinTempK K</option>
+                </select>
+            </td>
+            <td colspan="2" id="minWind">
+                <select class="form-control">
+                    <option>@item.MinWind mps</option>
+                    <option>@item.MinWindFoot foot </option>
+                    <option>@item.MinWindYard yard</option>
+                    <option>@item.MinWindKnot knot</option>
+                    <option>@item.MinWindKPH kph</option>
+                    <option>@item.MinWindMiPH mileph</option>
+                </select>
+            </td>
+            <td colspan="2" id="minPress">
+                <select class="form-control">
+                    <option>@item.MinPress Paskal</option>
+                    <option>@item.MinPressBAR Bar</option>
+                    <option>@item.MinPressPSI PSI</option>
+                    <option>@item.MinPressAT Atm</option>
+                </select>
+            </td>
         </tr>
     </table>
     <br />

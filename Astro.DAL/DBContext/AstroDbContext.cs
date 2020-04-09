@@ -24,7 +24,6 @@ namespace Astro.DAL.DBContext
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.ApplyConfiguration(new Roles());
 
             modelBuilder.Entity<Topic>()
                 .HasOne(p => p.User)

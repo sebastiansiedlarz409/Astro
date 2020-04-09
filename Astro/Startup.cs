@@ -73,13 +73,17 @@ namespace Astro
             services.AddTransient<APIDbRepository>();
             services.AddTransient<HttpClient>();
             services.AddTransient<JSONtools>();
+            services.AddTransient<ISpeed, Speed>();
+            services.AddTransient<ITemperature, Temperature>();
+            services.AddTransient<IPressure, Pressure>();
+            services.AddTransient<Calculator>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<User> userManager)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<User> userManager, RoleManager<IdentityRole> roleManager)
         {
             if (env.IsDevelopment())
             {
@@ -109,7 +113,7 @@ namespace Astro
             });
 
             //seed admin when app is run first time
-            SeedAdmin.Initialize(userManager);
+            SeedAdmin.Initialize(userManager, roleManager);
         }
     }
 }

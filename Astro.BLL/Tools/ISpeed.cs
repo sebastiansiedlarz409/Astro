@@ -1,12 +1,11 @@
 ﻿namespace Astro.BLL.Tools
 {
-    interface ISpeed
+    public interface ISpeed
     {
-        double GetKiloMeterPerHour(double meterPerSecondValue);
-        double GetMilePerHour(double meterPerSecondValue);
-        double GetFootPerMinute(double meterPerSecondValue);
-        double GetYardPerMinute(double meterPerSecondValue);
-
-        //można więcej dodać
+        decimal GetKiloMeterPerHour(decimal meterPerSecondValue);
+        decimal GetMilePerHour(decimal meterPerSecondValue);
+        decimal GetFootPerMinute(decimal meterPerSecondValue);
+        decimal GetYardPerMinute(decimal meterPerSecondValue);
+        decimal GetKnot(decimal meterPerSecondValue);
     }
 }

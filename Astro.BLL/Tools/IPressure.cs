@@ -1,9 +1,9 @@
 ﻿namespace Astro.BLL.Tools
 {
-    interface IPressure
+    public interface IPressure
     {
-        double GetBarPressure(double paskalValue);
-        double GetAtmospherePressure(double paskalValue);
-        double GetPsiPressure(double paskalValue);
+        decimal GetBarPressure(decimal paskalValue);
+        decimal GetAtmospherePressure(decimal paskalValue);
+        decimal GetPsiPressure(decimal paskalValue);
     }
 }
