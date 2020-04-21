@@ -11,6 +11,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<style>
+    table hr{
+        border-color: white;
+    }
+</style>
+
 <h2>@Model.Title</h2>
 <hr />
 
@@ -22,7 +28,7 @@
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <h5><a asp-controller="Forum" asp-action="ChangeRate" asp-route-id="@Model.Id" asp-route-up="false"><img src="~/Images/red_down.jpg" width="25px" height="25px" /></a> @Model.Rate <a asp-controller="Forum" asp-action="ChangeRate" asp-route-id="@Model.Id" asp-route-up="true"><img src="~/Images/green_up.png" width="25px" height="25px" /></a></h5>
+    <h3><a asp-controller="Forum" asp-action="ChangeRate" asp-route-id="@Model.Id" asp-route-up="false"><img src="~/Images/down.png" width="30px" height="30px" /></a> @Model.Rate <a asp-controller="Forum" asp-action="ChangeRate" asp-route-id="@Model.Id" asp-route-up="true"><img src="~/Images/up.png" width="30px" height="30px" /></a></h3>
 }
 else
 {

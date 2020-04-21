@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Astro.BLL.JSONParsers;
 using Astro.BLL.Tools;
@@ -29,7 +30,7 @@ namespace Astro.Controllers
         {
             await _JSONParse.GetInsightData(await _NASAApi.GetInsightJson());
 
-            List<Insight> insights = await _context.Insights.AsNoTracking().ToListAsync();
+            List<Insight> insights = await _context.Insights.AsNoTracking().OrderByDescending(t=>t.Id).ToListAsync();
 
             _calculator.Calculate(insights);
 

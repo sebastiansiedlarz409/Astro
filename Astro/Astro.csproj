@@ -6,11 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="wwwroot\Images\green_up.png" />
-    <None Include="wwwroot\Images\red_down.jpg" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="DHTMLX.Scheduler" Version="5.3.6" />
     <PackageReference Include="DHTMLX.Scheduler.MVC.Responsive.Sample" Version="1.0.2" />
     <PackageReference Include="DHTMLX.Scheduler.MVC3.Sample" Version="1.0.3" />

@@ -49,14 +49,14 @@ namespace Astro.Controllers
                 {
                     Title = model.Topic,
                     Rate = 0,
-                    Date = DateTime.Now.ToString(),
+                    Date = DateTime.Now.ToString("dd/MM/yyyy HH:mm"),
                     User = user
                 };
 
                 Comment comment = new Comment()
                 {
                     Content = model.Comment,
-                    Date = DateTime.Now.ToString(),
+                    Date = DateTime.Now.ToString("dd/MM/yyyy HH:mm"),
                     User = user,
                     Topic = topic
                 };
@@ -114,7 +114,7 @@ namespace Astro.Controllers
             Comment editComment = await _context.Comments.FirstOrDefaultAsync(t => t.Id == id);
 
             editComment.Content = comment;
-            editComment.Date = DateTime.Now.ToString();
+            editComment.Date = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
 
             await _context.SaveChangesAsync();
 

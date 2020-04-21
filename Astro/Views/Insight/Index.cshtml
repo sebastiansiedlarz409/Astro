@@ -3,7 +3,7 @@
     ViewData["Title"] = "Pogoda na Marsie";
 }
 
-<h1 style="text-align:center">Pogoda na Marsie</h1>
+<h1>Pogoda na Marsie</h1>
 
 @foreach(var item in Model)
 {
@@ -25,6 +25,7 @@
                 </tr>
                 <tr>
                     <td colspan="2" id="maxTemp">
+                        <label>Max:</label>
                         <select class="form-control">
                             <option>@item.MaxTemp F</option>
                             <option>@item.MaxTempC C</option>
@@ -32,6 +33,7 @@
                         </select>
                     </td>
                     <td colspan="2" id="maxWind">
+                        <label>Max:</label>
                         <select class="form-control">
                             <option>@item.MaxWind mps</option>
                             <option>@item.MaxWindFoot foot </option>
@@ -42,6 +44,7 @@
                         </select>
                     </td>
                     <td colspan="2" id="maxPress">
+                        <label>Max:</label>
                         <select class="form-control">
                             <option>@item.MaxPress Paskal</option>
                             <option>@item.MaxPressBAR Bar</option>
@@ -52,6 +55,7 @@
                 </tr>
                 <tr>
                     <td colspan="2" id="avgTemp">
+                        <label>Avg:</label>
                         <select class="form-control">
                             <option>@item.AvgTemp F</option>
                             <option>@item.AvgTempC C</option>
@@ -59,6 +63,7 @@
                         </select>
                     </td>
                     <td colspan="2" id="avgWind">
+                        <label>Avg:</label>
                         <select class="form-control">
                             <option>@item.AvgWind mps</option>
                             <option>@item.AvgWindFoot foot </option>
@@ -69,6 +74,7 @@
                         </select>
                     </td>
                     <td colspan="2" id="avgPress">
+                        <label>Avg:</label>
                         <select class="form-control">
                             <option>@item.AvgPress Paskal</option>
                             <option>@item.AvgPressBAR Bar</option>
@@ -79,6 +85,7 @@
                 </tr>
                 <tr>
                     <td colspan="2" id="minTemp">
+                        <label>Min:</label>
                         <select class="form-control">
                             <option>@item.MinTemp F</option>
                             <option>@item.MinTempC C</option>
@@ -86,6 +93,7 @@
                         </select>
                     </td>
                     <td colspan="2" id="minWind">
+                        <label>Min:</label>
                         <select class="form-control">
                             <option>@item.MinWind mps</option>
                             <option>@item.MinWindFoot foot </option>
@@ -96,6 +104,7 @@
                         </select>
                     </td>
                     <td colspan="2" id="minPress">
+                        <label>Min:</label>
                         <select class="form-control">
                             <option>@item.MinPress Paskal</option>
                             <option>@item.MinPressBAR Bar</option>

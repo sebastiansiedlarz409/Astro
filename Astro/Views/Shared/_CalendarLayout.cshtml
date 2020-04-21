@@ -22,11 +22,11 @@
         }
     </style>
 </head>
-<body style="overflow:scroll;background-image:url('@Url.Content("~/Images/background.jpg")')">
+<body style="overflow:scroll">
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" style="background-color: #000080;border-bottom: 1px solid #000080!important;">
             <div class="container">
-                <a class="navbar-brand text-light" asp-area="" asp-controller="Home" asp-action="Index">Astro</a>
+                <a class="navbar-brand text-light" asp-area="" asp-controller="Forum" asp-action="MainPage" style="margin:0px"><img src="~/Images/navlogo.png" width="120px" height="40px" /></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -51,7 +51,7 @@
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                NASA OpenAPI
+                                NASA API
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" asp-area="" asp-controller="APOD" asp-action="Index">Astronomy Picture of the Day</a>

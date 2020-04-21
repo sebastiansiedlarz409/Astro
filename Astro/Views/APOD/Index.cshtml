@@ -10,7 +10,6 @@
 }
 
 <h1>Astronomiczne zdjęcie dnia</h1>
-<hr />
 
 <style>
     * {
@@ -89,6 +88,30 @@
     .demo:hover {
         opacity: 1;
     }
+
+    div.gallery {
+        margin: 5px;
+        border: 1px solid #ccc;
+        float: left;
+        width: 180px;
+    }
+
+    div.gallery:hover {
+        border: 1px solid #777;
+    }
+
+    div.gallery img {
+        width: 100%;
+        height: auto;
+    }
+
+    div.desc {
+        padding: 15px;
+        text-align: center;
+        color:white;
+        overflow: hidden;
+        text-overflow: ellipsis; 
+    }
 </style>
 
 <div class="container">
@@ -115,21 +138,16 @@
         <p id="caption"></p>
     </div>
 
-    <div class="row">
-        @{
-            int i = 1;
-            foreach (var item in Model)
-            {
-                if (item.MediaType != "image")
-                {
-                    continue;
-                }
-                <div class="column">
-                    <img class="demo cursor" src="@item.UrlHd" style="width:200px;height:200px" onclick="currentSlide(@(i++))" alt="@item.Title (@item.Date, @item.Author) @item.Description">
-                </div>
-            }
-        }
-    </div>
+    <br />
+    @foreach (var item in Model)
+    {
+        <div class="gallery">
+            <a target="_blank" href="@item.UrlHd">
+                <img src="@item.UrlHd" alt="image" width="600" height="400">
+            </a>
+            <div class="desc"> @item.Title (@item.Author @item.Date)</div>
+        </div>
+    }
 </div>
 
 @if (SignInManager.IsSignedIn(User))

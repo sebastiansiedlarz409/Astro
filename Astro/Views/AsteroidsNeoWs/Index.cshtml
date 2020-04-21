@@ -10,11 +10,10 @@
 </style>
 
 <h1>Obiekty blisko ziemi</h1>
-<hr />
 
 @foreach(var item in Model)
 {
-    <table class="table table-bordered table-striped" style="background-color:@(item.Dangerous.Equals("True")?"#ff9999":"")">
+    <table class="table table-bordered table-striped" style="background-color:@(item.Dangerous.Equals("True")?"#FF3444":"")">
         <tr>
             <th width="20%">Nazwa:</th>
             <td width="20%">@item.Name @(item.Dangerous.Equals("True") ? "(NIEBEZPIECZNE)" : "")</td>

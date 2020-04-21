@@ -41,7 +41,7 @@ namespace Astro.Controllers
 
                 if (result.Succeeded)
                 {
-                    user.LastLoginDate = DateTime.Now.ToString();
+                    user.LastLoginDate = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
 
                     _context.Update(user);
                     await _context.SaveChangesAsync();
