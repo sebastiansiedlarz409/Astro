@@ -1,4 +1,7 @@
 ﻿@model IEnumerable<Astro.DAL.Models.EPIC>
+@using Microsoft.AspNetCore.Identity
+@using Astro.DAL.Models
+@inject SignInManager<User> SignInManager
 @{
     ViewData["Title"] = "EPIC";
 }
@@ -43,10 +46,10 @@
         border-radius: 3px 0 0 3px;
     }
 
-        .prev:hover,
-        .next:hover {
-            background-color: rgba(0, 0, 0, 0.8);
-        }
+    .prev:hover,
+    .next:hover {
+        background-color: rgba(0, 0, 0, 0.8);
+    }
 
     .numbertext {
         color: #f2f2f2;
@@ -78,10 +81,10 @@
         opacity: 0.6;
     }
 
-        .active,
-        .demo:hover {
-            opacity: 1;
-        }
+    .active,
+    .demo:hover {
+        opacity: 1;
+    }
 </style>
 
 <div class="container">
@@ -106,6 +109,30 @@
 
 </div>
 
+@if (SignInManager.IsSignedIn(User))
+{
+    <hr />
+    <div class="row">
+        <div class="col-md-10">
+            <h1>Skomentuj na forum</h1>
+            <form asp-controller="Forum" asp-action="AddTopic">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label class="control-label">Temat:</label>
+                    <input name="Topic" class="form-control" />
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Treść</label>
+                    <textarea name="Comment" class="form-control"></textarea>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Dodaj" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+}
+
 <script>
     var slideIndex = 1;
     showSlides(slideIndex);
@@ -124,17 +151,17 @@
         var slides = document.getElementsByClassName("mySlides");
         var dots = document.getElementsByClassName("demo");
         var captionText = document.getElementById("caption");
-        if (n > slides.length) {slideIndex = 1}
-            if (n < 1) {slideIndex = slides.length}
-                for (i = 0; i < slides.length; i++) {
-                    slides[i].style.display = "none";
-                }
-                for (i = 0; i < dots.length; i++) {
-                dots[i].className = dots[i].className.replace(" active", "");
-            }
-        slides[slideIndex-1].style.display = "block";
-        dots[slideIndex-1].className += " active";
-        captionText.innerHTML = dots[slideIndex-1].alt;
+        if (n > slides.length) { slideIndex = 1 }
+        if (n < 1) { slideIndex = slides.length }
+        for (i = 0; i < slides.length; i++) {
+            slides[i].style.display = "none";
+        }
+        for (i = 0; i < dots.length; i++) {
+            dots[i].className = dots[i].className.replace(" active", "");
+        }
+        slides[slideIndex - 1].style.display = "block";
+        dots[slideIndex - 1].className += " active";
+        captionText.innerHTML = dots[slideIndex - 1].alt;
     }
 </script>
 <script src="https://cdn.jsdelivr.net/npm/lazyload@2.0.0-rc.2/lazyload.js"></script>
