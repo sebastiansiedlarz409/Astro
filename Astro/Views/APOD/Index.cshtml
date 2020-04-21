@@ -1,13 +1,16 @@
 ﻿@model IEnumerable<Astro.DAL.Models.APOD>
+
 @using Microsoft.AspNetCore.Identity
 @using Astro.DAL.Models
+
 @inject SignInManager<User> SignInManager
 
 @{
     ViewData["Title"] = "APOD";
 }
 
-<h1 style="text-align:center">Astronomiczne zdjęcie dnia</h1>
+<h1>Astronomiczne zdjęcie dnia</h1>
+<hr />
 
 <style>
     * {
@@ -146,7 +149,7 @@
                     <textarea name="Comment" class="form-control"></textarea>
                 </div>
                 <div class="form-group">
-                    <input type="submit" value="Dodaj" class="btn btn-primary" />
+                    <input type="submit" value="Dodaj" class="myButton" />
                 </div>
             </form>
         </div>

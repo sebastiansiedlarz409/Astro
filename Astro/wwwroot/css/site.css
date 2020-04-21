@@ -78,3 +78,11 @@ body {
     font-size:40px;
     -webkit-text-stroke: 3px #000080;
 }
+
+h1, h2, h3, h4, h5, h6, label, p {
+    color:white;
+}
+
+table{
+    background-color:slateblue;
+}

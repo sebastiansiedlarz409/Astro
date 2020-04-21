@@ -4,37 +4,36 @@
     ViewData["Title"] = "Zarejestruj";
 }
 
-<h1>Zarejestruj</h1>
+<style>
+    .form-signin {
+        width: 100%;
+        max-width: 330px;
+        padding: 15px;
+        margin: auto;
+    }
+</style>
 
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Register">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="UserName" class="control-label"></label>
-                <input asp-for="UserName" class="form-control" />
-                <span asp-validation-for="UserName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Email" class="control-label"></label>
-                <input asp-for="Email" class="form-control" />
-                <span asp-validation-for="Email" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
-                <span asp-validation-for="Password" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ConfirmPassword" class="control-label"></label>
-                <input asp-for="ConfirmPassword" class="form-control" />
-                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Rejestruj" class="myButton" style="width:350px" />
-            </div>
-        </form>
-    </div>
+<div class="text-center">
+    <form asp-action="Register" class="form-signin" style="max-width:440px">
+        <h1 class="h1 mb-3 font-weight-normal">Rejestracja</h1>
+        <label for="inputUserName" class="sr-only">Nazwa użytkownika</label>
+        <input asp-for="UserName" type="text" id="inputUserName" class="form-control" placeholder="Nazwa użytkownika" required="" autofocus="" style="margin-bottom:4px">
+        <span asp-validation-for="UserName" class="text-danger"></span>
+        <label for="inputEmail" class="sr-only">Adres email</label>
+        <input asp-for="Email" type="email" id="inputEmail" class="form-control" placeholder="Adres email" required="" autofocus="" style="margin-bottom:4px">
+        <span asp-validation-for="Email" class="text-danger"></span>
+        <label for="inputPassword" class="sr-only">Hasło</label>
+        <input asp-for="Password" type="password" id="inputPassword" class="form-control" placeholder="Hasło" required="" style="margin-bottom:4px">
+        <label for="inputPasswordRepeat" class="sr-only">Powtórz hasło</label>
+        <input asp-for="ConfirmPassword" type="password" id="inputPasswordRepeat" class="form-control" placeholder="Powtórz hasło" required="" style="margin-bottom:4px">
+        <div class="checkbox mb-3">
+            <label>
+                Zapraszamy!
+            </label>
+        </div>
+        <button class="myButton" type="submit" style="width:100%">Rejestruj</button>
+        <p class="mt-5 mb-3 text-muted">2020</p>
+    </form>
 </div>
 
 @section Scripts {

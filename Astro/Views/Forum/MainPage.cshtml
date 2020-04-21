@@ -12,47 +12,62 @@
 }
 
 <h1>Forum</h1>
+<hr />
+
 @if (SignInManager.IsSignedIn(User))
 {
     <a asp-controller="Forum" asp-action="AddTopic" class="myButton" style="text-align: center;width: 300px;">Dodaj</a>
     <br />
     <br />
 }
+else
+{
+    <div class="alert alert-primary" role="alert" style="margin-left:10px;margin-right:10px">
+        Zaloguj się aby dodawać tematy!
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
 
 @foreach (var item in Model)
 {
-    <table class="table table-striped table-bordered">
-        <tr>
-            <td rowspan="2" width="10%">
-                <b>Ocena: </b>
-                <br />
-                <span class="rateBorder">@item.Rate</span>
-            </td>
-            <td width="45%">
-                <b>Dodano: </b>@item.Date
-            </td>
-            <td colspan="2">
-                <b>Autor: </b>@item.User.Email
-            </td>
-        </tr>
-        <tr>
-            @if (User.IsInRole("Administrator"))
-            {
-                <td width="70%">
-                    <a asp-controller="Forum" asp-action="ShowTopic" asp-route-id="@item.Id" class="myButtonDanger" style="width:100%">@item.Title</a>
-                </td>
-                <td>
-                    <a asp-controller="Forum" asp-action="DeleteTopic" asp-route-id="@item.Id" class="myButtonDanger">Usuń</a>
-                </td>
-            }
-            else
-            {
-                <td colspan="2" width="70%">
-                    <a asp-controller="Forum" asp-action="ShowTopic" asp-route-id="@item.Id" class="myButtonDanger" style="width:100%">@item.Title</a>
-                </td>
-            }
-        </tr>
-    </table>
-    <br />
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table table-striped table-bordered">
+                <tr>
+                    <td rowspan="2" width="10%">
+                        <b>Ocena: </b>
+                        <br />
+                        <span class="rateBorder">@item.Rate</span>
+                    </td>
+                    <td width="45%">
+                        <b>Dodano: </b>@item.Date
+                    </td>
+                    <td colspan="2">
+                        <b>Autor: </b>@item.User.Email
+                    </td>
+                </tr>
+                <tr>
+                    @if (User.IsInRole("Administrator"))
+                    {
+                        <td width="70%">
+                            <a asp-controller="Forum" asp-action="ShowTopic" asp-route-id="@item.Id" class="myButtonDanger" style="width:100%">@item.Title</a>
+                        </td>
+                        <td>
+                            <a asp-controller="Forum" asp-action="DeleteTopic" asp-route-id="@item.Id" class="myButtonDanger">Usuń</a>
+                        </td>
+                    }
+                    else
+                    {
+                        <td colspan="2" width="70%">
+                            <a asp-controller="Forum" asp-action="ShowTopic" asp-route-id="@item.Id" class="myButtonDanger" style="width:100%">@item.Title</a>
+                        </td>
+                    }
+                </tr>
+            </table>
+            <br />
+        </div>
+    </div>
 }
 
