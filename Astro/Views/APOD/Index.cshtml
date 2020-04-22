@@ -137,72 +137,73 @@
     <div class="caption-container">
         <p id="caption"></p>
     </div>
-
-    <br />
-    @foreach (var item in Model)
-    {
-        <div class="gallery">
-            <a target="_blank" href="@item.UrlHd">
-                <img src="@item.UrlHd" alt="image" width="600" height="400">
-            </a>
-            <div class="desc"> @item.Title (@item.Author @item.Date)</div>
-        </div>
-    }
+    <div class="row" style="margin-left:0px;margin-right:0px">
+        <br />
+        @foreach (var item in Model)
+        {
+            <div class="gallery">
+                <a target="_blank" href="@item.UrlHd">
+                    <img src="@item.UrlHd" alt="image" width="600" height="400">
+                </a>
+                <div class="desc"> @item.Title (@item.Author @item.Date)</div>
+            </div>
+        }
+    </div>
 </div>
 
-@if (SignInManager.IsSignedIn(User))
-{
-    <hr />
-    <div class="row">
-        <div class="col-md-10">
-            <h1>Skomentuj na forum</h1>
-            <form asp-controller="Forum" asp-action="AddTopic">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label class="control-label">Temat:</label>
-                    <input name="Topic" class="form-control"/>
-                </div>
-                <div class="form-group">
-                    <label class="control-label">Treść</label>
-                    <textarea name="Comment" class="form-control"></textarea>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Dodaj" class="myButton" />
-                </div>
-            </form>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <hr />
+        <div class="row">
+            <div class="col-md-10">
+                <h1>Skomentuj na forum</h1>
+                <form asp-controller="Forum" asp-action="AddTopic">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label class="control-label">Temat:</label>
+                        <input name="Topic" class="form-control" />
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Treść</label>
+                        <textarea name="Comment" class="form-control"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Dodaj" class="myButton" style="width:300px"/>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
-}
-
-<script>
-    var slideIndex = 1;
-    showSlides(slideIndex);
-
-    //navigation
-    function plusSlides(n) {
-        showSlides(slideIndex += n);
     }
 
-    function currentSlide(n) {
-        showSlides(slideIndex = n);
-    }
+    <script>
+        var slideIndex = 1;
+        showSlides(slideIndex);
 
-    function showSlides(n) {
-        var i;
-        var slides = document.getElementsByClassName("mySlides");
-        var dots = document.getElementsByClassName("demo");
-        var captionText = document.getElementById("caption");
-        if (n > slides.length) { slideIndex = 1 }
-        if (n < 1) { slideIndex = slides.length }
-        for (i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
+        //navigation
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
         }
-        for (i = 0; i < dots.length; i++) {
-            dots[i].className = dots[i].className.replace(" active", "");
-        }
-        slides[slideIndex - 1].style.display = "block";
-        dots[slideIndex - 1].className += " active";
-        captionText.innerHTML = dots[slideIndex - 1].alt;
-    }
 
-</script>
+        function currentSlide(n) {
+            showSlides(slideIndex = n);
+        }
+
+        function showSlides(n) {
+            var i;
+            var slides = document.getElementsByClassName("mySlides");
+            var dots = document.getElementsByClassName("demo");
+            var captionText = document.getElementById("caption");
+            if (n > slides.length) { slideIndex = 1 }
+            if (n < 1) { slideIndex = slides.length }
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+            for (i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+            slides[slideIndex - 1].style.display = "block";
+            dots[slideIndex - 1].className += " active";
+            captionText.innerHTML = dots[slideIndex - 1].alt;
+        }
+
+    </script>

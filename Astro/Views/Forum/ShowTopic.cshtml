@@ -12,10 +12,20 @@
 }
 
 <style>
-    table hr{
+    table hr {
         border-color: white;
     }
 </style>
+
+@if (!SignInManager.IsSignedIn(User))
+{
+    <div class="alert alert-primary" role="alert" style="margin-left:10px;margin-right:10px">
+        Zaloguj się aby dodawać komentarze!
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
 
 <h2>@Model.Title</h2>
 <hr />
@@ -32,12 +42,7 @@
 }
 else
 {
-    <div class="alert alert-primary" role="alert" style="margin-left:10px;margin-right:10px">
-        Zaloguj się aby dodawać komentarze!
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-    </div>
+    <h3>@Model.Rate</h3>
 }
 
 <hr />
@@ -48,18 +53,26 @@ else
         <div class="col-md-12">
             <table class="table table-striped table-bordered">
                 <tr>
-                    <td width="25%" style="font-size:15px">
-                        <b id=@("UserName"+item.Id) onclick="UserName(@item.Id)">@item.User.UserName</b>
+                    <td width="25%" style="font-size:15px;background-color:royalblue">
+                        <div style="width:100%;text-align:center"><b id=@("UserName"+item.Id) onclick="UserName(@item.Id)">@item.User.UserName</b></div>
                         <br />
-                        <b>Dołączył:</b> @item.User.RegisterDate
+                        <div style="width:100%;text-align:center">
+                            <img src="~/Images/empty-avatar.jpg" width="80px" height="90px" />
+                        </div>
                         <br />
-                        <b>Online:</b> @item.User.LastLoginDate
-                        <br />
-                        <b>Tematy:</b> @item.User.TopicsCount <b>Komentarze:</b> @item.User.CommentsCount
+                        <div style="width:100%;text-align:center">
+                            <b>Dołączył:</b> @item.User.RegisterDate
+                            <br />
+                            <b>Online:</b> @item.User.LastLoginDate
+                            <br />
+                            <b>Tematy:</b> @item.User.TopicsCount <b>Komentarze:</b> @item.User.CommentsCount
+                        </div>
                     </td>
-                    <td>
+                    <td style="position:relative">
                         <div id=@("CommentContent"+item.Id)>
                             @item.Content
+                        </div>
+                        <div style="position:absolute;bottom:0;margin-bottom:20px; width:90%">
                             <hr />
                             <b>Dodano dnia:</b> @item.Date
                         </div>
@@ -74,16 +87,16 @@ else
                         </div>
 
                     </td>
-                    <td width="20%">
+                    <td width="10%">
                         @if (SignInManager.IsSignedIn(User))
                         {
-                            <button class="myButton" onclick="EditComment(@item.Id)">Edytuj</button>
+                            <button class="myButton" onclick="EditComment(@item.Id)" style="width:95%;margin-bottom:3px">Edytuj</button>
                         }
                         @if (User.IsInRole("Administrator"))
                         {
                             if (Model.Comments.IndexOf(item) != 0)
                             {
-                                <a asp-controller="Forum" asp-action="DeleteComment" asp-route-id="@item.Id" asp-route-topicId="@Model.Id" class="myButtonDanger">Usuń</a>
+                                <a asp-controller="Forum" asp-action="DeleteComment" asp-route-id="@item.Id" asp-route-topicId="@Model.Id" class="myButtonDanger" style="width:95%;margin-bottom:3px">Usuń</a>
                             }
                         }
                     </td>
@@ -104,7 +117,7 @@ else
                 <label class="control-label">Treść</label>
                 <textarea name="comment" class="form-control" id="CommentTextArea"></textarea>
                 <br />
-                <input type="submit" value="Wyślij" class="myButton" />
+                <input type="submit" value="Wyślij" class="myButton" style="width:300px"/>
             </form>
         </div>
     </div>

@@ -25,7 +25,8 @@ namespace Astro.Controllers
 
         public async Task<IActionResult> MainPage()
         {
-            List<Topic> topics = await _context.Topics.AsNoTracking().Include(t => t.User).OrderByDescending(t => t.Id)
+            List<Topic> topics = await _context.Topics.AsNoTracking().Include(t => t.User)
+                .Include(t=>t.Comments).OrderByDescending(t => t.Id)
                 .ToListAsync();
 
             return View(topics);
