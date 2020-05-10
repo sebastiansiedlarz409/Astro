@@ -3,7 +3,7 @@ package com.example.astromobile
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.squareup.picasso.Picasso
-import kotlinx.android.synthetic.main.activity_apod_details.*
+import kotlinx.android.synthetic.main.activity_show_image.*
 
 class ShowImageActivity : AppCompatActivity() {
 
@@ -14,7 +14,7 @@ class ShowImageActivity : AppCompatActivity() {
 
         val url = intent.getStringExtra("url")
 
-        Picasso.with(this)
+        Picasso.get()
             .load(url)
             .into(image)
     }

@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, APODActivity::class.java))
             }
             else if(position == 1){
-
+                startActivity(Intent(this, EPICActivity::class.java))
             }
             else if(position == 2){
 

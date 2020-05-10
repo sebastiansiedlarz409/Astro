@@ -1,6 +1,7 @@
 package com.example.astromobile.apiclient
 
 import com.example.astromobile.models.APOD
+import com.example.astromobile.models.EPIC
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
@@ -40,5 +41,19 @@ class ApiClient {
 
     fun getAPODListData(data: String?): MutableList<APOD>{
         return Gson().fromJson(data, object : TypeToken<MutableList<APOD>>() {}.type)
+    }
+
+    suspend fun getEPICList() : String? {
+        val request = Request.Builder()
+            .url("$urlMain/$urlEPIC")
+            .build()
+
+        val response: Response = client.newCall(request).execute()
+
+        return withContext(Dispatchers.IO) { response.body?.string() }
+    }
+
+    fun getEPICListData(data: String?): MutableList<EPIC>{
+        return Gson().fromJson(data, object : TypeToken<MutableList<EPIC>>() {}.type)
     }
 }

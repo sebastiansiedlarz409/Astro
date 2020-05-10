@@ -23,7 +23,7 @@ class APODDetailsActivity : AppCompatActivity() {
         val displayMetrics = DisplayMetrics()
         windowManager.defaultDisplay.getMetrics(displayMetrics)
 
-        Picasso.with(this)
+        Picasso.get()
             .load(url)
             .resize(displayMetrics.widthPixels, displayMetrics.widthPixels)
             .into(image)

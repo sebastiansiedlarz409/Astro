@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ShowImageActivity"></activity>
+        <activity android:name=".EPICActivity"></activity>
+        <activity android:name=".ShowImageActivity" />
         <activity android:name=".APODDetailsActivity" />
         <activity android:name=".APODActivity" />
         <activity android:name=".MainActivity">
