@@ -1,9 +1,12 @@
 ﻿using System;
+using System.IO;
+using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using Astro.DAL.DBContext;
 using Astro.DAL.Models;
 using Astro.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -89,6 +92,74 @@ namespace Astro.Controllers
             await _signInManager.SignOutAsync();
 
             return RedirectToAction("MainPage", "Forum");
+        }
+
+        [Authorize]
+        public IActionResult UserPage()
+        {
+            ViewBag.password = TempData["password"];
+            ViewBag.avatar = TempData["image"];
+
+            return View();
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> UserPage(ChangePasswordViewModel model)
+        {
+            if (!ModelState.IsValid)
+                return View();
+
+            var result = await _userManager
+                .ChangePasswordAsync(await _userManager.GetUserAsync(User), model.Password, model.NewPassword);
+
+            TempData["password"] = "Zmieniono hasło!";
+
+            return RedirectToAction("UserPage");
+        }
+
+        [Authorize]
+        [HttpPost]
+        public async Task<IActionResult> AddAvatar(IFormFile image)
+        {
+            if (image is { })
+            {
+                if (image.Length > 0)
+                {
+                    var fileName = ContentDispositionHeaderValue
+                        .Parse(image.ContentDisposition).FileName.Trim('"');
+
+                    var avatarName = image.FileName.Split('.')[0] + '_' + DateTime.Now.ToString("yyyy_MM_dd_HH_mm_ss") +
+                        '.' + image.FileName.Split('.')[1];
+
+                    using (var fileStream = new FileStream(Path.Combine(Directory.GetCurrentDirectory() + "\\wwwroot\\Images\\Avatars", avatarName), FileMode.Create))
+                    {
+                        await image.CopyToAsync(fileStream);
+                    }
+
+                    User user = await _context.Users.FirstOrDefaultAsync(t => t.Id == _userManager.GetUserId(User));
+
+                    if(user.Avatar is { })
+                    {
+                        var avatar = new System.IO.FileInfo(Directory.GetCurrentDirectory() + "\\wwwroot\\Images\\Avatars\\" + user.Avatar);
+                        avatar.Delete();
+                    }
+
+                    user.Avatar = avatarName;
+
+                    _context.Update(user);
+                    await _context.SaveChangesAsync();
+                }
+
+                TempData["image"] = "Dodano awatar!";
+
+                return RedirectToAction("UserPage");
+            }
+            else
+            {
+                TempData["image"] = "Dodawanie awatara nie powiodło się!";
+            }
+            return RedirectToAction("UserPage");
         }
     }
 }

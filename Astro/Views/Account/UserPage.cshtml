@@ -1,0 +1,76 @@
+﻿@model Astro.Models.ChangePasswordViewModel
+
+@{
+    ViewData["Title"] = "UserPage";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Ustawienia profilu</h1>
+
+@if (ViewBag.password is { })
+{
+    <div class="alert alert-primary" role="alert" style="margin-left:10px;margin-right:10px">
+        @ViewBag.password
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+@if (ViewBag.avatar is { })
+{
+    <div class="alert alert-primary" role="alert" style="margin-left:10px;margin-right:10px">
+        @ViewBag.avatar
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="UserPage">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NewPassword" class="control-label"></label>
+                <input asp-for="NewPassword" class="form-control" />
+                <span asp-validation-for="NewPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ConfirmPassword" class="control-label"></label>
+                <input asp-for="ConfirmPassword" class="form-control" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Zapisz" class="myButton" />
+            </div>
+        </form>
+    </div>
+
+    <div class="col-md-6">
+        <h4>Dodaj avatar</h4>
+        <h5>Avatar będzie skalowany do 80x90px</h5>
+        <form enctype="multipart/form-data" asp-controller="Account" asp-action="AddAvatar" class="md-form">
+            <div class="input-group">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="inputGroupFileAddon01">Dodaj</span>
+                </div>
+                <div class="custom-file">
+                    <input type="file" name="image" class="custom-file-input" id="inputGroupFile01"
+                           aria-describedby="inputGroupFileAddon01">
+                    <label class="custom-file-label" for="inputGroupFile01">Wybierz plik</label>
+                </div>
+            </div>
+            <br />
+            <div class="form-group">
+                <input type="submit" value="Dodaj" class="myButton" />
+            </div>
+        </form>
+    </div>
+</div>
+

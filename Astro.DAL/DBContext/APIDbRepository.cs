@@ -30,7 +30,7 @@ namespace Astro.DAL.DBContext
             if (APODs.Count <= 7)
                 return;
 
-            for (int i = 0; i < APODs.Count - 7;)
+            for (int i = 0; i < APODs.Count - 10;)
             {
                 if (APODs[i].MediaType.Equals("image"))
                 {

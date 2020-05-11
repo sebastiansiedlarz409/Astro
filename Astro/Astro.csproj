@@ -30,4 +30,9 @@
     <ProjectReference Include="..\Astro.DAL\Astro.DAL.csproj" />
   </ItemGroup>
 
+
+  <ItemGroup>
+    <Folder Include="wwwroot\Images\Avatars\" />
+  </ItemGroup>
+
 </Project>

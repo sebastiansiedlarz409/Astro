@@ -13,6 +13,8 @@ namespace Astro.DAL.Models
 
         public string RegisterDate { get; set; }
 
+        public string Avatar { get; set; }
+
         public List<Topic> Topics { get; set; }
 
         public List<Comment> Comments { get; set; }

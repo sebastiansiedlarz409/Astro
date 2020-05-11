@@ -7,6 +7,10 @@
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
+        
+        <li class="nav-item">
+            <a class="btn btn-outline-success" style="margin-right:3px" asp-area="" asp-controller="Account" asp-action="UserPage">Profil</a>
+        </li>
         <li class="nav-item">
             <form class="form-inline" asp-area="" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
                 <button type="submit" class="btn btn-outline-danger">Wyloguj</button>

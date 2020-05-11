@@ -2,6 +2,7 @@
 
 @using Microsoft.AspNetCore.Identity
 @using Astro.DAL.Models
+@using System.IO
 
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
@@ -57,7 +58,14 @@ else
                         <div style="width:100%;text-align:center"><b id=@("UserName"+item.Id) onclick="UserName(@item.Id)">@item.User.UserName</b></div>
                         <br />
                         <div style="width:100%;text-align:center">
-                            <img src="~/Images/empty-avatar.jpg" width="80px" height="90px" />
+                            @if (item.User.Avatar is null)
+                            {
+                                <img src="~/Images/empty-avatar.jpg" width="80px" height="90px" />
+                            }
+                            else
+                            {
+                                <img src="~/Images/Avatars/@item.User.Avatar" width="80px" height="90px" />
+                            }
                         </div>
                         <br />
                         <div style="width:100%;text-align:center">
