@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, AsteroidsNeoWsActivity::class.java))
             }
             else if(position == 3){
-
+                startActivity(Intent(this, InsightActivity::class.java))
             }
             else if(position == 4){
 

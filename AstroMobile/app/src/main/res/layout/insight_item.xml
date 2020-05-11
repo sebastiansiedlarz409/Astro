@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_margin="10dp"
+        android:elevation="8dp"
+        tools:ignore="MissingConstraints"
+        card_view:cardCornerRadius="6dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:weightSum="1"
+            android:background="#0d0d0d"
+            android:padding="3dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:layout_weight="0.6"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/date"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:paddingLeft="1dp"
+                    android:textColor="#FFFFFF"
+                    android:layout_margin="3dp"
+                    android:textSize="18sp"/>
+
+                <TextView
+                    android:id="@+id/season"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.5"
+                    android:paddingLeft="1dp"
+                    android:textColor="#FFFFFF"
+                    android:layout_margin="3dp"
+                    android:textSize="18sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="0.4"
+                android:weightSum="1">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="0.33"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:id="@+id/tempLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Temp [F]:"
+                        android:paddingLeft="1dp"
+                        android:textColor="#FFFFFF"
+                        android:layout_margin="3dp"
+                        android:textSize="16sp"
+                        android:layout_weight="0.25"/>
+
+                    <TextView
+                        android:id="@+id/maxTemp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="1dp"
+                        android:textColor="#FFFFFF"
+                        android:layout_margin="3dp"
+                        android:textSize="16sp"
+                        android:layout_weight="0.25" />
+
+                    <TextView
+                        android:id="@+id/avgTemp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="1dp"
+                        android:textColor="#FFFFFF"
+                        android:layout_margin="3dp"
+                        android:textSize="16sp"
+                        android:layout_weight="0.25"/>
+
+                    <TextView
+                        android:id="@+id/minTemp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="1dp"
+                        android:textColor="#FFFFFF"
+                        android:layout_margin="3dp"
+                        android:textSize="16sp"
+                        android:layout_weight="0.25"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="0.33"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:id="@+id/windLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Wiatr [mps]:"
+                        android:paddingLeft="1dp"
+                        android:textColor="#FFFFFF"
+                        android:layout_margin="3dp"
+                        android:textSize="16sp"
+                        android:layout_weight="0.25"/>
+
+                    <TextView
+                        android:id="@+id/maxWind"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="1dp"
+                        android:textColor="#FFFFFF"
+                        android:layout_margin="3dp"
+                        android:textSize="16sp"
+                        android:layout_weight="0.25" />
+
+                    <TextView
+                        android:id="@+id/avgWind"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="1dp"
+                        android:textColor="#FFFFFF"
+                        android:layout_margin="3dp"
+                        android:textSize="16sp"
+                        android:layout_weight="0.25"/>
+
+                    <TextView
+                        android:id="@+id/minWind"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="1dp"
+                        android:textColor="#FFFFFF"
+                        android:layout_margin="3dp"
+                        android:textSize="16sp"
+                        android:layout_weight="0.25"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:layout_weight="0.33"
+                    android:weightSum="1">
+
+                    <TextView
+                        android:id="@+id/pressLabel"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Ciśnienie [Pas]:"
+                        android:paddingLeft="1dp"
+                        android:textColor="#FFFFFF"
+                        android:layout_margin="3dp"
+                        android:textSize="16sp"
+                        android:layout_weight="0.25"/>
+
+                    <TextView
+                        android:id="@+id/maxPress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="#FFFFFF"
+                        android:layout_margin="3dp"
+                        android:textSize="16sp"
+                        android:layout_weight="0.25"/>
+
+                    <TextView
+                        android:id="@+id/avgPress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="1dp"
+                        android:textColor="#FFFFFF"
+                        android:layout_margin="3dp"
+                        android:textSize="16sp"
+                        android:layout_weight="0.25"/>
+
+                    <TextView
+                        android:id="@+id/minPress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingLeft="1dp"
+                        android:textColor="#FFFFFF"
+                        android:layout_margin="3dp"
+                        android:textSize="16sp"
+                        android:layout_weight="0.25"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+</LinearLayout>

@@ -32,6 +32,9 @@ class MenuAdapter(
         else if(position == 3){
             rowView.logo.setImageResource(R.drawable.ic_web_black_24dp)
         }
+        else if(position == 4){
+            rowView.logo.setImageResource(R.drawable.ic_forum_black_24dp)
+        }
         else{
             rowView.logo.setImageResource(R.drawable.ic_info_outline_black_24dp)
         }

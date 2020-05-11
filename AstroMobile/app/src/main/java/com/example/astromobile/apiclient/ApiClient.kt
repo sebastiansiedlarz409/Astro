@@ -3,6 +3,7 @@ package com.example.astromobile.apiclient
 import com.example.astromobile.models.APOD
 import com.example.astromobile.models.AsteroidsNeoWs
 import com.example.astromobile.models.EPIC
+import com.example.astromobile.models.Insight
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
@@ -70,5 +71,19 @@ class ApiClient {
 
     fun getAsteroidsNeoWsListData(data: String?): MutableList<AsteroidsNeoWs>{
         return Gson().fromJson(data, object : TypeToken<MutableList<AsteroidsNeoWs>>() {}.type)
+    }
+
+    suspend fun getInsightList() : String? {
+        val request = Request.Builder()
+            .url("$urlMain/$urlInsight")
+            .build()
+
+        val response: Response = client.newCall(request).execute()
+
+        return withContext(Dispatchers.IO) { response.body?.string() }
+    }
+
+    fun getInsightListData(data: String?): MutableList<Insight>{
+        return Gson().fromJson(data, object : TypeToken<MutableList<Insight>>() {}.type)
     }
 }

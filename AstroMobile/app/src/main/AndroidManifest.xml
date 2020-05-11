@@ -12,7 +12,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".AsteroidsNeoWsActivity"></activity>
+        <activity android:name=".InsightActivity"></activity>
+        <activity android:name=".AsteroidsNeoWsActivity" />
         <activity android:name=".EPICActivity" />
         <activity android:name=".ShowImageActivity" />
         <activity android:name=".APODDetailsActivity" />
