@@ -22,7 +22,7 @@
         android:text="Astronomiczne zdjęcie dnia:" />
 
     <GridView
-        android:id="@+id/others"
+        android:id="@+id/apod"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:numColumns="2"

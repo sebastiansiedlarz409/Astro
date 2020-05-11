@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".EPICActivity"
+    tools:context=".AsteroidsNeoWsActivity"
     android:background="#333333">
 
     <TextView
@@ -19,13 +19,12 @@
         android:textSize="25sp"
         android:textStyle="bold"
         android:textColor="#FFFFFF"
-        android:text="Galeria epic:" />
+        android:text="Obiekty blisko ziemi:" />
 
-    <GridView
-        android:id="@+id/epic"
+    <ListView
+        android:id="@+id/asteroids"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:numColumns="2"
         android:layout_margin="5dp"
         android:padding="2dp"/>
 

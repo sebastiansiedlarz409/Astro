@@ -1,6 +1,7 @@
 package com.example.astromobile.apiclient
 
 import com.example.astromobile.models.APOD
+import com.example.astromobile.models.AsteroidsNeoWs
 import com.example.astromobile.models.EPIC
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -55,5 +56,19 @@ class ApiClient {
 
     fun getEPICListData(data: String?): MutableList<EPIC>{
         return Gson().fromJson(data, object : TypeToken<MutableList<EPIC>>() {}.type)
+    }
+
+    suspend fun getAsteroidsNeoWsList() : String? {
+        val request = Request.Builder()
+            .url("$urlMain/$urlAsteroidsNeoWs")
+            .build()
+
+        val response: Response = client.newCall(request).execute()
+
+        return withContext(Dispatchers.IO) { response.body?.string() }
+    }
+
+    fun getAsteroidsNeoWsListData(data: String?): MutableList<AsteroidsNeoWs>{
+        return Gson().fromJson(data, object : TypeToken<MutableList<AsteroidsNeoWs>>() {}.type)
     }
 }

@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         supportActionBar?.hide()
 
-        val options: ArrayList<String> = arrayListOf("APOD", "EPIC", "Asteroids", "Insight", "Informacje")
+        val options: ArrayList<String> = arrayListOf("APOD", "EPIC", "Asteroids", "Insight", "Forum", "Informacje")
 
         val adapter = MenuAdapter(this, options)
 
@@ -30,9 +30,12 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, EPICActivity::class.java))
             }
             else if(position == 2){
-
+                startActivity(Intent(this, AsteroidsNeoWsActivity::class.java))
             }
             else if(position == 3){
+
+            }
+            else if(position == 4){
 
             }
             else{

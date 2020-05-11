@@ -34,14 +34,14 @@ class APODActivity : AppCompatActivity() {
             }
 
             withContext(Main){
-                others.adapter = adapter
+                apod.adapter = adapter
             }
         }
 
         adapter = APODAdapter(this, listItems)
-        others.adapter = adapter
+        apod.adapter = adapter
 
-        others.setOnItemClickListener {
+        apod.setOnItemClickListener {
                 _, _, position, _ ->
             val intent = Intent(this, APODDetailsActivity::class.java)
             intent.putExtra("urlHd", adapter.getItem(position).urlHd)

@@ -33,14 +33,14 @@ class EPICActivity : AppCompatActivity() {
             }
 
             withContext(Dispatchers.Main){
-                others.adapter = adapter
+                epic.adapter = adapter
             }
         }
 
         adapter = EPICAdapter(this, listItems)
-        others.adapter = adapter
+        epic.adapter = adapter
 
-        others.setOnItemClickListener {
+        epic.setOnItemClickListener {
                 _, _, position, _ ->
             val intent = Intent(this, ShowImageActivity::class.java)
             intent.putExtra("url", adapter.getItem(position).imageName)
