@@ -12,14 +12,9 @@ import okhttp3.ConnectionSpec
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
-import java.io.BufferedInputStream
-import java.io.FileInputStream
-import java.security.KeyStore
-import java.security.cert.Certificate
-import java.security.cert.CertificateFactory
-import java.security.cert.X509Certificate
-import javax.net.ssl.SSLContext
-import javax.net.ssl.TrustManagerFactory
+import ru.gildor.coroutines.okhttp.await
+import java.net.SocketTimeoutException
+import java.util.concurrent.TimeUnit
 
 class ApiClient {
 
@@ -29,14 +24,30 @@ class ApiClient {
     private val urlInsight: String = "api/Insight"
     private val urlAsteroidsNeoWs: String = "api/AsteroidsNeoWs"
     private var client: OkHttpClient = OkHttpClient.Builder()
+        .connectTimeout(2000, TimeUnit.MILLISECONDS)
         .connectionSpecs(arrayListOf(ConnectionSpec.MODERN_TLS, ConnectionSpec.CLEARTEXT)).build()
+
+    suspend fun connectionTest() : Boolean{
+        try{
+            val request = Request.Builder()
+                .url(urlMain)
+                .build()
+
+            client.newCall(request).await()
+        }
+        catch (ex: SocketTimeoutException){
+            return false
+        }
+
+        return true
+    }
 
     suspend fun getAPODList() : String? {
         val request = Request.Builder()
             .url("$urlMain/$urlAPOD")
             .build()
 
-        val response: Response = client.newCall(request).execute()
+        val response: Response = client.newCall(request).await()
 
         return withContext(Dispatchers.IO) { response.body?.string() }
     }
@@ -50,7 +61,7 @@ class ApiClient {
             .url("$urlMain/$urlEPIC")
             .build()
 
-        val response: Response = client.newCall(request).execute()
+        val response: Response = client.newCall(request).await()
 
         return withContext(Dispatchers.IO) { response.body?.string() }
     }
@@ -64,7 +75,7 @@ class ApiClient {
             .url("$urlMain/$urlAsteroidsNeoWs")
             .build()
 
-        val response: Response = client.newCall(request).execute()
+        val response: Response = client.newCall(request).await()
 
         return withContext(Dispatchers.IO) { response.body?.string() }
     }
@@ -78,7 +89,7 @@ class ApiClient {
             .url("$urlMain/$urlInsight")
             .build()
 
-        val response: Response = client.newCall(request).execute()
+        val response: Response = client.newCall(request).await()
 
         return withContext(Dispatchers.IO) { response.body?.string() }
     }

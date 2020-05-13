@@ -4,17 +4,60 @@ import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import com.example.astromobile.adapters.MenuAdapter
+import com.example.astromobile.apiclient.ApiClient
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.connection_error.*
+import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
+import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
 
+    private val apiClient = ApiClient()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
         supportActionBar?.hide()
 
+        setContentView(R.layout.connection_error)
+        retry.visibility = View.GONE
+        progress.visibility = View.VISIBLE
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                exitProcess(0)
+            }
+        }
+        this.onBackPressedDispatcher.addCallback(this, callback)
+
+        checkConnection()
+    }
+
+    private fun checkConnection(){
+        CoroutineScope(IO).launch {
+            delay(4000)
+            if(!apiClient.connectionTest()){
+                withContext(Main){
+                    info.text = "Nie można połączyć ze źródłem danych!"
+                    retry.visibility = View.VISIBLE
+                    progress.visibility = View.GONE
+                }
+            }
+            else{
+                withContext(Main){
+                    setContentView(R.layout.activity_main)
+                    mainPage()
+                }
+            }
+        }
+    }
+
+    private fun mainPage() {
         val options: ArrayList<String> = arrayListOf("APOD", "EPIC", "Asteroids", "Insight", "Galeria", "Forum", "Informacje")
 
         val adapter = MenuAdapter(this, options)
@@ -55,5 +98,11 @@ class MainActivity : AppCompatActivity() {
                 builder.show()
             }
         }
+    }
+
+    fun retry(view: View){
+        val intent = Intent(this, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        startActivity(intent)
     }
 }
