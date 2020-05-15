@@ -12,7 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".ConnectionCheckActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".RegisterActivity" />
         <activity android:name=".LoginActivity" />
         <activity android:name=".InsightActivity" />
         <activity android:name=".AsteroidsNeoWsActivity" />
@@ -20,13 +26,7 @@
         <activity android:name=".ShowImageActivity" />
         <activity android:name=".APODDetailsActivity" />
         <activity android:name=".APODActivity" />
-        <activity android:name=".MainActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".MainActivity"/>
     </application>
 
 </manifest>

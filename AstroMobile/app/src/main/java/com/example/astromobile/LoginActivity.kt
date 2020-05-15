@@ -6,8 +6,9 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import com.example.astromobile.apiclient.ApiClient
-import com.example.astromobile.models.Token
+import androidx.activity.OnBackPressedCallback
+import com.example.astromobile.services.AuthService
+import com.example.astromobile.services.LoginResults
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
@@ -15,7 +16,7 @@ import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
 
-    private val apiClient = ApiClient()
+    private lateinit var authService: AuthService
     private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,24 +25,39 @@ class LoginActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         sharedPreferences = getSharedPreferences("AstroMobile", Context.MODE_PRIVATE)
+        authService = AuthService.getAuthService(sharedPreferences)!!
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                startActivity(Intent(this@LoginActivity, MainActivity::class.java))
+            }
+        }
+        this.onBackPressedDispatcher.addCallback(this, callback)
     }
 
     fun login(view: View){
-        CoroutineScope(IO).launch {
-            val data: String? = apiClient.login(email.text.toString(), password.text.toString())
-            if(data == null){
-                val intent = Intent(this@LoginActivity, LoginActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                startActivity(intent)
-            }
-            else{
-                val token: Token = apiClient.loginData(data)
-                sharedPreferences.edit().putString("token", token.token).apply()
-                sharedPreferences.edit().putString("username", token.user.userName).apply()
+        val email = email.text.toString()
+        val password = password.text.toString()
 
-                val intent = Intent(this@LoginActivity, MainActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                startActivity(intent)
+        CoroutineScope(IO).launch {
+
+            val loginResult: LoginResults = authService.login(email, password)
+
+            when (loginResult) {
+                LoginResults.Logged -> {
+                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    startActivity(intent)
+                }
+                LoginResults.BadRequest -> {
+                    //TODO: print error
+                    /*val intent = Intent(this@LoginActivity, LoginActivity::class.java)
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                        startActivity(intent)*/
+                }
+                else -> {
+                    //TODO: print error
+                }
             }
         }
     }

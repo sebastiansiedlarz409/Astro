@@ -10,66 +10,31 @@ import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import com.example.astromobile.adapters.MenuAdapter
-import com.example.astromobile.apiclient.ApiClient
+import com.example.astromobile.services.AuthService
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_main.login
-import kotlinx.android.synthetic.main.connection_error.*
-import kotlinx.coroutines.*
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.Dispatchers.Main
+import java.lang.System.exit
 import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
 
-    private var token: String? = null
-    private var username: String? = null
-
-    private val apiClient = ApiClient()
     private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var authService: AuthService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        setContentView(R.layout.activity_main)
         supportActionBar?.hide()
 
         sharedPreferences = getSharedPreferences("AstroMobile", Context.MODE_PRIVATE)
-
-        setContentView(R.layout.connection_error)
-        retry.visibility = View.GONE
-        progress.visibility = View.VISIBLE
+        authService = AuthService.getAuthService(sharedPreferences)!!
 
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                exitProcess(0)
+                finish()
             }
         }
         this.onBackPressedDispatcher.addCallback(this, callback)
-
-        if(!isLogged() && !intent.getBooleanExtra("connected", false))
-            checkConnection()
-        else
-            mainPage()
-    }
-
-    private fun checkConnection(){
-        CoroutineScope(IO).launch {
-            delay(4000)
-            if(!apiClient.connectionTest()){
-                withContext(Main){
-                    info.text = "Nie można połączyć ze źródłem danych!"
-                    retry.visibility = View.VISIBLE
-                    progress.visibility = View.GONE
-                }
-            }
-            else{
-                withContext(Main){
-                    mainPage()
-                }
-            }
-        }
-    }
-
-    private fun mainPage() {
-        setContentView(R.layout.activity_main)
 
         login.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
@@ -78,14 +43,16 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, RegisterActivity::class.java))
         }
         loginOut.setOnClickListener {
-            logOut()
+            authService.logOut()
+            finish();
+            startActivity(intent);
         }
 
-        if(token != null && username != null){
+        if(authService.isLogged()){
             authField.visibility = View.GONE
             loggedField.visibility = View.VISIBLE
 
-            loggedUser.text = username.toString()
+            loggedUser.text = authService.getLoggedUser()?.userName
         }
 
         val options: ArrayList<String> = arrayListOf("APOD", "EPIC", "Asteroids", "Insight", "Galeria", "Forum", "Informacje")
@@ -128,30 +95,5 @@ class MainActivity : AppCompatActivity() {
                 builder.show()
             }
         }
-    }
-
-    private fun isLogged(): Boolean {
-        token = sharedPreferences.getString("token", null)
-        username = sharedPreferences.getString("username", null)
-
-        return (token != null && username != null)
-    }
-
-    private fun logOut(){
-        token = null
-        username = null
-        sharedPreferences.edit().putString("token", null).apply()
-        sharedPreferences.edit().putString("username", null).apply()
-
-        val intent = Intent(this, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        intent.putExtra("connected", true)
-        startActivity(intent)
-    }
-
-    fun retry(view: View){
-        val intent = Intent(this, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        startActivity(intent)
     }
 }

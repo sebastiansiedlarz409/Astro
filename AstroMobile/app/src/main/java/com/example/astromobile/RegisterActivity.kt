@@ -3,11 +3,11 @@ package com.example.astromobile
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import com.example.astromobile.apiclient.ApiClient
-import com.example.astromobile.models.Token
+import androidx.appcompat.app.AppCompatActivity
+import com.example.astromobile.services.AuthService
+import com.example.astromobile.services.RegisterResults
 import kotlinx.android.synthetic.main.activity_register.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 
 class RegisterActivity : AppCompatActivity() {
 
-    private val apiClient = ApiClient()
+    private lateinit var authService: AuthService
     private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,6 +24,7 @@ class RegisterActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         sharedPreferences = getSharedPreferences("AstroMobile", Context.MODE_PRIVATE)
+        authService = AuthService.getAuthService(sharedPreferences)!!
     }
 
     fun register(view: View){
@@ -33,28 +34,19 @@ class RegisterActivity : AppCompatActivity() {
         val passwordConfirm = passwordConfirm.text.toString()
 
         CoroutineScope(IO).launch {
-            var data = apiClient.register(username, email, password, passwordConfirm)
-            if(data == null){
-                val intent = Intent(this@RegisterActivity, RegisterActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                startActivity(intent)
-            }
-            else{
-                data = apiClient.login(email, password)
+            val registerResult: RegisterResults = authService.register(username, email, password, passwordConfirm)
 
-                if(data == null){
+            when (registerResult) {
+                RegisterResults.Registered -> {
                     val intent = Intent(this@RegisterActivity, LoginActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     startActivity(intent)
                 }
-                else{
-                    val token: Token = apiClient.loginData(data)
-                    sharedPreferences.edit().putString("token", token.token).apply()
-                    sharedPreferences.edit().putString("username", token.user.userName).apply()
-
-                    val intent = Intent(this@RegisterActivity, MainActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                    startActivity(intent)
+                RegisterResults.BadRequest -> {
+                    //TODO: print error
+                }
+                else -> {
+                    //TODO: print error
                 }
             }
         }

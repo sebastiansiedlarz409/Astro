@@ -45,7 +45,7 @@ class ApiClient {
 
     //region Auth
 
-    suspend fun login(email: String, password: String): String?{
+    suspend fun login(email: String, password: String): Response{
         val data = JSONObject()
         data.put("Email", email)
         data.put("Password", password)
@@ -55,21 +55,14 @@ class ApiClient {
             .post(RequestBody.create(JSON, data.toString()))
             .build()
 
-        val response: Response = client.newCall(request).await()
-
-        if(response.code == 200){
-            return withContext(Dispatchers.IO) { response.body?.string() }
-        }
-        else{
-            return null
-        }
+        return client.newCall(request).await()
     }
 
     suspend fun loginData(data: String?): Token{
         return Gson().fromJson(data, object : TypeToken<Token>() {}.type)
     }
 
-    suspend fun register(username: String, email: String, password: String, passwordConfirm: String): String?{
+    suspend fun register(username: String, email: String, password: String, passwordConfirm: String): Response{
         val data = JSONObject()
         data.put("UserName", username)
         data.put("Email", email)
@@ -81,14 +74,7 @@ class ApiClient {
             .post(RequestBody.create(JSON, data.toString()))
             .build()
 
-        val response: Response = client.newCall(request).await()
-
-        if(response.code == 200){
-            return withContext(Dispatchers.IO) { response.body?.string() }
-        }
-        else{
-            return null
-        }
+        return client.newCall(request).await()
     }
 
     //endregion
