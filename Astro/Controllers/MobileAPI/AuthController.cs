@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -32,6 +31,9 @@ namespace Astro.Controllers.MobileAPI
         [HttpPost("login")]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
             var user = await _context.Users.FirstOrDefaultAsync(t => t.Email.Equals(model.Email));
 
             var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, false, lockoutOnFailure: false);
@@ -70,12 +72,16 @@ namespace Astro.Controllers.MobileAPI
                     user
                 });
             }
+
             return BadRequest();
         }
 
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
+            if (!ModelState.IsValid)
+                return BadRequest();
+
             User newUser = new User
             {
                 UserName = model.UserName,
@@ -89,9 +95,7 @@ namespace Astro.Controllers.MobileAPI
             {
                 _userManager.AddToRoleAsync(newUser, "User").Wait();
 
-                await _signInManager.SignInAsync(newUser, isPersistent: false);
-
-                return RedirectToAction("Login", new { model = new LoginViewModel() { Email = model.Email, Password = model.Password } });
+                return Ok();
             }
 
             return BadRequest();

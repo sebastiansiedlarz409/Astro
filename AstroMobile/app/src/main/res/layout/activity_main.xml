@@ -37,8 +37,86 @@
             android:textColor="#FFFFFF"
             android:text="Dostępne opcje:" />
 
+        <LinearLayout
+            android:id="@+id/loggedField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:weightSum="2"
+            android:visibility="gone">
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/emailLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="10dp"
+                android:elevation="8dp"
+                tools:ignore="MissingConstraints"
+                android:layout_weight="1"
+                card_view:cardCornerRadius="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="#0d0d0d">
+
+                    <TextView
+                        android:id="@+id/loggedUser"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginTop="0dp"
+                        android:textSize="22sp"
+                        android:textStyle="bold"
+                        android:textColor="#FFFFFF"
+                        android:layout_weight="1"
+                        android:text="Email:" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/loginOut"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="10dp"
+                android:elevation="8dp"
+                tools:ignore="MissingConstraints"
+                android:layout_weight="1"
+                card_view:cardCornerRadius="2dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:background="#0d0d0d">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="12dp"
+                        android:layout_marginBottom="2dp"
+                        android:layout_marginTop="0dp"
+                        android:textSize="22sp"
+                        android:layout_gravity="center"
+                        android:textColor="#FFFFFF"
+                        android:text="Wyloguj" />
+
+                </LinearLayout>
+
+            </com.google.android.material.card.MaterialCardView>
+
+        </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/authField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -68,7 +146,7 @@
                         android:layout_marginRight="12dp"
                         android:layout_marginBottom="2dp"
                         android:layout_marginTop="0dp"
-                        android:textSize="18sp"
+                        android:textSize="22sp"
                         android:layout_gravity="center"
                         android:textColor="#FFFFFF"
                         android:text="Logowanie" />
@@ -101,7 +179,7 @@
                         android:layout_marginRight="12dp"
                         android:layout_marginBottom="2dp"
                         android:layout_marginTop="0dp"
-                        android:textSize="18sp"
+                        android:textSize="22sp"
                         android:layout_gravity="center"
                         android:textColor="#FFFFFF"
                         android:text="Rejestracja" />

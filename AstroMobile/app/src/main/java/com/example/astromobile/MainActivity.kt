@@ -1,6 +1,8 @@
 package com.example.astromobile
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,6 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import com.example.astromobile.adapters.MenuAdapter
 import com.example.astromobile.apiclient.ApiClient
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_main.login
 import kotlinx.android.synthetic.main.connection_error.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
@@ -18,11 +21,17 @@ import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
 
+    private var token: String? = null
+    private var username: String? = null
+
     private val apiClient = ApiClient()
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         supportActionBar?.hide()
+
+        sharedPreferences = getSharedPreferences("AstroMobile", Context.MODE_PRIVATE)
 
         setContentView(R.layout.connection_error)
         retry.visibility = View.GONE
@@ -35,7 +44,10 @@ class MainActivity : AppCompatActivity() {
         }
         this.onBackPressedDispatcher.addCallback(this, callback)
 
-        checkConnection()
+        if(!isLogged() && !intent.getBooleanExtra("connected", false))
+            checkConnection()
+        else
+            mainPage()
     }
 
     private fun checkConnection(){
@@ -50,7 +62,6 @@ class MainActivity : AppCompatActivity() {
             }
             else{
                 withContext(Main){
-                    setContentView(R.layout.activity_main)
                     mainPage()
                 }
             }
@@ -58,6 +69,25 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun mainPage() {
+        setContentView(R.layout.activity_main)
+
+        login.setOnClickListener {
+            startActivity(Intent(this, LoginActivity::class.java))
+        }
+        register.setOnClickListener {
+            startActivity(Intent(this, RegisterActivity::class.java))
+        }
+        loginOut.setOnClickListener {
+            logOut()
+        }
+
+        if(token != null && username != null){
+            authField.visibility = View.GONE
+            loggedField.visibility = View.VISIBLE
+
+            loggedUser.text = username.toString()
+        }
+
         val options: ArrayList<String> = arrayListOf("APOD", "EPIC", "Asteroids", "Insight", "Galeria", "Forum", "Informacje")
 
         val adapter = MenuAdapter(this, options)
@@ -98,6 +128,25 @@ class MainActivity : AppCompatActivity() {
                 builder.show()
             }
         }
+    }
+
+    private fun isLogged(): Boolean {
+        token = sharedPreferences.getString("token", null)
+        username = sharedPreferences.getString("username", null)
+
+        return (token != null && username != null)
+    }
+
+    private fun logOut(){
+        token = null
+        username = null
+        sharedPreferences.edit().putString("token", null).apply()
+        sharedPreferences.edit().putString("username", null).apply()
+
+        val intent = Intent(this, MainActivity::class.java)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent.putExtra("connected", true)
+        startActivity(intent)
     }
 
     fun retry(view: View){

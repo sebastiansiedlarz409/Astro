@@ -1,28 +1,29 @@
 package com.example.astromobile.apiclient
 
-import com.example.astromobile.models.APOD
-import com.example.astromobile.models.AsteroidsNeoWs
-import com.example.astromobile.models.EPIC
-import com.example.astromobile.models.Insight
+import com.example.astromobile.models.*
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import okhttp3.ConnectionSpec
-import okhttp3.OkHttpClient
-import okhttp3.Request
-import okhttp3.Response
+import okhttp3.*
+import okhttp3.MediaType.Companion.toMediaTypeOrNull
+import org.json.JSONObject
 import ru.gildor.coroutines.okhttp.await
 import java.net.SocketTimeoutException
 import java.util.concurrent.TimeUnit
 
 class ApiClient {
 
+    private val JSON = "application/json; charset=utf-8".toMediaTypeOrNull()
+
     private val urlMain: String = "http://192.168.1.2:5001"
     private val urlEPIC: String = "api/EPIC"
     private val urlAPOD: String = "api/APOD"
     private val urlInsight: String = "api/Insight"
     private val urlAsteroidsNeoWs: String = "api/AsteroidsNeoWs"
+    private val urlLogin: String = "api/Auth/login"
+    private val urlRegister: String = "api/Auth/register"
+
     private var client: OkHttpClient = OkHttpClient.Builder()
         .connectTimeout(2000, TimeUnit.MILLISECONDS)
         .connectionSpecs(arrayListOf(ConnectionSpec.MODERN_TLS, ConnectionSpec.CLEARTEXT)).build()
@@ -41,6 +42,58 @@ class ApiClient {
 
         return true
     }
+
+    //region Auth
+
+    suspend fun login(email: String, password: String): String?{
+        val data = JSONObject()
+        data.put("Email", email)
+        data.put("Password", password)
+
+        val request = Request.Builder()
+            .url("$urlMain/$urlLogin")
+            .post(RequestBody.create(JSON, data.toString()))
+            .build()
+
+        val response: Response = client.newCall(request).await()
+
+        if(response.code == 200){
+            return withContext(Dispatchers.IO) { response.body?.string() }
+        }
+        else{
+            return null
+        }
+    }
+
+    suspend fun loginData(data: String?): Token{
+        return Gson().fromJson(data, object : TypeToken<Token>() {}.type)
+    }
+
+    suspend fun register(username: String, email: String, password: String, passwordConfirm: String): String?{
+        val data = JSONObject()
+        data.put("UserName", username)
+        data.put("Email", email)
+        data.put("Password", password)
+        data.put("ConfirmPassword", passwordConfirm)
+
+        val request = Request.Builder()
+            .url("$urlMain/$urlRegister")
+            .post(RequestBody.create(JSON, data.toString()))
+            .build()
+
+        val response: Response = client.newCall(request).await()
+
+        if(response.code == 200){
+            return withContext(Dispatchers.IO) { response.body?.string() }
+        }
+        else{
+            return null
+        }
+    }
+
+    //endregion
+
+    //region NASA API
 
     suspend fun getAPODList() : String? {
         val request = Request.Builder()
@@ -97,4 +150,6 @@ class ApiClient {
     fun getInsightListData(data: String?): MutableList<Insight>{
         return Gson().fromJson(data, object : TypeToken<MutableList<Insight>>() {}.type)
     }
+
+    //endregion
 }
