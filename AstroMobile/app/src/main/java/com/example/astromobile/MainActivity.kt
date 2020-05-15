@@ -7,6 +7,7 @@ import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.view.WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS
 import androidx.activity.OnBackPressedCallback
 import androidx.appcompat.app.AlertDialog
 import com.example.astromobile.adapters.MenuAdapter

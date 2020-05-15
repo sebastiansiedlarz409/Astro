@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".MainActivity"
-    android:background="#333333">
+    android:background="@drawable/background">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,19 +22,6 @@
             android:textStyle="bold"
             android:textColor="#FFFFFF"
             android:text="Astro Mobile" />
-
-        <TextView
-            android:id="@+id/menuText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="12dp"
-            android:layout_marginRight="12dp"
-            android:layout_marginBottom="2dp"
-            android:layout_marginTop="0dp"
-            android:textSize="25sp"
-            android:textStyle="bold"
-            android:textColor="#FFFFFF"
-            android:text="Dostępne opcje:" />
 
         <LinearLayout
             android:id="@+id/loggedField"
@@ -70,7 +56,7 @@
                         android:layout_marginRight="12dp"
                         android:layout_marginBottom="2dp"
                         android:layout_marginTop="0dp"
-                        android:textSize="22sp"
+                        android:textSize="24sp"
                         android:textStyle="bold"
                         android:textColor="#FFFFFF"
                         android:layout_weight="1"
@@ -104,7 +90,7 @@
                         android:layout_marginRight="12dp"
                         android:layout_marginBottom="2dp"
                         android:layout_marginTop="0dp"
-                        android:textSize="22sp"
+                        android:textSize="24sp"
                         android:layout_gravity="center"
                         android:textColor="#FFFFFF"
                         android:text="Wyloguj" />
@@ -146,7 +132,7 @@
                         android:layout_marginRight="12dp"
                         android:layout_marginBottom="2dp"
                         android:layout_marginTop="0dp"
-                        android:textSize="22sp"
+                        android:textSize="24sp"
                         android:layout_gravity="center"
                         android:textColor="#FFFFFF"
                         android:text="Logowanie" />
@@ -179,7 +165,7 @@
                         android:layout_marginRight="12dp"
                         android:layout_marginBottom="2dp"
                         android:layout_marginTop="0dp"
-                        android:textSize="22sp"
+                        android:textSize="24sp"
                         android:layout_gravity="center"
                         android:textColor="#FFFFFF"
                         android:text="Rejestracja" />
@@ -202,8 +188,10 @@
             android:id="@+id/menu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:padding="2dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="3dp"
+            android:layout_marginTop="0dp"
             android:numColumns="2"/>
 
     </LinearLayout>

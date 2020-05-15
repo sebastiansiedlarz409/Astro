@@ -9,9 +9,14 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.astromobile.services.AuthService
 import com.example.astromobile.services.RegisterResults
 import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.activity_register.email
+import kotlinx.android.synthetic.main.activity_register.errorText
+import kotlinx.android.synthetic.main.activity_register.password
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class RegisterActivity : AppCompatActivity() {
 
@@ -43,10 +48,16 @@ class RegisterActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
                 RegisterResults.BadRequest -> {
-                    //TODO: print error
+                    withContext(Dispatchers.Main){
+                        errorText.visibility = View.VISIBLE
+                        errorText.text = "Prawdopodobnie podałeś błędne dane!"
+                    }
                 }
                 else -> {
-                    //TODO: print error
+                    withContext(Dispatchers.Main){
+                        errorText.visibility = View.VISIBLE
+                        errorText.text = "Prawdopodobnie wystąpił błąd połączenia!"
+                    }
                 }
             }
         }

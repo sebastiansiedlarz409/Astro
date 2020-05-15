@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".APODDetailsActivity"
-    android:background="#333333">
+    android:background="@drawable/background">
 
     <ScrollView
         android:layout_width="wrap_content"
@@ -19,12 +19,14 @@
 
             <ImageView
                 android:id="@+id/image"
+                android:background="@drawable/imageview_border"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="12dp"
                 android:layout_marginRight="12dp"
                 android:layout_marginBottom="4dp"
                 android:layout_marginTop="12dp"
+                android:padding="3dp"
                 app:srcCompat="@drawable/ic_launcher_background" />
 
             <TextView

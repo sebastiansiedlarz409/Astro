@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:card_view="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".RegisterActivity"
-    android:background="#333333">
+    android:background="@drawable/background">
 
     <TextView
         android:id="@+id/title"
@@ -17,6 +15,7 @@
         android:textSize="35sp"
         android:textStyle="bold"
         android:textColor="#FFFFFF"
+        android:textColorHint="#AAAAAA"
         android:text="Astro Mobile" />
 
     <TextView
@@ -30,7 +29,21 @@
         android:textSize="25sp"
         android:textStyle="bold"
         android:textColor="#FFFFFF"
+        android:textColorHint="#AAAAAA"
         android:text="Zarejestruj się:" />
+
+    <TextView
+        android:id="@+id/errorText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="0dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        android:textColor="#FF0000" />
 
     <EditText
         android:id="@+id/username"
@@ -42,6 +55,8 @@
         android:layout_marginTop="5dp"
         android:ems="10"
         android:textColor="#FFFFFF"
+        android:textColorHint="#AAAAAA"
+        android:background="@drawable/input_background"
         android:inputType="textPersonName"
         android:hint="Nazwa użytkownika" />
 
@@ -55,6 +70,8 @@
         android:layout_marginTop="5dp"
         android:ems="10"
         android:textColor="#FFFFFF"
+        android:textColorHint="#AAAAAA"
+        android:background="@drawable/input_background"
         android:inputType="textPersonName"
         android:hint="Email" />
 
@@ -69,6 +86,8 @@
         android:hint="Hasło"
         android:ems="10"
         android:textColor="#FFFFFF"
+        android:textColorHint="#AAAAAA"
+        android:background="@drawable/input_background"
         android:inputType="textPassword" />
 
     <EditText
@@ -82,6 +101,8 @@
         android:hint="Powtórz hasło"
         android:ems="10"
         android:textColor="#FFFFFF"
+        android:textColorHint="#AAAAAA"
+        android:background="@drawable/input_background"
         android:inputType="textPassword" />
 
     <Button
@@ -91,10 +112,10 @@
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         android:layout_marginBottom="2dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="5dp"
         android:textColor="#FFFFFF"
         android:textSize="22sp"
-        android:background="@color/colorAccent"
+        android:background="#88000080"
         android:onClick="register"
         android:text="Zarejestruj" />
 

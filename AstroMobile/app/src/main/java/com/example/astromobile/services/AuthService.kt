@@ -36,8 +36,6 @@ class AuthService(private var sharedPreferences: SharedPreferences){
             when (response.code) {
                 200 -> {
                     token = apiClient.loginData(response.body?.string())
-                    //sharedPreferences.edit().putString("token", token!!.token).apply()
-                    //sharedPreferences.edit().putString("username", token!!.user.userName).apply()
                     result = LoginResults.Logged
                 }
                 400 -> {

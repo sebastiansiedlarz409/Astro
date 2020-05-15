@@ -24,7 +24,7 @@ class EPICAdapter(
 
         Picasso.get()
             .load(data[0].imageName)
-            .resize(80, 80)
+            .resize(120, 120)
             .centerCrop()
             .into(rowView.image)
 

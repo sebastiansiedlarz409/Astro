@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".APODActivity"
-    android:background="#333333">
+    android:background="@drawable/background">
 
     <TextView
         android:id="@+id/menuText"

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ShowImageActivity"
-    android:background="#333333">
+    android:background="@drawable/background">
 
     <ScrollView
         android:layout_width="wrap_content"

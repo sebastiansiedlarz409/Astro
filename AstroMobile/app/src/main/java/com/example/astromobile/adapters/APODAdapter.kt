@@ -24,7 +24,7 @@ class APODAdapter(
 
         Picasso.get()
             .load(data[position].url)
-            .resize(80, 80)
+            .resize(120, 120)
             .centerCrop()
             .into(rowView.image)
 

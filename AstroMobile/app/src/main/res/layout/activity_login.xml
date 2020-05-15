@@ -6,8 +6,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity"
-    android:background="#333333">
+    tools:context=".LoginActivity"
+    android:background="@drawable/background">
 
     <TextView
         android:id="@+id/title"
@@ -32,6 +32,19 @@
         android:textColor="#FFFFFF"
         android:text="Zaloguj się:" />
 
+    <TextView
+        android:id="@+id/errorText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="2dp"
+        android:layout_marginTop="0dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        android:textColor="#FF0000" />
+
     <EditText
         android:id="@+id/email"
         android:layout_width="match_parent"
@@ -42,6 +55,8 @@
         android:layout_marginTop="5dp"
         android:ems="10"
         android:textColor="#FFFFFF"
+        android:textColorHint="#AAAAAA"
+        android:background="@drawable/input_background"
         android:inputType="textPersonName"
         android:hint="Email" />
 
@@ -56,6 +71,8 @@
         android:hint="Hasło"
         android:ems="10"
         android:textColor="#FFFFFF"
+        android:textColorHint="#AAAAAA"
+        android:background="@drawable/input_background"
         android:inputType="textPassword" />
 
     <Button
@@ -65,11 +82,11 @@
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         android:layout_marginBottom="2dp"
-        android:layout_marginTop="0dp"
+        android:layout_marginTop="5dp"
         android:textColor="#FFFFFF"
         android:textSize="22sp"
         android:onClick="login"
-        android:background="@color/colorAccent"
+        android:background="#88000080"
         android:text="Zaloguj" />
 
 </LinearLayout>

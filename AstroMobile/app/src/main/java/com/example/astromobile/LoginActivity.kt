@@ -12,7 +12,9 @@ import com.example.astromobile.services.LoginResults
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class LoginActivity : AppCompatActivity() {
 
@@ -50,13 +52,16 @@ class LoginActivity : AppCompatActivity() {
                     startActivity(intent)
                 }
                 LoginResults.BadRequest -> {
-                    //TODO: print error
-                    /*val intent = Intent(this@LoginActivity, LoginActivity::class.java)
-                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                        startActivity(intent)*/
+                    withContext(Main){
+                        errorText.visibility = View.VISIBLE
+                        errorText.text = "Prawdopodobnie podałeś błędne dane!"
+                    }
                 }
                 else -> {
-                    //TODO: print error
+                    withContext(Main){
+                        errorText.visibility = View.VISIBLE
+                        errorText.text = "Prawdopodobnie wystąpił błąd połączenia!"
+                    }
                 }
             }
         }
