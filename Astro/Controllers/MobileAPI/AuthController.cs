@@ -1,15 +1,15 @@
 ﻿using System;
-using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Astro.DAL.DBContext;
 using Astro.DAL.Models;
 using Astro.Models;
+using JWT.Algorithms;
+using JWT.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Astro.Controllers.MobileAPI
 {
@@ -28,7 +28,7 @@ namespace Astro.Controllers.MobileAPI
             _context = context;
         }
 
-        [HttpPost("login")]
+        [HttpPost("Login")]
         public async Task<IActionResult> Login(LoginViewModel model)
         {
             if (!ModelState.IsValid)
@@ -45,30 +45,17 @@ namespace Astro.Controllers.MobileAPI
                 _context.Update(user);
                 await _context.SaveChangesAsync();
 
-                var claims = new[]
-                {
-                        new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                        new Claim(ClaimTypes.Name, user.UserName)
-                    };
-
-                //ignore string below
-                var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("Ta aplikacja jest turbo fajna :)"));
-
-                var creds = new SigningCredentials(key, SecurityAlgorithms.HmacSha512Signature);
-
-                var tokenDescriptor = new SecurityTokenDescriptor
-                {
-                    Subject = new ClaimsIdentity(claims),
-                    Expires = DateTime.Now.AddHours(12),
-                    SigningCredentials = creds
-                };
-
-                var tokenHandler = new JwtSecurityTokenHandler();
-                var token = tokenHandler.CreateToken(tokenDescriptor);
+                var token = new JwtBuilder()
+                    .WithAlgorithm(new HMACSHA256Algorithm())
+                    .WithSecret(Encoding.ASCII.GetBytes("Ta aplikacja jest turbo fajna")) //ignore this string
+                    .AddClaim(ClaimTypes.Expiration, DateTimeOffset.UtcNow.AddMinutes(10).ToUnixTimeSeconds())
+                    .AddClaim(ClaimTypes.NameIdentifier, user.Id.ToString())
+                    .AddClaim(ClaimTypes.Name, user.UserName)
+                    .Encode();
 
                 return Ok(new
                 {
-                    token = tokenHandler.WriteToken(token),
+                    token,
                     user
                 });
             }
@@ -76,7 +63,7 @@ namespace Astro.Controllers.MobileAPI
             return BadRequest();
         }
 
-        [HttpPost("register")]
+        [HttpPost("Register")]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (!ModelState.IsValid)

@@ -21,8 +21,8 @@ class ApiClient {
     private val urlAPOD: String = "api/APOD"
     private val urlInsight: String = "api/Insight"
     private val urlAsteroidsNeoWs: String = "api/AsteroidsNeoWs"
-    private val urlLogin: String = "api/Auth/login"
-    private val urlRegister: String = "api/Auth/register"
+    private val urlLogin: String = "api/Auth/Login"
+    private val urlRegister: String = "api/Auth/Register"
 
     private var client: OkHttpClient = OkHttpClient.Builder()
         .connectTimeout(2000, TimeUnit.MILLISECONDS)

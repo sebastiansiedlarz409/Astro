@@ -13,6 +13,9 @@ using Astro.BLL.JSONParsers;
 using Astro.DAL.APICLIENT;
 using Astro.BLL.Tools;
 using System.Net.Http;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 namespace Astro
 {
@@ -78,7 +81,26 @@ namespace Astro
             services.AddTransient<IPressure, Pressure>();
             services.AddTransient<Calculator>();
 
-            services.AddControllersWithViews();
+            
+            services.AddAuthentication()
+            .AddJwtBearer(jwtBearerOptions =>
+            {
+                jwtBearerOptions.RequireHttpsMetadata = false;
+                jwtBearerOptions.SaveToken = true;
+                jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuerSigningKey = true,
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("Ta aplikacja jest turbo fajna")),
+                    ValidateLifetime = true,
+                    ClockSkew = TimeSpan.FromMinutes(10)
+                };
+            });
+
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            );
+
             services.AddRazorPages();
         }
 
@@ -92,7 +114,7 @@ namespace Astro
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                //app.UseExceptionHandler("/Home/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
