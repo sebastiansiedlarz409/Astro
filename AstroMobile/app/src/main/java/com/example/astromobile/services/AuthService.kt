@@ -1,6 +1,5 @@
 package com.example.astromobile.services
 
-import android.content.SharedPreferences
 import com.example.astromobile.apiclient.ApiClient
 import com.example.astromobile.models.Token
 import com.example.astromobile.models.User
@@ -9,7 +8,7 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.async
 import okhttp3.Response
 
-class AuthService(private var sharedPreferences: SharedPreferences){
+class AuthService{
 
     private val apiClient = ApiClient()
     private var token: Token? = null
@@ -79,9 +78,9 @@ class AuthService(private var sharedPreferences: SharedPreferences){
     companion object{
         private var instance: AuthService? = null
 
-        fun getAuthService(sharedPreferences: SharedPreferences): AuthService?{
+        fun getAuthService(): AuthService?{
             if(instance == null){
-                instance = AuthService(sharedPreferences)
+                instance = AuthService()
             }
 
             return instance

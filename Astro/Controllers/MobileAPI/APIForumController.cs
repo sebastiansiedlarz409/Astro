@@ -1,12 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Astro.DAL.DBContext;
 using Astro.DAL.Models;
 using Astro.Models;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +14,7 @@ namespace Astro.Controllers.MobileAPI
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize]
+    [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class APIForumController : ControllerBase
     {
         private readonly AstroDbContext _context;
@@ -47,7 +46,7 @@ namespace Astro.Controllers.MobileAPI
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            User user = await _context.User.FirstOrDefaultAsync(t => t.Id.Equals(_userManager.GetUserId(User)));
+            User user = await _context.User.FirstOrDefaultAsync(t => t.Id.Equals(model.UserId));
 
             Topic topic = new Topic()
             {

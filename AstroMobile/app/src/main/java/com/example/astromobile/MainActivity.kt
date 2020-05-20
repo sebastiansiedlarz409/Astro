@@ -19,7 +19,6 @@ import kotlin.system.exitProcess
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var sharedPreferences: SharedPreferences
     private lateinit var authService: AuthService
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,8 +26,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         supportActionBar?.hide()
 
-        sharedPreferences = getSharedPreferences("AstroMobile", Context.MODE_PRIVATE)
-        authService = AuthService.getAuthService(sharedPreferences)!!
+        authService = AuthService.getAuthService()!!
 
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -45,8 +43,8 @@ class MainActivity : AppCompatActivity() {
         }
         loginOut.setOnClickListener {
             authService.logOut()
-            finish();
-            startActivity(intent);
+            finish()
+            startActivity(intent)
         }
 
         if(authService.isLogged()){
@@ -79,8 +77,23 @@ class MainActivity : AppCompatActivity() {
             else if(position == 4){
 
             }
-            else if(position == 4){
-
+            else if(position == 5){
+                if(!authService.isLogged()){
+                    val builder = AlertDialog.Builder(this, R.style.InfoAlert)
+                    builder.setTitle("Forum")
+                    builder.setMessage("Musisz się zalogować!")
+                    builder.setIcon(R.drawable.ic_info_outline_black_24dp)
+                    builder.setPositiveButton("Rejestruj") { _, _ ->
+                        startActivity(Intent(this@MainActivity, RegisterActivity::class.java))
+                    }
+                    builder.setNegativeButton("Zaloguj") { _, _ ->
+                        startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+                    }
+                    builder.show()
+                }
+                else{
+                    startActivity(Intent(this, ForumActivity::class.java))
+                }
             }
             else{
                 val builder = AlertDialog.Builder(this, R.style.InfoAlert)

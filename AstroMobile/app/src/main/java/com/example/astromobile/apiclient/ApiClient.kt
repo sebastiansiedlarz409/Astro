@@ -23,6 +23,7 @@ class ApiClient {
     private val urlAsteroidsNeoWs: String = "api/AsteroidsNeoWs"
     private val urlLogin: String = "api/Auth/Login"
     private val urlRegister: String = "api/Auth/Register"
+    private val urlAllTopics: String = "api/APIForum/Topic"
 
     private var client: OkHttpClient = OkHttpClient.Builder()
         .connectTimeout(2000, TimeUnit.MILLISECONDS)
@@ -78,6 +79,39 @@ class ApiClient {
     }
 
     //endregion
+
+    // region Forum
+
+    suspend fun getAllTopics(token: String) : Response {
+        val request = Request.Builder()
+            .url("$urlMain/$urlAllTopics")
+            .addHeader("Authorization", "Bearer $token")
+            .build()
+
+        return client.newCall(request).await()
+    }
+
+    fun getAllTopicsData(data: String?): MutableList<Topic>{
+        println(data?.subSequence(0,40))
+        return Gson().fromJson(data, object : TypeToken<MutableList<Topic>>() {}.type)
+    }
+
+    suspend fun postTopic(token: String,id: String, title: String, content: String) : Response {
+        val data = JSONObject()
+        data.put("UserId", id)
+        data.put("Topic", title)
+        data.put("Comment", content)
+
+        val request = Request.Builder()
+            .url("$urlMain/$urlAllTopics")
+            .addHeader("Authorization", "Bearer $token")
+            .post(RequestBody.create(JSON, data.toString()))
+            .build()
+
+        return client.newCall(request).await()
+    }
+
+    // endregion
 
     //region NASA API
 

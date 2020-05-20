@@ -5,11 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".InsightActivity"
+    tools:context=".ForumActivity"
     android:background="@drawable/background">
 
     <TextView
-        android:id="@+id/menuText"
+        android:id="@+id/forumLabel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="12dp"
@@ -19,10 +19,20 @@
         android:textSize="25sp"
         android:textStyle="bold"
         android:textColor="#FFFFFF"
-        android:text="Dane pogodowe z Marsa:" />
+        android:text="Forum:" />
+
+    <Button
+        android:id="@+id/addTopic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#FFFFFF"
+        android:layout_margin="3dp"
+        android:textSize="22sp"
+        android:background="@color/colorAccent"
+        android:text="Dodaj"/>
 
     <ListView
-        android:id="@+id/insight"
+        android:id="@+id/topics"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"

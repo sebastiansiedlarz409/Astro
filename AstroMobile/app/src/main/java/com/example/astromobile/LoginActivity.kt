@@ -19,15 +19,13 @@ import kotlinx.coroutines.withContext
 class LoginActivity : AppCompatActivity() {
 
     private lateinit var authService: AuthService
-    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
         supportActionBar?.hide()
 
-        sharedPreferences = getSharedPreferences("AstroMobile", Context.MODE_PRIVATE)
-        authService = AuthService.getAuthService(sharedPreferences)!!
+        authService = AuthService.getAuthService()!!
 
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {

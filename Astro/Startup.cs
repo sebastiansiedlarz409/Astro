@@ -16,6 +16,7 @@ using System.Net.Http;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using JWT;
 
 namespace Astro
 {
@@ -81,15 +82,16 @@ namespace Astro
             services.AddTransient<IPressure, Pressure>();
             services.AddTransient<Calculator>();
 
-            
-            services.AddAuthentication()
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(jwtBearerOptions =>
             {
                 jwtBearerOptions.RequireHttpsMetadata = false;
                 jwtBearerOptions.SaveToken = true;
                 jwtBearerOptions.TokenValidationParameters = new TokenValidationParameters
                 {
-                    ValidateIssuerSigningKey = true,
+                    ValidateIssuerSigningKey = false,
+                    ValidateAudience = false,
+                    ValidateIssuer = false,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes("Ta aplikacja jest turbo fajna")),
                     ValidateLifetime = true,
                     ClockSkew = TimeSpan.FromMinutes(10)
@@ -121,11 +123,12 @@ namespace Astro
             app.UseHttpsRedirection();
             app.UseDefaultFiles();
             app.UseStaticFiles();
-
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            //app.UseJwtMiddleware();
 
             app.UseEndpoints(endpoints =>
             {

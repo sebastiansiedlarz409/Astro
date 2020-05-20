@@ -18,7 +18,7 @@ namespace Astro.DAL.DBContext
         {
             APOD check = await _context.APOD.AsNoTracking().FirstOrDefaultAsync(t => t.Date.Equals(apod.Date));
 
-            if (check is null)
+            if (check is null && apod.MediaType.Equals("image"))
             {
                 await _context.APOD.AddAsync(apod);
                 await _context.SaveChangesAsync();

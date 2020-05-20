@@ -124,10 +124,20 @@
             {
                 continue;
             }
-            <div class="mySlides">
-                <div class="numbertext">@(j++) / @Model.Count()</div>
-                <img src="@item.UrlHd" style="width:100%">
-            </div>
+            if (item.UrlHd.Equals("none"))
+            {
+                <div class="mySlides">
+                    <div class="numbertext">@(j++) / @Model.Count()</div>
+                    <img src="@item.Url" style="width:100%">
+                </div>
+            }
+            else
+            {
+                <div class="mySlides">
+                    <div class="numbertext">@(j++) / @Model.Count()</div>
+                    <img src="@item.UrlHd" style="width:100%">
+                </div>
+            }
         }
     }
 
@@ -141,10 +151,23 @@
         <br />
         @foreach (var item in Model)
         {
+            if (item.MediaType != "image")
+            {
+                continue;
+            }
             <div class="gallery">
-                <a target="_blank" href="@item.UrlHd">
-                    <img src="@item.UrlHd" alt="image" />
-                </a>
+                @if (item.UrlHd.Equals("none"))
+                {
+                    <a target="_blank" href="@item.Url">
+                        <img src="@item.Url" alt="image" />
+                    </a>
+                }
+                else
+                {
+                    <a target="_blank" href="@item.UrlHd">
+                        <img src="@item.UrlHd" alt="image" />
+                    </a>
+                }
                 <div class="desc"> @item.Title (@item.Author @item.Date)</div>
             </div>
         }

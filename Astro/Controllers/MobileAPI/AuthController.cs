@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using Astro.DAL.DBContext;
@@ -37,7 +36,7 @@ namespace Astro.Controllers.MobileAPI
             var user = await _context.Users.FirstOrDefaultAsync(t => t.Email.Equals(model.Email));
 
             var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, false, lockoutOnFailure: false);
-
+            
             if (result.Succeeded)
             {
                 user.LastLoginDate = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
@@ -45,12 +44,14 @@ namespace Astro.Controllers.MobileAPI
                 _context.Update(user);
                 await _context.SaveChangesAsync();
 
+                await _signInManager.SignOutAsync();
+
                 var token = new JwtBuilder()
                     .WithAlgorithm(new HMACSHA256Algorithm())
                     .WithSecret(Encoding.ASCII.GetBytes("Ta aplikacja jest turbo fajna")) //ignore this string
-                    .AddClaim(ClaimTypes.Expiration, DateTimeOffset.UtcNow.AddMinutes(10).ToUnixTimeSeconds())
-                    .AddClaim(ClaimTypes.NameIdentifier, user.Id.ToString())
-                    .AddClaim(ClaimTypes.Name, user.UserName)
+                    .AddClaim("exp", DateTimeOffset.UtcNow.AddMinutes(10).ToUnixTimeSeconds())
+                    .AddClaim("id", user.Id.ToString())
+                    .AddClaim("username", user.UserName)
                     .Encode();
 
                 return Ok(new

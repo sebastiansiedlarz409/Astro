@@ -7,6 +7,7 @@ namespace Astro.Models
 {
     public class AddCommentViewModel
     {
+        public string UserId { get; set; }
         public int Id { get; set; }
         public int TopicId { get; set; }
         public string Comment { get; set; }
