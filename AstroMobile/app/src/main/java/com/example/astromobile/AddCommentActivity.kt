@@ -25,13 +25,27 @@ class AddCommentActivity : AppCompatActivity() {
         authService = AuthService.getAuthService()!!
 
         val id: Int = intent.getIntExtra("id", 0)
+        val comment: String? = intent.getStringExtra("content")
+
+        if(comment != null){
+            content.setText(comment.toString())
+        }
 
         addComment.setOnClickListener {
             val content = content.text.toString()
 
             CoroutineScope(Dispatchers.IO).launch {
-                val response: Response = apiClient.postComment(authService.getLoggedUserToken()!!.token,
-                    authService.getLoggedUser()!!.id, id.toString(), content)
+
+                val response: Response
+
+                if(comment == null){
+                    response = apiClient.postComment(authService.getLoggedUserToken()!!.token,
+                        authService.getLoggedUser()!!.id, id.toString(), content)
+                }
+                else{
+                    response = apiClient.editComment(authService.getLoggedUserToken()!!.token,
+                        id.toString(), content)
+                }
 
                 when (response.code) {
                     200 -> {

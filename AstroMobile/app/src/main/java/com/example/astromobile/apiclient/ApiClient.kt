@@ -140,6 +140,42 @@ class ApiClient {
         return client.newCall(request).await()
     }
 
+    suspend fun editComment(token: String, commentId: String, comment: String) : Response {
+        val data = JSONObject()
+        data.put("Id", commentId)
+        data.put("Comment", comment)
+
+        val request = Request.Builder()
+            .url("$urlMain/$urlComments")
+            .addHeader("Authorization", "Bearer $token")
+            .put(RequestBody.create(JSON, data.toString()))
+            .build()
+
+        return client.newCall(request).await()
+    }
+
+    suspend fun deleteComment(token: String, commentId: String) : Response {
+
+        val request = Request.Builder()
+            .url("$urlMain/$urlComments/$commentId")
+            .addHeader("Authorization", "Bearer $token")
+            .delete(RequestBody.create(JSON, "{}"))
+            .build()
+
+        return client.newCall(request).await()
+    }
+
+    suspend fun deleteTopic(token: String, topicId: String) : Response {
+
+        val request = Request.Builder()
+            .url("$urlMain/$urlTopics/$topicId")
+            .addHeader("Authorization", "Bearer $token")
+            .delete(RequestBody.create(JSON, "{}"))
+            .build()
+
+        return client.newCall(request).await()
+    }
+
     suspend fun rateTopic(token: String, topicId: String, rate: Int): Response {
 
         val request = Request.Builder()

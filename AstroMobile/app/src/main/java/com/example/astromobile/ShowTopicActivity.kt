@@ -9,7 +9,6 @@ import com.example.astromobile.apiclient.ApiClient
 import com.example.astromobile.models.Comment
 import com.example.astromobile.models.Topic
 import com.example.astromobile.services.AuthService
-import kotlinx.android.synthetic.main.activity_forum.*
 import kotlinx.android.synthetic.main.activity_show_topic.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
