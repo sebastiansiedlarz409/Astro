@@ -23,7 +23,8 @@ class ApiClient {
     private val urlAsteroidsNeoWs: String = "api/AsteroidsNeoWs"
     private val urlLogin: String = "api/Auth/Login"
     private val urlRegister: String = "api/Auth/Register"
-    private val urlAllTopics: String = "api/APIForum/Topic"
+    private val urlTopics: String = "api/APIForum/Topic"
+    private val urlComments: String = "api/APIForum/Comment"
 
     private var client: OkHttpClient = OkHttpClient.Builder()
         .connectTimeout(2000, TimeUnit.MILLISECONDS)
@@ -84,7 +85,7 @@ class ApiClient {
 
     suspend fun getAllTopics(token: String) : Response {
         val request = Request.Builder()
-            .url("$urlMain/$urlAllTopics")
+            .url("$urlMain/$urlTopics")
             .addHeader("Authorization", "Bearer $token")
             .build()
 
@@ -92,18 +93,45 @@ class ApiClient {
     }
 
     fun getAllTopicsData(data: String?): MutableList<Topic>{
-        println(data?.subSequence(0,40))
         return Gson().fromJson(data, object : TypeToken<MutableList<Topic>>() {}.type)
     }
 
-    suspend fun postTopic(token: String,id: String, title: String, content: String) : Response {
+    suspend fun getTopic(token: String, id: Int) : Response {
+        val request = Request.Builder()
+            .url("$urlMain/$urlTopics/$id")
+            .addHeader("Authorization", "Bearer $token")
+            .build()
+
+        return client.newCall(request).await()
+    }
+
+    fun getTopicData(data: String?): Topic{
+        return Gson().fromJson(data, object : TypeToken<Topic>() {}.type)
+    }
+
+    suspend fun postTopic(token: String, userId: String, title: String, content: String) : Response {
         val data = JSONObject()
-        data.put("UserId", id)
+        data.put("UserId", userId)
         data.put("Topic", title)
         data.put("Comment", content)
 
         val request = Request.Builder()
-            .url("$urlMain/$urlAllTopics")
+            .url("$urlMain/$urlTopics")
+            .addHeader("Authorization", "Bearer $token")
+            .post(RequestBody.create(JSON, data.toString()))
+            .build()
+
+        return client.newCall(request).await()
+    }
+
+    suspend fun postComment(token: String, userId: String, topicId: String, comment: String) : Response {
+        val data = JSONObject()
+        data.put("UserId", userId)
+        data.put("TopicId", topicId)
+        data.put("Comment", comment)
+
+        val request = Request.Builder()
+            .url("$urlMain/$urlComments")
             .addHeader("Authorization", "Bearer $token")
             .post(RequestBody.create(JSON, data.toString()))
             .build()

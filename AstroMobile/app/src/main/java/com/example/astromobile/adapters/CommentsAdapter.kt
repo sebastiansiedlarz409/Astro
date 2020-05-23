@@ -8,35 +8,28 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.example.astromobile.R
-import com.example.astromobile.ShowTopicActivity
-import com.example.astromobile.models.Topic
-import kotlinx.android.synthetic.main.topic_item.view.*
+import com.example.astromobile.models.Comment
+import kotlinx.android.synthetic.main.comment_item.view.*
 
-class AllTopicsAdapter(
+class CommentsAdapter(
     private val context: Context,
-    private val data: ArrayList<Topic>): BaseAdapter() {
+    private val data: ArrayList<Comment>): BaseAdapter() {
 
     private val inflater: LayoutInflater
             = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
     @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val rowView: View = inflater.inflate(R.layout.topic_item, parent, false)
+        val rowView: View = inflater.inflate(R.layout.comment_item, parent, false)
 
-        rowView.date.text = data[position].date
+        rowView.date.text = data[position].date.toString()
         rowView.author.text = data[position].user.userName
-        rowView.open.text = data[position].title
-
-        rowView.open.setOnClickListener {
-            val intent = Intent(context, ShowTopicActivity::class.java)
-            intent.putExtra("id", data[position].id)
-            context.startActivity(intent)
-        }
+        rowView.content.text = data[position].content
 
         return rowView
     }
 
-    override fun getItem(position: Int): Topic = data[position]
+    override fun getItem(position: Int): Comment = data[position]
 
     override fun getItemId(position: Int): Long = position.toLong()
 

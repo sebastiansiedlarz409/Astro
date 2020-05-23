@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Astro.DAL.DBContext;
 using Astro.DAL.Models;
@@ -35,7 +36,7 @@ namespace Astro.Controllers.MobileAPI
         [HttpGet("Topic/{id}")]
         public async Task<ActionResult<Topic>> Topic(int id)
         {
-            Topic topic = await _context.Topics.Include(t=>t.Comments).ThenInclude(t=>t.User).Include(t=>t.User).FirstOrDefaultAsync(t => t.Id == id);
+            Topic topic = await _context.Topics.Include(t => t.Comments).ThenInclude(t => t.User).Include(t => t.User).FirstOrDefaultAsync(t => t.Id == id);
 
             return topic;
         }
@@ -83,7 +84,7 @@ namespace Astro.Controllers.MobileAPI
 
             Topic topic = await _context.Topics.FirstOrDefaultAsync(t => t.Id == model.TopicId);
 
-            User user = await _context.User.FirstOrDefaultAsync(t => t.Id.Equals(_userManager.GetUserId(User)));
+            User user = await _context.User.FirstOrDefaultAsync(t => t.Id.Equals(model.UserId));
 
             Comment newComment = new Comment()
             {

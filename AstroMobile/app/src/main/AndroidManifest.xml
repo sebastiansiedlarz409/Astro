@@ -12,7 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".AddTopicActivity"></activity>
+        <activity android:name=".AddCommentActivity"></activity>
+        <activity android:name=".ShowTopicActivity" />
+        <activity android:name=".AddTopicActivity" />
         <activity android:name=".ForumActivity" />
         <activity android:name=".ConnectionCheckActivity">
             <intent-filter>
