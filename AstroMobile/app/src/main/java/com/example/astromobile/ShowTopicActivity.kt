@@ -94,5 +94,60 @@ class ShowTopicActivity : AppCompatActivity() {
 
         adapter = CommentsAdapter(this, listItems)
         comments.adapter = adapter
+
+        //rate topic
+        rateUp.setOnClickListener {
+            CoroutineScope(IO).launch {
+                val response: Response = apiClient.rateTopic(authService.getLoggedUserToken()!!.token,
+                id.toString(), 1)
+
+                when (response.code) {
+                    200 -> {
+                        startActivity(intent)
+                        finish()
+                    }
+                    401 -> {
+                        startActivity(Intent(this@ShowTopicActivity, LoginActivity::class.java))
+                    }
+                    else -> {
+                        val builder = AlertDialog.Builder(this@ShowTopicActivity, R.style.InfoAlert)
+                        builder.setTitle("Forum")
+                        builder.setMessage("Wystąpił nie oczekiwany bład!")
+                        builder.setIcon(R.drawable.ic_info_outline_black_24dp)
+                        builder.setPositiveButton("OK") { _, _ ->
+                            startActivity(Intent(this@ShowTopicActivity, ConnectionCheckActivity::class.java))
+                        }
+                        builder.show()
+                    }
+                }
+            }
+        }
+
+        rateDown.setOnClickListener {
+            CoroutineScope(IO).launch {
+                val response: Response = apiClient.rateTopic(authService.getLoggedUserToken()!!.token,
+                    id.toString(), 0)
+
+                when (response.code) {
+                    200 -> {
+                        startActivity(intent)
+                        finish()
+                    }
+                    401 -> {
+                        startActivity(Intent(this@ShowTopicActivity, LoginActivity::class.java))
+                    }
+                    else -> {
+                        val builder = AlertDialog.Builder(this@ShowTopicActivity, R.style.InfoAlert)
+                        builder.setTitle("Forum")
+                        builder.setMessage("Wystąpił nie oczekiwany bład!")
+                        builder.setIcon(R.drawable.ic_info_outline_black_24dp)
+                        builder.setPositiveButton("OK") { _, _ ->
+                            startActivity(Intent(this@ShowTopicActivity, ConnectionCheckActivity::class.java))
+                        }
+                        builder.show()
+                    }
+                }
+            }
+        }
     }
 }

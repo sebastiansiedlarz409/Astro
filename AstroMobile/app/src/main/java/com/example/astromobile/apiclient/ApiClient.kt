@@ -25,6 +25,7 @@ class ApiClient {
     private val urlRegister: String = "api/Auth/Register"
     private val urlTopics: String = "api/APIForum/Topic"
     private val urlComments: String = "api/APIForum/Comment"
+    private val urlRate: String = "api/APIForum/Rate"
 
     private var client: OkHttpClient = OkHttpClient.Builder()
         .connectTimeout(2000, TimeUnit.MILLISECONDS)
@@ -134,6 +135,17 @@ class ApiClient {
             .url("$urlMain/$urlComments")
             .addHeader("Authorization", "Bearer $token")
             .post(RequestBody.create(JSON, data.toString()))
+            .build()
+
+        return client.newCall(request).await()
+    }
+
+    suspend fun rateTopic(token: String, topicId: String, rate: Int): Response {
+
+        val request = Request.Builder()
+            .url("$urlMain/$urlRate/$topicId/$rate")
+            .addHeader("Authorization", "Bearer $token")
+            .put(RequestBody.create(JSON, "{}"))
             .build()
 
         return client.newCall(request).await()
