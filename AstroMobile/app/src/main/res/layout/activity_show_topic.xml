@@ -28,7 +28,7 @@
         android:layout_marginRight="12dp"
         android:layout_marginBottom="4dp"
         android:layout_marginTop="0dp"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         android:textColor="#FFFFFF"
         android:text="Data dodania:" />
@@ -41,7 +41,7 @@
         android:layout_marginRight="12dp"
         android:layout_marginBottom="4dp"
         android:layout_marginTop="0dp"
-        android:textSize="20sp"
+        android:textSize="18sp"
         android:textStyle="bold"
         android:textColor="#FFFFFF"
         android:text="Autor:" />
@@ -62,9 +62,9 @@
             android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
             android:layout_margin="3dp"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:layout_weight="1"
-            android:background="@color/colorAccent"
+            android:background="#88000080"
             android:text="Plus"/>
 
         <Button
@@ -73,9 +73,9 @@
             android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
             android:layout_margin="3dp"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:layout_weight="1"
-            android:background="@color/colorAccent"
+            android:background="#88000080"
             android:text="0"/>
 
         <Button
@@ -84,9 +84,9 @@
             android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
             android:layout_margin="3dp"
-            android:textSize="16sp"
+            android:textSize="15sp"
             android:layout_weight="1"
-            android:background="@color/colorAccent"
+            android:background="#88000080"
             android:text="Minus"/>
 
     </LinearLayout>
@@ -101,7 +101,7 @@
         android:layout_marginBottom="4dp"
         android:layout_marginTop="0dp"
         android:textSize="18sp"
-        android:background="@color/colorAccent"
+        android:background="#88000080"
         android:text="Skomentuj"/>
 
     <ListView

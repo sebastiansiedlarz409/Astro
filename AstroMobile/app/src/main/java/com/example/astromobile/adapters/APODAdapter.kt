@@ -20,17 +20,17 @@ class APODAdapter(
 
     @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val rowView: View = inflater.inflate(R.layout.apod_item, parent, false)
+        val apodItem: View = inflater.inflate(R.layout.apod_item, parent, false)
 
         Picasso.get()
             .load(data[position].url)
             .resize(120, 120)
             .centerCrop()
-            .into(rowView.image)
+            .into(apodItem.image)
 
-        rowView.dateAPOD.text = data[position].date
+        apodItem.dateAPOD.text = data[position].date
 
-        return rowView
+        return apodItem
     }
 
     override fun getItem(position: Int): APOD = data[position]

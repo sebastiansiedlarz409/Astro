@@ -21,22 +21,22 @@ class AsteroidsNeoWsAdapter(
 
     @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val rowView: View = inflater.inflate(R.layout.asteroidsneows_item, parent, false)
+        val asteroidsItem: View = inflater.inflate(R.layout.asteroidsneows_item, parent, false)
 
-        rowView.name.text = data[position].name
-        rowView.size.text = data[position].size
-        rowView.fobservation.text = data[position].firstObservation
-        rowView.lobservation.text = data[position].lastObservation
+        asteroidsItem.name.text = data[position].name
+        asteroidsItem.size.text = data[position].size
+        asteroidsItem.fobservation.text = data[position].firstObservation
+        asteroidsItem.lobservation.text = data[position].lastObservation
 
-        rowView.link.setOnClickListener {
+        asteroidsItem.link.setOnClickListener {
              context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(data[position].url)))
         }
 
         if(data[position].dangerous == "True"){
-            rowView.name.setTextColor(Integer.parseUnsignedInt("ffff0000",16))
+            asteroidsItem.name.setTextColor(Integer.parseUnsignedInt("ffff0000",16))
         }
 
-        return rowView
+        return asteroidsItem
     }
 
     override fun getItem(position: Int): AsteroidsNeoWs = data[position]

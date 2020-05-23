@@ -20,17 +20,17 @@ class EPICAdapter(
 
     @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val rowView: View = inflater.inflate(R.layout.epic_item, parent, false)
+        val epicItem: View = inflater.inflate(R.layout.epic_item, parent, false)
 
         Picasso.get()
             .load(data[0].imageName)
             .resize(120, 120)
             .centerCrop()
-            .into(rowView.image)
+            .into(epicItem.image)
 
-        rowView.dateEPIC.text = data[position].date
+        epicItem.dateEPIC.text = data[position].date
 
-        return rowView
+        return epicItem
     }
 
     override fun getItem(position: Int): EPIC = data[position]

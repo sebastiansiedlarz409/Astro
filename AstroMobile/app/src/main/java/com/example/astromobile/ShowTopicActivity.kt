@@ -7,6 +7,7 @@ import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
 import com.example.astromobile.adapters.CommentsAdapter
 import com.example.astromobile.apiclient.ApiClient
+import com.example.astromobile.apiclient.ApiClientForum
 import com.example.astromobile.models.Comment
 import com.example.astromobile.models.Topic
 import com.example.astromobile.services.AuthService
@@ -20,7 +21,7 @@ import okhttp3.Response
 
 class ShowTopicActivity : AppCompatActivity() {
 
-    private val apiClient = ApiClient()
+    private val apiClient = ApiClientForum()
     private lateinit var authService: AuthService
 
     override fun onCreate(savedInstanceState: Bundle?) {

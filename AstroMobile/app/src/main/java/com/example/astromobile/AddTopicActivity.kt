@@ -7,6 +7,7 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.astromobile.apiclient.ApiClient
+import com.example.astromobile.apiclient.ApiClientForum
 import com.example.astromobile.services.AuthService
 import kotlinx.android.synthetic.main.activity_add_topic.*
 import kotlinx.coroutines.CoroutineScope
@@ -16,7 +17,7 @@ import okhttp3.Response
 
 class AddTopicActivity : AppCompatActivity() {
 
-    private var apiClient = ApiClient()
+    private var apiClient = ApiClientForum()
     private lateinit var authService: AuthService
 
     override fun onCreate(savedInstanceState: Bundle?) {

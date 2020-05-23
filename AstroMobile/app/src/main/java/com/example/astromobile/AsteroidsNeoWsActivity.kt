@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.astromobile.adapters.AsteroidsNeoWsAdapter
 import com.example.astromobile.apiclient.ApiClient
+import com.example.astromobile.apiclient.ApiClientNasa
 import com.example.astromobile.models.AsteroidsNeoWs
 import kotlinx.android.synthetic.main.activity_asteroids_neo_ws.*
 import kotlinx.coroutines.CoroutineScope
@@ -13,7 +14,7 @@ import kotlinx.coroutines.withContext
 
 class AsteroidsNeoWsActivity : AppCompatActivity() {
 
-    private val apiClient = ApiClient()
+    private val apiClient = ApiClientNasa()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -19,21 +19,21 @@ class InsightAdapter(
 
     @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val rowView: View = inflater.inflate(R.layout.insight_item, parent, false)
+        val insightItem: View = inflater.inflate(R.layout.insight_item, parent, false)
 
-        rowView.date.text = "Data: ${data[position].date}"
-        rowView.season.text = "Pora roku: ${data[position].season}"
-        rowView.minPress.text = data[position].minPress
-        rowView.avgPress.text = data[position].avgPress
-        rowView.maxPress.text = data[position].maxPress
-        rowView.minTemp.text = data[position].minTemp
-        rowView.avgTemp.text = data[position].avgTemp
-        rowView.maxTemp.text = data[position].maxTemp
-        rowView.minWind.text = data[position].minWind
-        rowView.avgWind.text = data[position].avgWind
-        rowView.maxWind.text = data[position].maxWind
+        insightItem.date.text = "Data: ${data[position].date}"
+        insightItem.season.text = "Pora roku: ${data[position].season}"
+        insightItem.minPress.text = data[position].minPress
+        insightItem.avgPress.text = data[position].avgPress
+        insightItem.maxPress.text = data[position].maxPress
+        insightItem.minTemp.text = data[position].minTemp
+        insightItem.avgTemp.text = data[position].avgTemp
+        insightItem.maxTemp.text = data[position].maxTemp
+        insightItem.minWind.text = data[position].minWind
+        insightItem.avgWind.text = data[position].avgWind
+        insightItem.maxWind.text = data[position].maxWind
 
-        return rowView
+        return insightItem
     }
 
     override fun getItem(position: Int): Insight = data[position]

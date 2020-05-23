@@ -1,6 +1,6 @@
 package com.example.astromobile.services
 
-import com.example.astromobile.apiclient.ApiClient
+import com.example.astromobile.apiclient.ApiClientAuth
 import com.example.astromobile.models.Token
 import com.example.astromobile.models.User
 import kotlinx.coroutines.CoroutineScope
@@ -10,7 +10,7 @@ import okhttp3.Response
 
 class AuthService{
 
-    private val apiClient = ApiClient()
+    private val apiClient = ApiClientAuth()
     private var token: Token? = null
 
     fun isLogged(): Boolean{

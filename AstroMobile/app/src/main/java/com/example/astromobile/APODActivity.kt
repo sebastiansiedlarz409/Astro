@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.astromobile.adapters.APODAdapter
 import com.example.astromobile.apiclient.ApiClient
+import com.example.astromobile.apiclient.ApiClientNasa
 import com.example.astromobile.models.APOD
 import kotlinx.android.synthetic.main.activity_apod.*
 import kotlinx.coroutines.CoroutineScope
@@ -15,7 +16,7 @@ import kotlinx.coroutines.withContext
 
 class APODActivity : AppCompatActivity() {
 
-    private val apiClient = ApiClient()
+    private val apiClient = ApiClientNasa()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

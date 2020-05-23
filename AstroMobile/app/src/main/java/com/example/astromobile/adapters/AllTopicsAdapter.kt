@@ -9,7 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.example.astromobile.*
-import com.example.astromobile.apiclient.ApiClient
+import com.example.astromobile.apiclient.ApiClientForum
 import com.example.astromobile.models.Topic
 import com.example.astromobile.services.AuthService
 import kotlinx.android.synthetic.main.topic_item.view.*
@@ -28,7 +28,7 @@ class AllTopicsAdapter(
             = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
     private lateinit var authService: AuthService
-    private val apiClient = ApiClient()
+    private val apiClient = ApiClientForum()
 
     @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
@@ -47,7 +47,7 @@ class AllTopicsAdapter(
         }
 
         rowView.delete.setOnClickListener {
-            if(data[position].user.id.equals(authService.getLoggedUser()!!.id)){
+            if(data[position].user.id == authService.getLoggedUser()!!.id){
                 CoroutineScope(Dispatchers.IO).launch {
                     val response: Response = apiClient.deleteTopic(authService.getLoggedUserToken()!!.token, data[position].id.toString())
 

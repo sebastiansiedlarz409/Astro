@@ -8,9 +8,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
-import androidx.activity.OnBackPressedCallback
 import com.example.astromobile.*
-import com.example.astromobile.apiclient.ApiClient
+import com.example.astromobile.apiclient.ApiClientForum
 import com.example.astromobile.models.Comment
 import com.example.astromobile.services.AuthService
 import kotlinx.android.synthetic.main.comment_item.view.*
@@ -28,19 +27,19 @@ class CommentsAdapter(
             = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
     private lateinit var authService: AuthService
-    private val apiClient = ApiClient()
+    private val apiClient = ApiClientForum()
 
     @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val rowView: View = inflater.inflate(R.layout.comment_item, parent, false)
+        val commentsItem: View = inflater.inflate(R.layout.comment_item, parent, false)
 
         authService = AuthService.getAuthService()!!
 
-        rowView.date.text = data[position].date.toString()
-        rowView.author.text = data[position].user.userName
-        rowView.content.text = data[position].content
+        commentsItem.date.text = data[position].date.toString()
+        commentsItem.author.text = data[position].user.userName
+        commentsItem.content.text = data[position].content
 
-        rowView.content.setOnClickListener {
+        commentsItem.content.setOnClickListener {
             if(data[position].user.id.equals(authService.getLoggedUser()!!.id)){
                 val intent = Intent(context, AddCommentActivity::class.java)
                 intent.putExtra("id", data[position].id)
@@ -49,7 +48,7 @@ class CommentsAdapter(
             }
         }
 
-        rowView.delete.setOnClickListener {
+        commentsItem.delete.setOnClickListener {
             if(data[position].user.id.equals(authService.getLoggedUser()!!.id)){
                 CoroutineScope(IO).launch {
                     val response: Response = apiClient.deleteComment(authService.getLoggedUserToken()!!.token, data[position].id.toString())
@@ -88,7 +87,7 @@ class CommentsAdapter(
             }
         }
 
-        return rowView
+        return commentsItem
     }
 
     override fun getItem(position: Int): Comment = data[position]

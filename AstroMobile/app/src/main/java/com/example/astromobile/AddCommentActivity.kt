@@ -5,6 +5,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.astromobile.apiclient.ApiClient
+import com.example.astromobile.apiclient.ApiClientForum
 import com.example.astromobile.services.AuthService
 import kotlinx.android.synthetic.main.activity_add_comment.*
 import kotlinx.coroutines.CoroutineScope
@@ -15,7 +16,7 @@ import okhttp3.Response
 class AddCommentActivity : AppCompatActivity() {
 
     private lateinit var authService: AuthService
-    private val apiClient = ApiClient()
+    private val apiClient = ApiClientForum()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
