@@ -27,8 +27,8 @@
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         android:layout_marginBottom="4dp"
-        android:layout_marginTop="12dp"
-        android:textSize="25sp"
+        android:layout_marginTop="0dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="#FFFFFF"
         android:text="Data dodania:" />
@@ -40,8 +40,8 @@
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         android:layout_marginBottom="4dp"
-        android:layout_marginTop="12dp"
-        android:textSize="25sp"
+        android:layout_marginTop="0dp"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:textColor="#FFFFFF"
         android:text="Autor:" />
@@ -53,7 +53,7 @@
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         android:layout_marginBottom="4dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="0dp"
         android:weightSum="3">
 
         <Button
@@ -62,7 +62,7 @@
             android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
             android:layout_margin="3dp"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:layout_weight="1"
             android:background="@color/colorAccent"
             android:text="Plus"/>
@@ -73,7 +73,7 @@
             android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
             android:layout_margin="3dp"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:layout_weight="1"
             android:background="@color/colorAccent"
             android:text="0"/>
@@ -84,7 +84,7 @@
             android:layout_height="wrap_content"
             android:textColor="#FFFFFF"
             android:layout_margin="3dp"
-            android:textSize="18sp"
+            android:textSize="16sp"
             android:layout_weight="1"
             android:background="@color/colorAccent"
             android:text="Minus"/>
@@ -99,7 +99,7 @@
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         android:layout_marginBottom="4dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="0dp"
         android:textSize="18sp"
         android:background="@color/colorAccent"
         android:text="Skomentuj"/>

@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
 import com.example.astromobile.adapters.CommentsAdapter
 import com.example.astromobile.apiclient.ApiClient
 import com.example.astromobile.models.Comment
@@ -31,6 +32,13 @@ class ShowTopicActivity : AppCompatActivity() {
 
         val id: Int = intent.getIntExtra("id", 0)
 
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                startActivity(Intent(this@ShowTopicActivity, ForumActivity::class.java))
+            }
+        }
+        this.onBackPressedDispatcher.addCallback(this, callback)
+
         addComment.setOnClickListener {
             if(authService.isLogged()){
                 val intent = Intent(this@ShowTopicActivity, AddCommentActivity::class.java)
@@ -52,7 +60,7 @@ class ShowTopicActivity : AppCompatActivity() {
             }
         }
 
-        var adapter = CommentsAdapter(this, arrayListOf())
+        var adapter = CommentsAdapter(id,this, arrayListOf())
         val listItems: ArrayList<Comment> = arrayListOf()
 
         CoroutineScope(IO).launch {
@@ -91,7 +99,7 @@ class ShowTopicActivity : AppCompatActivity() {
             }
         }
 
-        adapter = CommentsAdapter(this, listItems)
+        adapter = CommentsAdapter(id,this, listItems)
         comments.adapter = adapter
 
         //rate topic

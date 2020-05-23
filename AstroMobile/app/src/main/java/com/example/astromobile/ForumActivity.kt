@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
 import com.example.astromobile.adapters.AllTopicsAdapter
 import com.example.astromobile.apiclient.ApiClient
 import com.example.astromobile.models.Topic
@@ -28,6 +29,13 @@ class ForumActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
         authService = AuthService.getAuthService()!!
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                startActivity(Intent(this@ForumActivity, MainActivity::class.java))
+            }
+        }
+        this.onBackPressedDispatcher.addCallback(this, callback)
 
         var adapter = AllTopicsAdapter(this, arrayListOf())
         val listItems: ArrayList<Topic> = arrayListOf()
