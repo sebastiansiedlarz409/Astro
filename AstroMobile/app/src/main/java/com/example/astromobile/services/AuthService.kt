@@ -12,9 +12,10 @@ class AuthService{
 
     private val apiClient = ApiClientAuth()
     private var token: Token? = null
+    private var loginTime: Long = 0
 
     fun isLogged(): Boolean{
-        return token != null
+        return System.currentTimeMillis() - loginTime < 600000 && token != null
     }
 
     fun getLoggedUserToken(): Token?{
@@ -36,6 +37,8 @@ class AuthService{
                 200 -> {
                     token = apiClient.loginData(response.body?.string())
                     result = LoginResults.Logged
+
+                    loginTime = System.currentTimeMillis()
                 }
                 400 -> {
                     result = LoginResults.BadRequest
