@@ -40,6 +40,9 @@ namespace Astro.Controllers
             {
                 var user = await _context.Users.FirstOrDefaultAsync(t => t.Email.Equals(model.Email));
 
+                if (user is null)
+                    return RedirectToAction("MainPage", "Forum");
+
                 var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, false, lockoutOnFailure: false);
 
                 if (result.Succeeded)

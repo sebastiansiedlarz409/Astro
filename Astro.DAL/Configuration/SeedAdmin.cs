@@ -19,8 +19,10 @@ namespace Astro.DAL.Configuration
                 NormalizedName = "USER"
             };
 
-            roleManager.CreateAsync(adminRole).Wait();
-            roleManager.CreateAsync(userRole).Wait();
+            if(roleManager.FindByNameAsync("Administrator").Result is null)
+                roleManager.CreateAsync(adminRole).Wait();
+            if (roleManager.FindByNameAsync("Administrator").Result is null)
+                roleManager.CreateAsync(userRole).Wait();
 
             User admin = new User()
             {
@@ -31,11 +33,14 @@ namespace Astro.DAL.Configuration
                 RegisterDate = DateTime.Now.ToString()
             };
 
-            IdentityResult result = userManager.CreateAsync(admin, "Zaq12345").Result;
-
-            if (result.Succeeded)
+            if (userManager.FindByNameAsync("admin@astro.pl").Result is null)
             {
-                userManager.AddToRoleAsync(admin, "Administrator").Wait();
+                IdentityResult result = userManager.CreateAsync(admin, "Zaq12345").Result;
+
+                if (result.Succeeded)
+                {
+                    userManager.AddToRoleAsync(admin, "Administrator").Wait();
+                }
             }
         }
     }

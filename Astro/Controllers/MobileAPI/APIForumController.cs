@@ -36,7 +36,8 @@ namespace Astro.Controllers.MobileAPI
         [HttpGet("Topic/{id}")]
         public async Task<ActionResult<Topic>> Topic(int id)
         {
-            Topic topic = await _context.Topics.Include(t => t.Comments).ThenInclude(t => t.User).Include(t => t.User).FirstOrDefaultAsync(t => t.Id == id);
+            Topic topic = await _context.Topics.OrderByDescending(t=>t.Id).Include(t => t.Comments).ThenInclude(t => t.User).Include(t => t.User)
+                .FirstOrDefaultAsync(t => t.Id == id);
 
             return topic;
         }

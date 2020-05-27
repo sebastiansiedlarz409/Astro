@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Astro.DAL.DBContext;
@@ -35,8 +36,22 @@ namespace Astro.Controllers.MobileAPI
 
             var user = await _context.Users.FirstOrDefaultAsync(t => t.Email.Equals(model.Email));
 
-            var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, false, lockoutOnFailure: false);
+            var returnUser = new User()
+            {
+                Id = user.Id.ToString(),
+                UserName = user.UserName,
+                Email = user.Email,
+                Avatar = user.Avatar,
+                TopicsCount = user.TopicsCount,
+                CommentsCount = user.CommentsCount,
+                LastLoginDate = user.LastLoginDate,
+                RegisterDate = user.RegisterDate
+            };
+
             
+
+            var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, false, lockoutOnFailure: false);
+
             if (result.Succeeded)
             {
                 user.LastLoginDate = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
@@ -57,7 +72,7 @@ namespace Astro.Controllers.MobileAPI
                 return Ok(new
                 {
                     token,
-                    user
+                    returnUser
                 });
             }
 
