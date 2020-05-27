@@ -30,15 +30,28 @@ namespace Astro.Controllers.MobileAPI
         [HttpGet("Topic")]
         public async Task<ActionResult<IEnumerable<Topic>>> AllTopics()
         {
-            return await _context.Topics.Include(t => t.User).ToListAsync();
+            return await _context.Topics.AsNoTracking().Include(t => t.User).ToListAsync();
         }
 
         [HttpGet("Topic/{id}")]
         public async Task<ActionResult<Topic>> Topic(int id)
         {
-            Topic topic = await _context.Topics.OrderByDescending(t=>t.Id).Include(t => t.Comments).ThenInclude(t => t.User).Include(t => t.User)
+            Topic topic = await _context.Topics.AsNoTracking().OrderByDescending(t=>t.Id).Include(t => t.Comments).ThenInclude(t=>t.User)
                 .FirstOrDefaultAsync(t => t.Id == id);
+            topic.User = null;
 
+            topic.Comments.ForEach(t => t.User.Comments = null);
+            topic.Comments.ForEach(t => t.User = new DAL.Models.User()
+            {
+                Id = t.User.Id.ToString(),
+                UserName = t.User.UserName,
+                Email = t.User.Email,
+                Avatar = t.User.Avatar,
+                TopicsCount = t.User.TopicsCount,
+                CommentsCount = t.User.CommentsCount,
+                LastLoginDate = t.User.LastLoginDate,
+                RegisterDate = t.User.RegisterDate
+            });
             return topic;
         }
 

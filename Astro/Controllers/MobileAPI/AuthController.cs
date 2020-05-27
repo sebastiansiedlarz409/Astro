@@ -34,29 +34,29 @@ namespace Astro.Controllers.MobileAPI
             if (!ModelState.IsValid)
                 return BadRequest();
 
-            var user = await _context.Users.FirstOrDefaultAsync(t => t.Email.Equals(model.Email));
+            var findUser = await _context.Users.FirstOrDefaultAsync(t => t.Email.Equals(model.Email));
 
-            var returnUser = new User()
+            var user = new User()
             {
-                Id = user.Id.ToString(),
-                UserName = user.UserName,
-                Email = user.Email,
-                Avatar = user.Avatar,
-                TopicsCount = user.TopicsCount,
-                CommentsCount = user.CommentsCount,
-                LastLoginDate = user.LastLoginDate,
-                RegisterDate = user.RegisterDate
+                Id = findUser.Id.ToString(),
+                UserName = findUser.UserName,
+                Email = findUser.Email,
+                Avatar = findUser.Avatar,
+                TopicsCount = findUser.TopicsCount,
+                CommentsCount = findUser.CommentsCount,
+                LastLoginDate = findUser.LastLoginDate,
+                RegisterDate = findUser.RegisterDate
             };
-
-            
 
             var result = await _signInManager.PasswordSignInAsync(user.UserName, model.Password, false, lockoutOnFailure: false);
 
             if (result.Succeeded)
             {
+                var roles = await _userManager.GetRolesAsync(findUser);
+
                 user.LastLoginDate = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
 
-                _context.Update(user);
+                _context.Update(findUser);
                 await _context.SaveChangesAsync();
 
                 await _signInManager.SignOutAsync();
@@ -72,7 +72,8 @@ namespace Astro.Controllers.MobileAPI
                 return Ok(new
                 {
                     token,
-                    returnUser
+                    user,
+                    roles
                 });
             }
 
