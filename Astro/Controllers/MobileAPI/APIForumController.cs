@@ -36,12 +36,22 @@ namespace Astro.Controllers.MobileAPI
         [HttpGet("Topic/{id}")]
         public async Task<ActionResult<Topic>> Topic(int id)
         {
-            Topic topic = await _context.Topics.AsNoTracking().OrderByDescending(t=>t.Id).Include(t => t.Comments).ThenInclude(t=>t.User)
+            Topic topic = await _context.Topics.AsNoTracking().OrderByDescending(t=>t.Id).Include(t=>t.User).Include(t => t.Comments).ThenInclude(t=>t.User)
                 .FirstOrDefaultAsync(t => t.Id == id);
-            topic.User = null;
+            topic.User = new User()
+            {
+                Id = topic.User.Id.ToString(),
+                UserName = topic.User.UserName,
+                Email = topic.User.Email,
+                Avatar = topic.User.Avatar,
+                TopicsCount = topic.User.TopicsCount,
+                CommentsCount = topic.User.CommentsCount,
+                LastLoginDate = topic.User.LastLoginDate,
+                RegisterDate = topic.User.RegisterDate
+            };
 
             topic.Comments.ForEach(t => t.User.Comments = null);
-            topic.Comments.ForEach(t => t.User = new DAL.Models.User()
+            topic.Comments.ForEach(t => t.User = new User()
             {
                 Id = t.User.Id.ToString(),
                 UserName = t.User.UserName,

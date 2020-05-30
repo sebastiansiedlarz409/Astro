@@ -26,6 +26,10 @@ class AuthService{
         return token?.user
     }
 
+    fun getLoggedUserRole(): String?{
+        return token?.roles?.get(0)
+    }
+
     suspend fun login(email: String, password: String): LoginResults{
 
         var result: LoginResults = LoginResults.Other

@@ -49,7 +49,8 @@ class CommentsAdapter(
         }
 
         commentsItem.delete.setOnClickListener {
-            if(data[position].user.id.equals(authService.getLoggedUser()!!.id)){
+            if(data.size > 1 && (data[position].user.id == authService.getLoggedUser()!!.id ||
+                        authService.getLoggedUserRole().equals("Administrator"))){
                 CoroutineScope(IO).launch {
                     val response: Response = apiClient.deleteComment(authService.getLoggedUserToken()!!.token, data[position].id.toString())
 

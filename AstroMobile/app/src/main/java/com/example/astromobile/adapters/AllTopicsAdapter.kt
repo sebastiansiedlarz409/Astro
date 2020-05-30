@@ -47,7 +47,7 @@ class AllTopicsAdapter(
         }
 
         rowView.delete.setOnClickListener {
-            if(data[position].user.id == authService.getLoggedUser()!!.id){
+            if(data[position].user.id == authService.getLoggedUser()!!.id || authService.getLoggedUserRole().equals("Administrator")){
                 CoroutineScope(Dispatchers.IO).launch {
                     val response: Response = apiClient.deleteTopic(authService.getLoggedUserToken()!!.token, data[position].id.toString())
 
