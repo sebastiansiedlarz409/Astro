@@ -26,23 +26,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
-
-                <Button
-                    android:id="@+id/delete"
-                    android:layout_width="20dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="right"
-                    android:focusable="false"
-                    android:focusableInTouchMode="false"
-                    android:background="@drawable/delete_button"
-                    android:text="X" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:weightSum="2">
 
@@ -65,6 +48,17 @@
                     android:textSize="18sp"
                     android:layout_weight="1"
                     android:text="Data dodania: " />
+
+                <Button
+                    android:id="@+id/delete"
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:layout_gravity="end"
+                    android:focusable="false"
+                    android:layout_weight="1"
+                    android:focusableInTouchMode="false"
+                    android:background="@drawable/delete_button"
+                    android:text="X" />
 
             </LinearLayout>
 
@@ -92,6 +86,10 @@
                     android:textSize="18sp"
                     android:layout_weight="1"/>
 
+                <TextView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"/>
+
             </LinearLayout>
 
             <LinearLayout
@@ -105,12 +103,12 @@
                     android:layout_height="wrap_content"
                     android:textColor="#FFFFFF"
                     android:layout_margin="3dp"
-                    android:padding="6dp"
+                    android:padding="3dp"
                     android:textSize="18sp"
                     android:gravity="left"
                     android:text="Treść"
                     android:textAllCaps="false"
-                    android:background="@color/colorAccent"/>
+                    android:background="#80000080"/>
 
             </LinearLayout>
 

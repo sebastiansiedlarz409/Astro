@@ -24,8 +24,6 @@ class APODAdapter(
 
         Picasso.get()
             .load(data[position].url)
-            .resize(120, 120)
-            .centerCrop()
             .into(apodItem.image)
 
         apodItem.dateAPOD.text = data[position].date

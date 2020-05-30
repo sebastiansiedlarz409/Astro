@@ -142,7 +142,7 @@
                 android:textColor="#FFFFFF"
                 android:layout_margin="3dp"
                 android:textSize="22sp"
-                android:background="@color/colorAccent"
+                android:background="#80000080"
                 android:text="Link"/>
 
         </LinearLayout>
