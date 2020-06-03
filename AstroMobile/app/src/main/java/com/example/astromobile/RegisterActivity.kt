@@ -27,7 +27,7 @@ class RegisterActivity : AppCompatActivity() {
         setContentView(R.layout.activity_register)
         supportActionBar?.hide()
 
-        authService = AuthService.getAuthService()!!
+        authService = AuthService.getAuthService(this)!!
     }
 
     fun register(view: View){

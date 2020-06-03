@@ -1,6 +1,9 @@
 package com.example.astromobile.services
 
+import android.content.Context
+import android.content.SharedPreferences
 import com.example.astromobile.apiclient.ApiClientAuth
+import com.example.astromobile.apiclient.ApiClientForum
 import com.example.astromobile.models.Token
 import com.example.astromobile.models.User
 import kotlinx.coroutines.CoroutineScope
@@ -8,11 +11,16 @@ import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.async
 import okhttp3.Response
 
-class AuthService{
+class AuthService(context: Context){
 
-    private val apiClient = ApiClientAuth()
+    private lateinit var apiClient: ApiClientAuth
+    private val sharedPreferences = context.getSharedPreferences("ASTRO", Context.MODE_PRIVATE);
     private var token: Token? = null
     private var loginTime: Long = 0
+
+    init {
+        apiClient = ApiClientAuth(sharedPreferences)
+    }
 
     fun isLogged(): Boolean{
         return System.currentTimeMillis() - loginTime < 600000 && token != null
@@ -85,9 +93,9 @@ class AuthService{
     companion object{
         private var instance: AuthService? = null
 
-        fun getAuthService(): AuthService?{
+        fun getAuthService(context: Context): AuthService?{
             if(instance == null){
-                instance = AuthService()
+                instance = AuthService(context)
             }
 
             return instance

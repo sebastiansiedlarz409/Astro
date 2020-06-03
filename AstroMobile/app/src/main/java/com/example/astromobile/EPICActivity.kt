@@ -1,6 +1,8 @@
 package com.example.astromobile
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.astromobile.adapters.EPICAdapter
@@ -15,12 +17,15 @@ import kotlinx.coroutines.withContext
 
 class EPICActivity : AppCompatActivity() {
 
-    private val apiClient = ApiClientNasa()
+    private lateinit var apiClient: ApiClientNasa
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_epic)
         supportActionBar?.hide()
+        sharedPreferences = getSharedPreferences("ASTRO", Context.MODE_PRIVATE);
+        apiClient = ApiClientNasa(sharedPreferences)
 
         var adapter = EPICAdapter(this, arrayListOf())
         val listItems: ArrayList<EPIC> = arrayListOf()

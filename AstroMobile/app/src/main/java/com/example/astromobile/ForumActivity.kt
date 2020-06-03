@@ -21,7 +21,8 @@ import okhttp3.Response
 
 class ForumActivity : AppCompatActivity() {
 
-    private var apiClient = ApiClientForum()
+    private lateinit var apiClient: ApiClientForum
+    private lateinit var sharedPreferences: SharedPreferences
     private lateinit var authService: AuthService
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +30,10 @@ class ForumActivity : AppCompatActivity() {
         setContentView(R.layout.activity_forum)
         supportActionBar?.hide()
 
-        authService = AuthService.getAuthService()!!
+        sharedPreferences = getSharedPreferences("ASTRO", Context.MODE_PRIVATE);
+        authService = AuthService.getAuthService(this)!!
+
+        apiClient = ApiClientForum(sharedPreferences)
 
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {

@@ -1,5 +1,6 @@
 package com.example.astromobile.apiclient
 
+import android.content.SharedPreferences
 import com.example.astromobile.models.APOD
 import com.example.astromobile.models.AsteroidsNeoWs
 import com.example.astromobile.models.EPIC
@@ -12,7 +13,7 @@ import okhttp3.Request
 import okhttp3.Response
 import ru.gildor.coroutines.okhttp.await
 
-class ApiClientNasa: ApiClient() {
+class ApiClientNasa(sharedPreferences: SharedPreferences): ApiClient(sharedPreferences) {
 
     private val urlEPIC: String = "api/EPIC"
     private val urlAPOD: String = "api/APOD"

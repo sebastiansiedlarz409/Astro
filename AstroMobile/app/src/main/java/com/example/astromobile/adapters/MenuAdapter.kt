@@ -34,9 +34,6 @@ class MenuAdapter(
                 menuItem.logo.setImageResource(R.drawable.ic_web_black_24dp)
             }
             4 -> {
-                menuItem.logo.setImageResource(R.drawable.ic_burst_mode_black_24dp)
-            }
-            5 -> {
                 menuItem.logo.setImageResource(R.drawable.ic_forum_black_24dp)
             }
             else -> {

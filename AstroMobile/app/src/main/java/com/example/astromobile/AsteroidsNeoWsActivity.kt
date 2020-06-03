@@ -1,5 +1,7 @@
 package com.example.astromobile
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.astromobile.adapters.AsteroidsNeoWsAdapter
@@ -14,12 +16,16 @@ import kotlinx.coroutines.withContext
 
 class AsteroidsNeoWsActivity : AppCompatActivity() {
 
-    private val apiClient = ApiClientNasa()
+    private lateinit var apiClient: ApiClientNasa
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_asteroids_neo_ws)
         supportActionBar?.hide()
+
+        sharedPreferences = getSharedPreferences("ASTRO", Context.MODE_PRIVATE);
+        apiClient = ApiClientNasa(sharedPreferences)
 
         var adapter = AsteroidsNeoWsAdapter(this, arrayListOf())
         val listItems: ArrayList<AsteroidsNeoWs> = arrayListOf()

@@ -1,5 +1,6 @@
 package com.example.astromobile.apiclient
 
+import android.content.SharedPreferences
 import com.example.astromobile.models.Topic
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -9,7 +10,7 @@ import okhttp3.Response
 import org.json.JSONObject
 import ru.gildor.coroutines.okhttp.await
 
-class ApiClientForum: ApiClient(){
+class ApiClientForum(sharedPreferences: SharedPreferences): ApiClient(sharedPreferences){
 
     private val urlTopics: String = "api/APIForum/Topic"
     private val urlComments: String = "api/APIForum/Comment"

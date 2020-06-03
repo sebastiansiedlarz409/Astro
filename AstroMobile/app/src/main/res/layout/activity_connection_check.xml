@@ -30,6 +30,49 @@
             android:textColor="#FFFFFF"
             android:text="Sprawdzam połączenie z ASTRO!"/>
 
+
+
+        <EditText
+            android:id="@+id/address"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="2dp"
+            android:layout_marginTop="5dp"
+            android:ems="10"
+            android:textColor="#FFFFFF"
+            android:textColorHint="#AAAAAA"
+            android:background="@drawable/input_background"
+            android:inputType="textPersonName"
+            android:hint="adres_ip:port" />
+
+        <Button
+            android:id="@+id/save"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="4dp"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp"
+            android:background="#80000080"
+            android:onClick="checkConnection"
+            android:text="Zapisz adres!"/>
+
+        <Button
+            android:id="@+id/change"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="12dp"
+            android:layout_marginBottom="4dp"
+            android:textColor="#FFFFFF"
+            android:textSize="22sp"
+            android:background="#80000080"
+            android:onClick="checkConnection"
+            android:text="Zmien adres!"/>
+
         <Button
             android:id="@+id/retry"
             android:layout_width="match_parent"
@@ -38,9 +81,8 @@
             android:layout_marginRight="12dp"
             android:layout_marginBottom="4dp"
             android:textColor="#FFFFFF"
-            android:layout_margin="3dp"
             android:textSize="22sp"
-            android:background="@color/colorAccent"
+            android:background="#80000080"
             android:onClick="checkConnection"
             android:text="Spróbuj ponownie!"/>
 

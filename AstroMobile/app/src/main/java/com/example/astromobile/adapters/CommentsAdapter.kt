@@ -27,13 +27,15 @@ class CommentsAdapter(
             = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
 
     private lateinit var authService: AuthService
-    private val apiClient = ApiClientForum()
+    private lateinit var apiClient: ApiClientForum
+    private val sharedPreferences = context.getSharedPreferences("ASTRO", Context.MODE_PRIVATE);
 
     @SuppressLint("ViewHolder")
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
         val commentsItem: View = inflater.inflate(R.layout.comment_item, parent, false)
 
-        authService = AuthService.getAuthService()!!
+        apiClient = ApiClientForum(sharedPreferences)
+        authService = AuthService.getAuthService(context)!!
 
         commentsItem.date.text = data[position].date.toString()
         commentsItem.author.text = data[position].user.userName

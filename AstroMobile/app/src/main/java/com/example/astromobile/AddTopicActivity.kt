@@ -17,7 +17,8 @@ import okhttp3.Response
 
 class AddTopicActivity : AppCompatActivity() {
 
-    private var apiClient = ApiClientForum()
+    private lateinit var apiClient: ApiClientForum
+    private lateinit var sharedPreferences: SharedPreferences
     private lateinit var authService: AuthService
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +26,10 @@ class AddTopicActivity : AppCompatActivity() {
         setContentView(R.layout.activity_add_topic)
         supportActionBar?.hide()
 
-        authService = AuthService.getAuthService()!!
+        sharedPreferences = getSharedPreferences("ASTRO", Context.MODE_PRIVATE);
+        authService = AuthService.getAuthService(this)!!
+
+        apiClient = ApiClientForum(sharedPreferences)
 
         addTopic.setOnClickListener {
             val title: String = topic.text.toString()

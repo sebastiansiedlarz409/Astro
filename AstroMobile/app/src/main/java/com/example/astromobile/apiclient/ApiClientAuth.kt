@@ -1,5 +1,6 @@
 package com.example.astromobile.apiclient
 
+import android.content.SharedPreferences
 import com.example.astromobile.models.Token
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -9,7 +10,7 @@ import okhttp3.Response
 import org.json.JSONObject
 import ru.gildor.coroutines.okhttp.await
 
-class ApiClientAuth: ApiClient() {
+class ApiClientAuth(sharedPreferences: SharedPreferences): ApiClient(sharedPreferences) {
 
     private val urlLogin: String = "api/Auth/Login"
     private val urlRegister: String = "api/Auth/Register"

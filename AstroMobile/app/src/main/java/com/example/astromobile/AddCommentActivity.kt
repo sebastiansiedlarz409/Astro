@@ -1,6 +1,7 @@
 package com.example.astromobile
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -16,14 +17,17 @@ import okhttp3.Response
 class AddCommentActivity : AppCompatActivity() {
 
     private lateinit var authService: AuthService
-    private val apiClient = ApiClientForum()
+    private lateinit var apiClient: ApiClientForum
+    private val sharedPreferences = getSharedPreferences("ASTRO", Context.MODE_PRIVATE);
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_comment)
         supportActionBar?.hide()
 
-        authService = AuthService.getAuthService()!!
+        authService = AuthService.getAuthService(this)!!
+
+        apiClient = ApiClientForum(sharedPreferences)
 
         val id: Int = intent.getIntExtra("id", 0)
         val comment: String? = intent.getStringExtra("content")

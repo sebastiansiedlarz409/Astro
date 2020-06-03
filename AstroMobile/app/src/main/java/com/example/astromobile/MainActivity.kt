@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         supportActionBar?.hide()
 
-        authService = AuthService.getAuthService()!!
+        authService = AuthService.getAuthService(this)!!
 
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
             loggedUser.text = authService.getLoggedUser()?.userName
         }
 
-        val options: ArrayList<String> = arrayListOf("APOD", "EPIC", "Asteroids", "Insight", "Galeria", "Forum", "Informacje")
+        val options: ArrayList<String> = arrayListOf("APOD", "EPIC", "Asteroids", "Insight", "Forum", "Informacje")
 
         val adapter = MenuAdapter(this, options)
 
@@ -76,9 +76,6 @@ class MainActivity : AppCompatActivity() {
                 startActivity(Intent(this, InsightActivity::class.java))
             }
             else if(position == 4){
-
-            }
-            else if(position == 5){
                 if(!authService.isLogged()){
                     val builder = AlertDialog.Builder(this, R.style.InfoAlert)
                     builder.setTitle("Forum")

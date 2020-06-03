@@ -1,5 +1,7 @@
 package com.example.astromobile
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.astromobile.adapters.InsightAdapter
@@ -14,12 +16,16 @@ import kotlinx.coroutines.withContext
 
 class InsightActivity : AppCompatActivity() {
 
-    private val apiClient = ApiClientNasa()
+    private lateinit var apiClient: ApiClientNasa
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_insight)
         supportActionBar?.hide()
+
+        sharedPreferences = getSharedPreferences("ASTRO", Context.MODE_PRIVATE);
+        apiClient = ApiClientNasa(sharedPreferences)
 
         var adapter = InsightAdapter(this, arrayListOf())
         val listItems: ArrayList<Insight> = arrayListOf()

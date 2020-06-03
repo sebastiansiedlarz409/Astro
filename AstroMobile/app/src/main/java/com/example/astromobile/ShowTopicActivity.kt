@@ -1,7 +1,9 @@
 package com.example.astromobile
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
@@ -21,7 +23,8 @@ import okhttp3.Response
 
 class ShowTopicActivity : AppCompatActivity() {
 
-    private val apiClient = ApiClientForum()
+    private lateinit var apiClient: ApiClientForum
+    private lateinit var sharedPreferences: SharedPreferences
     private lateinit var authService: AuthService
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +32,10 @@ class ShowTopicActivity : AppCompatActivity() {
         setContentView(R.layout.activity_show_topic)
         supportActionBar?.hide()
 
-        authService = AuthService.getAuthService()!!
+        sharedPreferences = getSharedPreferences("ASTRO", Context.MODE_PRIVATE);
+        authService = AuthService.getAuthService(this)!!
+
+        apiClient = ApiClientForum(sharedPreferences)
 
         val id: Int = intent.getIntExtra("id", 0)
 

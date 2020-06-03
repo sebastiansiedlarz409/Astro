@@ -25,7 +25,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(R.layout.activity_login)
         supportActionBar?.hide()
 
-        authService = AuthService.getAuthService()!!
+        authService = AuthService.getAuthService(this)!!
 
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {

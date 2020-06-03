@@ -1,6 +1,8 @@
 package com.example.astromobile
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.astromobile.adapters.APODAdapter
@@ -16,12 +18,16 @@ import kotlinx.coroutines.withContext
 
 class APODActivity : AppCompatActivity() {
 
-    private val apiClient = ApiClientNasa()
+    private lateinit var apiClient: ApiClientNasa
+    private lateinit var sharedPreferences: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_apod)
         supportActionBar?.hide()
+
+        sharedPreferences = getSharedPreferences("ASTRO", Context.MODE_PRIVATE);
+        apiClient = ApiClientNasa(sharedPreferences)
 
         var adapter = APODAdapter(this, arrayListOf())
         val listItems: ArrayList<APOD> = arrayListOf()
