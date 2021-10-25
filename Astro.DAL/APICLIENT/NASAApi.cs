@@ -43,16 +43,6 @@ namespace Astro.DAL.APICLIENT
             return result;
         }
 
-        public async Task<string> GetInsightJson()
-        {
-            string request =
-              "https://api.nasa.gov/insight_weather/?api_key=" + _apiKey + "&feedtype=json&ver=1.0";
-
-            string result = await DownloadData(request);
-
-            return result;
-        }
-
         public async Task<string> GetGalleryJson(string search)
         {
             string request =

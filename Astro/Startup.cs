@@ -87,10 +87,6 @@ namespace Astro
             services.AddTransient<APIDbRepository>();
             services.AddTransient<HttpClient>();
             services.AddTransient<JSONtools>();
-            services.AddTransient<ISpeed, Speed>();
-            services.AddTransient<ITemperature, Temperature>();
-            services.AddTransient<IPressure, Pressure>();
-            services.AddTransient<Calculator>();
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer(jwtBearerOptions =>

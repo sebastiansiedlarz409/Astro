@@ -94,29 +94,5 @@ namespace Astro.DAL.DBContext
 
             await _context.SaveChangesAsync();
         }
-
-        public async Task SavaInsightBase(Insight insight)
-        {
-            Insight check = await _context.Insights.AsNoTracking().FirstOrDefaultAsync(t => t.Date.Equals(insight.Date));
-
-            if (check is null)
-            {
-                await _context.Insights.AddAsync(insight);
-                await _context.SaveChangesAsync();
-            }
-
-            //remove old ones
-            List<Insight> insightList = await _context.Insights.ToListAsync();
-
-            if (insightList.Count <= 50)
-                return;
-
-            for (int i = 0; i < insightList.Count - 20; i++)
-            {
-                _context.Insights.Remove(insightList[i]);
-            }
-
-            await _context.SaveChangesAsync();
-        }
     }
 }

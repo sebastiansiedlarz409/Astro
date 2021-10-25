@@ -17,7 +17,6 @@ namespace Astro.DAL.DBContext
         public DbSet<User> User { get; set; }
         public DbSet<APOD> APOD { get; set; }
         public DbSet<EPIC> EPIC { get; set; }
-        public DbSet<Insight> Insights { get; set; }
         public DbSet<AsteroidsNeoWs> AsteroidsNeoWs { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
