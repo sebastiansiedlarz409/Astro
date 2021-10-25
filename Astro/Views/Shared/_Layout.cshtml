@@ -23,18 +23,6 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
-                        @if (SignInManager.IsSignedIn(User))
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="UserCalendar">Kalendarz</a>
-                            </li>
-                        }
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Calendar">Kalendarz</a>
-                            </li>
-                        }
                         <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Forum" asp-action="MainPage">Forum</a>
                         </li>

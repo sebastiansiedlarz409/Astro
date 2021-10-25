@@ -13,16 +13,5 @@ namespace Astro.Controllers
         {
             return View();
         }
-
-        public IActionResult Calendar()
-        {
-            return View();
-        }
-
-        [Authorize]
-        public IActionResult UserCalendar()
-        {
-            return View();
-        }
     }
 }
