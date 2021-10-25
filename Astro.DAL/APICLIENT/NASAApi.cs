@@ -53,18 +53,14 @@ namespace Astro.DAL.APICLIENT
             return result;
         }
 
-        public ValueTask<string> GetGalleryJson(string search)
+        public async Task<string> GetGalleryJson(string search)
         {
-            string result = null;
-
-            //when try to find empty string
-            if (search is null)
-                return new ValueTask<string>(result);
-
             string request =
               "https://images-api.nasa.gov/search?q=" + search;
 
-            return new ValueTask<string>(DownloadData(request));
+            string result = await DownloadData(request);
+
+            return result;
         }
 
         private async Task<string> DownloadData(string request)
