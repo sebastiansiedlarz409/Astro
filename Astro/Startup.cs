@@ -32,6 +32,16 @@ namespace Astro
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //path to db
+            string[] paths = Environment.CurrentDirectory.Split("\\");
+            StringBuilder pathBuilder = new StringBuilder();
+            for (int i = 0; i < paths.Length-1; i++)
+            {
+                pathBuilder.Append(paths[i]);
+                pathBuilder.Append("\\");
+            }
+            AppDomain.CurrentDomain.SetData("DataDirectory", pathBuilder.ToString());
+
             services.AddDbContext<AstroDbContext>(options =>
                 options.UseSqlServer(
                     Configuration.GetConnectionString("DbConnection")));
