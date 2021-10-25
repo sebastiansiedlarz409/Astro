@@ -43,7 +43,7 @@
         margin: 5px;
         border: 1px solid #ccc;
         float: left;
-        width: 210px;
+        width: 290px;
     }
 
     div.gallery:hover {
@@ -64,9 +64,7 @@
     }
 </style>
 
-<div class="header">
-    <h1>Galeria zdjęć NASA</h1>
-</div>
+<h1>Galeria zdjęć NASA</h1>
 
 <form asp-controller="Gallery" asp-action="Search">
     <div class="input-group mb-3">
@@ -82,7 +80,7 @@
     {
         <div class="gallery">
             <a target="_blank" href="@item.Url">
-                <img src="@item.Url" alt="image" width="600" height="400">
+                <img src="@item.Url" alt="image" width="700" height="500">
             </a>
             <div class="desc"> @item.Description</div>
         </div>
