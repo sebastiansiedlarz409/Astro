@@ -21,7 +21,7 @@ namespace Astro.DAL.Configuration
 
             if(roleManager.FindByNameAsync("Administrator").Result is null)
                 roleManager.CreateAsync(adminRole).Wait();
-            if (roleManager.FindByNameAsync("Administrator").Result is null)
+            if (roleManager.FindByNameAsync("User").Result is null)
                 roleManager.CreateAsync(userRole).Wait();
 
             User admin = new User()
