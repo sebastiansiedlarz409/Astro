@@ -1,8 +1,6 @@
 package com.example.astromobile
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -30,7 +28,7 @@ class RegisterActivity : AppCompatActivity() {
         authService = AuthService.getAuthService(this)!!
     }
 
-    fun register(view: View){
+    fun register(view: View) {
         val username = username.text.toString()
         val email = email.text.toString()
         val password = password.text.toString()

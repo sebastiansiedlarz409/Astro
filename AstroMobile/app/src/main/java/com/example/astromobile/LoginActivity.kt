@@ -1,8 +1,6 @@
 package com.example.astromobile
 
-import android.content.Context
 import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -35,7 +33,7 @@ class LoginActivity : AppCompatActivity() {
         this.onBackPressedDispatcher.addCallback(this, callback)
     }
 
-    fun login(view: View){
+    fun login(view: View) {
         val email = email.text.toString()
         val password = password.text.toString()
 

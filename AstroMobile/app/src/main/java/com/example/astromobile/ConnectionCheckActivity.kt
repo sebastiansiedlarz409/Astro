@@ -56,7 +56,7 @@ class ConnectionCheckActivity : AppCompatActivity() {
         retry.callOnClick()
     }
 
-    fun checkConnection(view: View){
+    fun checkConnection(view: View) {
         retry.visibility = View.GONE
         progress.visibility = View.VISIBLE
         info.text = "Sprawdzam połączenie z ASTRO!"
