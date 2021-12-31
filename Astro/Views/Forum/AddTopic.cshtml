@@ -14,16 +14,16 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Topic" class="control-label"></label>
-                <input asp-for="Topic" class="form-control" />
+                <input asp-for="Topic" class="form-control" style="background-color:transparent"/>
                 <span asp-validation-for="Topic" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Comment" class="control-label"></label>
-                <textarea asp-for="Comment" class="form-control"></textarea>
+                <textarea asp-for="Comment" class="form-control" style="background-color:transparent"></textarea>
                 <span asp-validation-for="Comment" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Dodaj" class="myButton" />
+                <input type="submit" value="Dodaj" class="btn btn-outline-light" />
             </div>
         </form>
     </div>

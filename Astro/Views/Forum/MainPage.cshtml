@@ -11,11 +11,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
+<br />
+<br />
 <h1>Forum</h1>
 
 @if (SignInManager.IsSignedIn(User))
 {
-    <a asp-controller="Forum" asp-action="AddTopic" class="myButton" style="text-align: center;width: 300px;">Dodaj</a>
+    <a asp-controller="Forum" asp-action="AddTopic" class="btn btn-outline-light" style="text-align: center;border: solid 1px white;font-weight:bold">Dodaj</a>
     <br />
     <br />
 }
@@ -33,8 +35,8 @@ else
 {
     <div class="row">
         <div class="col-md-12">
-            <table class="table table-striped table-bordered">
-                <tr style="background-color:royalblue">
+            <table class="table table-striped table-bordered" style="background-color:transparent;color:white;font-weight:bold;">
+                <tr>
                     <td rowspan="2" width="10%" style="text-align:center;">
                         <b>Ocena: </b>
                         <br />
@@ -52,16 +54,16 @@ else
                     @if (User.IsInRole("Administrator"))
                     {
                         <td width="70%">
-                            <a asp-controller="Forum" asp-action="ShowTopic" asp-route-id="@item.Id" class="myButton" style="width:100%">@item.Title</a>
+                            <a asp-controller="Forum" asp-action="ShowTopic" asp-route-id="@item.Id" class="btn btn-outline-light" style="width:100%;border: solid 1px white;font-weight:bold;">@item.Title</a>
                         </td>
                         <td>
-                            <a asp-controller="Forum" asp-action="DeleteTopic" asp-route-id="@item.Id" class="myButtonDanger">Usuń</a>
+                            <a asp-controller="Forum" asp-action="DeleteTopic" asp-route-id="@item.Id" class="btn btn-outline-light" style="border: solid 1px white;font-weight:bold;">Usuń</a>
                         </td>
                     }
                     else
                     {
                         <td colspan="2" width="70%">
-                            <a asp-controller="Forum" asp-action="ShowTopic" asp-route-id="@item.Id" class="myButton" style="width:100%">@item.Title</a>
+                            <a asp-controller="Forum" asp-action="ShowTopic" asp-route-id="@item.Id" class="btn btn-outline-light" style="width:100%;border: solid 1px white;font-weight:bold;">@item.Title</a>
                         </td>
                     }
                 </tr>

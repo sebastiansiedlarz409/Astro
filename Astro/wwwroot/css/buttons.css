@@ -1,59 +1,7 @@
-﻿.btn-outline-success, .btn-outline-danger, btn-outline-primary{
-    font-weight:bold;
-    border-width: 3px;
-}
-
-.nav-link{
+﻿.nav-link{
     font-size:17px;
 }
 
-.myButton {
-    background-color: #000080;
-    border-radius: 28px;
-    border: 1px solid #000080;
-    display: inline-block;
-    cursor: pointer;
-    color: #ffffff !important;
-    font-family: Arial;
-    font-size: 15px;
-    padding: 10px 20px;
-    text-decoration: none;
-    text-shadow: 0px 1px 0px #000080;
-}
-
-.myButton:hover {
-    background-color: #0000aa;
-}
-
-.myButton:active {
-    position: relative;
-    top: 1px;
-}
-
-.myButtonDanger {
-    background-color: #eb0e45;
-    border-radius: 28px;
-    border: 1px solid #800400;
-    display: inline-block;
-    cursor: pointer;
-    color: #ffffff !important;
-    font-family: Arial;
-    font-size: 15px;
-    padding: 10px 20px;
-    text-decoration: none;
-    text-shadow: 0px 1px 0px #080100;
-}
-
-.myButtonDanger:hover {
-    background-color: #e01212;
-}
-
-.myButtonDanger:active {
-    position: relative;
-    top: 1px;
-}
-
-/*remove underline*/
 a:hover {
     text-decoration: none;
 }

@@ -12,11 +12,10 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<style>
-    table hr {
-        border-color: white;
-    }
-</style>
+<br />
+<br />
+<h2>@Model.Title</h2>
+<hr />
 
 @if (!SignInManager.IsSignedIn(User))
 {
@@ -27,9 +26,6 @@
         </button>
     </div>
 }
-
-<h2>@Model.Title</h2>
-<hr />
 
 <h6>
     <b>Dodano dnia: </b>@Model.Date
@@ -52,9 +48,9 @@ else
 {
     <div class="row">
         <div class="col-md-12">
-            <table class="table table-striped table-bordered">
+            <table class="table table-striped table-bordered" style="background-color:transparent;color:white">
                 <tr>
-                    <td width="25%" style="font-size:15px;background-color:royalblue">
+                    <td width="25%" style="font-size:15px;">
                         <div style="width:100%;text-align:center"><b id=@("UserName"+item.Id) onclick="UserName(@item.Id)">@item.User.UserName</b></div>
                         <br />
                         <div style="width:100%;text-align:center">
@@ -98,13 +94,13 @@ else
                     <td width="10%">
                         @if (SignInManager.IsSignedIn(User))
                         {
-                            <button class="myButton" onclick="EditComment(@item.Id)" style="width:95%;margin-bottom:3px">Edytuj</button>
+                            <button class="btn btn-outline-light" onclick="EditComment(@item.Id)" style="width:95%;margin-bottom:3px;font-weight:bold;border: solid 1px white">Edytuj</button>
                         }
                         @if (User.IsInRole("Administrator"))
                         {
                             if (Model.Comments.IndexOf(item) != 0)
                             {
-                                <a asp-controller="Forum" asp-action="DeleteComment" asp-route-id="@item.Id" asp-route-topicId="@Model.Id" class="myButtonDanger" style="width:95%;margin-bottom:3px">Usuń</a>
+                                <a asp-controller="Forum" asp-action="DeleteComment" asp-route-id="@item.Id" asp-route-topicId="@Model.Id" class="btn btn-outline-light" style="width:95%;margin-bottom:3px;font-weight:bold;border: solid 2px white">Usuń</a>
                             }
                         }
                     </td>
@@ -123,9 +119,9 @@ else
             <form asp-controller="Forum" asp-action="AddComment">
                 <input type="hidden" name="topicId" value="@Model.Id" />
                 <label class="control-label">Treść</label>
-                <textarea name="comment" class="form-control" id="CommentTextArea"></textarea>
+                <textarea name="comment" class="form-control" id="CommentTextArea" style="background-color:transparent;font-weight:bold;border:solid 2px white"></textarea>
                 <br />
-                <input type="submit" value="Wyślij" class="myButton" style="width:300px"/>
+                <input type="submit" value="Wyślij" class="btn btn-outline-light" style="width:300px;font-weight:bold;border:solid 2px white"/>
             </form>
         </div>
     </div>
