@@ -62,18 +62,29 @@
         overflow: hidden;
         text-overflow: ellipsis; 
     }
+
+    .form-search {
+        width: 100%;
+        max-width: 60%;
+        padding: 15px;
+        margin: auto;
+    }
 </style>
 
-<h1>Galeria zdjęć NASA</h1>
+<br />
+<br />
+<h1 style="text-align:center">Galeria zdjęć NASA</h1>
 
-<form asp-controller="Gallery" asp-action="Search">
-    <div class="input-group mb-3">
-        <input name="search" type="text" class="form-control" placeholder="Szukaj" aria-label="Szukaj" aria-describedby="basic-addon2">
-        <div class="input-group-append">
-            <input type="submit" value="Szukaj" class="btn btn-danger" style="width:250px" />
+<div class="text-center">
+    <form asp-controller="Gallery" asp-action="Search" class="form-search">
+        <div class="input-group mb-3">
+            <input name="search" type="text" class="form-control" placeholder="Szukaj" aria-label="Szukaj" aria-describedby="basic-addon2" style="background-color:transparent" />
+            <div class="input-group-append">
+                <input type="submit" value="Szukaj" class="btn btn-light" style="width:250px" />
+            </div>
         </div>
-    </div>
-</form>
+    </form>
+</div>
 
 <div class="row" style="margin-left:0px;margin-right:0px">
     @foreach (var item in Model)

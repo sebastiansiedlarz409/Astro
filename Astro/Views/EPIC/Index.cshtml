@@ -2,11 +2,10 @@
 @using Microsoft.AspNetCore.Identity
 @using Astro.DAL.Models
 @inject SignInManager<User> SignInManager
+
 @{
     ViewData["Title"] = "Earth Polychromatic Imaging Camera";
 }
-
-<h1>Galeria EPIC</h1>
 
 <style>
     * {
@@ -57,6 +56,7 @@
         padding: 8px 12px;
         position: absolute;
         top: 0;
+        margin-top:12px;
     }
 
     .caption-container {
@@ -86,26 +86,40 @@
         opacity: 1;
     }
 
+    .main-div {
+        width: 100%;
+        max-width: 80%;
+        max-height: 80%;
+        padding: 15px;
+        margin: auto;
+    }
 </style>
+
+<br />
+<br />
+<h1 style="text-align:center">Galeria EPIC</h1>
+<br />
 
 <div class="container">
 
-    @{
-        int j = 1;
-        foreach (var item in Model)
-        {
-            <div class="mySlides">
-                <div class="numbertext">@(j++) / @Model.Count()</div>
-                <img src="@item.ImageName" style="width:100%">
-            </div>
+    <div class="main-div">
+        @{
+            int j = 1;
+            foreach (var item in Model)
+            {
+                <div class="mySlides">
+                    <div class="numbertext">@(j++) / @Model.Count()</div>
+                    <img src="@item.ImageName" style="width:100%">
+                </div>
+            }
         }
-    }
 
-    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
 
-    <div class="caption-container">
-        <p id="caption"></p>
+        <div class="caption-container">
+            <p id="caption"></p>
+        </div>
     </div>
 
 </div>

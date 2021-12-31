@@ -17,22 +17,22 @@
     <form asp-action="Register" class="form-signin" style="max-width:440px">
         <h1 class="h1 mb-3 font-weight-normal">Rejestracja</h1>
         <label for="inputUserName" class="sr-only">Nazwa użytkownika</label>
-        <input asp-for="UserName" type="text" id="inputUserName" class="form-control" placeholder="Nazwa użytkownika" required="" autofocus="" style="margin-bottom:4px">
+        <input asp-for="UserName" type="text" id="inputUserName" class="form-control" placeholder="Nazwa użytkownika" required="" autofocus="" style="margin-bottom:8px;background-color:transparent">
         <span asp-validation-for="UserName" class="text-danger"></span>
         <label for="inputEmail" class="sr-only">Adres email</label>
-        <input asp-for="Email" type="email" id="inputEmail" class="form-control" placeholder="Adres email" required="" autofocus="" style="margin-bottom:4px">
+        <input asp-for="Email" type="email" id="inputEmail" class="form-control" placeholder="Adres email" required="" autofocus="" style="margin-bottom:8px;background-color:transparent">
         <span asp-validation-for="Email" class="text-danger"></span>
         <label for="inputPassword" class="sr-only">Hasło</label>
-        <input asp-for="Password" type="password" id="inputPassword" class="form-control" placeholder="Hasło" required="" style="margin-bottom:4px">
+        <input asp-for="Password" type="password" id="inputPassword" class="form-control" placeholder="Hasło" required="" style="margin-bottom:8px;background-color:transparent">
         <label for="inputPasswordRepeat" class="sr-only">Powtórz hasło</label>
-        <input asp-for="ConfirmPassword" type="password" id="inputPasswordRepeat" class="form-control" placeholder="Powtórz hasło" required="" style="margin-bottom:4px">
+        <input asp-for="ConfirmPassword" type="password" id="inputPasswordRepeat" class="form-control" placeholder="Powtórz hasło" required="" style="margin-bottom:8px;background-color:transparent">
         <div class="checkbox mb-3">
             <label>
                 Zapraszamy!
             </label>
         </div>
-        <button class="myButton" type="submit" style="width:100%">Rejestruj</button>
-        <p class="mt-5 mb-3 text-muted">2020</p>
+        <button class="btn btn-outline-light" type="submit" style="width:100%">Rejestruj</button>
+        <p class="mt-2 mb-3 text-muted">2022</p>
     </form>
 </div>
 

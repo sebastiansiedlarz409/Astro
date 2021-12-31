@@ -10,13 +10,18 @@
     <title>@ViewData["Title"]</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <style>
+        a:hover{
+            color:black !important;
+        }
+    </style>
 </head>
-<body style="overflow:scroll;background-image:url('@Url.Content("~/Images/background.jpg")')">
+<body style="overflow:scroll;background-image:url('@Url.Content("~/images/background.jpg")');background-position:unset;background-attachment:fixed;background-size:cover;">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" style="background-color: #000080;border-bottom: 1px solid #000080!important;padding:0px">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light box-shadow mb-3" 
+            style="background-color: transparent;padding:8px">
             <div class="container">
-                <a class="navbar-brand text-light" asp-area="" asp-controller="Forum" asp-action="MainPage" style="margin:0px"><img src="~/Images/navlogo.png" width="120px" height="40px"/></a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+               <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -24,18 +29,23 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
+                            <a class="navbar-brand text-light" asp-area="" asp-controller="Forum" asp-action="MainPage">
+                                <span>Astro</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
                             <a class="nav-link text-light" asp-area="" asp-controller="Forum" asp-action="MainPage">Forum</a>
                         </li>
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 NASA
                             </a>
-                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-item" asp-area="" asp-controller="APOD" asp-action="Index">Astronomy Picture of the Day</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="EPIC" asp-action="Index">Earth Polychromatic Imaging Camera</a>
-                                <a class="dropdown-item" asp-area="" asp-controller="AsteroidsNeoWs" asp-action="Index">Near Earth Object Web Service</a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown" style="background-color:transparent;border: solid 1px white">
+                                <a class="dropdown-item" asp-area="" asp-controller="APOD" asp-action="Index" style="color:white">Astronomy Picture of the Day</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="EPIC" asp-action="Index" style="color:white">Earth Polychromatic Imaging Camera</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="AsteroidsNeoWs" asp-action="Index" style="color:white">Near Earth Object Web Service</a>
                                 <div class="dropdown-divider"></div>
-                                <a class="dropdown-item" asp-area="" asp-controller="Gallery" asp-action="Index">Galeria</a>
+                                <a class="dropdown-item" asp-area="" asp-controller="Gallery" asp-action="Index" style="color:white">Galeria</a>
                             </div>
                         </li>
                     </ul>

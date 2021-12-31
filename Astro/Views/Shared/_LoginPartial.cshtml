@@ -9,23 +9,23 @@
     {
         
         <li class="nav-item">
-            <a class="btn btn-outline-success" style="margin-right:3px" asp-area="" asp-controller="Account" asp-action="UserPage">Profil</a>
+            <a class="btn btn-outline-light" style="margin-right:3px" asp-area="" asp-controller="Account" asp-action="UserPage">Profil</a>
         </li>
         <li class="nav-item">
             <form class="form-inline" asp-area="" asp-controller="Account" asp-action="Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-                <button type="submit" class="btn btn-outline-danger">Wyloguj</button>
+                <button type="submit" class="btn btn-outline-light">Wyloguj</button>
             </form>
         </li>
     }
     else
     {
         <form asp-controller="Account" asp-action="Login" class="form-inline nav-item">
-            <input name="Email" class="form-control mr-sm-2" type="email" placeholder="Email" aria-label="Email" required>
-            <input name="Password" class="form-control mr-sm-2" type="password" placeholder="Hasło" aria-label="Hasło" required>
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Zaloguj</button>
+            <input name="Email" class="form-control mr-sm-2" type="email" placeholder="Email" aria-label="Email" required style="background-color:transparent" />
+            <input name="Password" class="form-control mr-sm-2" type="password" placeholder="Hasło" aria-label="Hasło" required style="background-color:transparent" />
+            <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Zaloguj</button>
         </form>
         <li class="nav-item">
-            <a class="btn btn-outline-danger" style="margin-left:3px" asp-area="" asp-controller="Account" asp-action="Register">Rejestracja</a>
+            <a class="btn btn-outline-light" style="margin-left:3px" asp-area="" asp-controller="Account" asp-action="Register">Rejestracja</a>
         </li>
     }
 </ul>
