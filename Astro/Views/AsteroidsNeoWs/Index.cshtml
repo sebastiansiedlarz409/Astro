@@ -3,23 +3,20 @@
     ViewData["Title"] = "Obiekty blisko ziemi";
 }
 
-<style>
-    .btn {
-        background-color:#000080 !important;
-    }
-</style>
-
-<h1>Obiekty blisko ziemi</h1>
+<br />
+<br />
+<h1 style="text-align:center">Obiekty blisko ziemi</h1>
+<br />
 
 @foreach(var item in Model)
 {
-    <table class="table table-bordered table-striped" style="background-color:@(item.Dangerous.Equals("True")?"#FF3444":"")">
+    <table class="table table-bordered table-striped" style="background-color:transparent;fonte-weight:bold;color:@(item.Dangerous.Equals("True")?"#FF3444":"white")">
         <tr>
             <th width="20%">Nazwa:</th>
             <td width="20%">@item.Name @(item.Dangerous.Equals("True") ? "(NIEBEZPIECZNE)" : "")</td>
             <th width="20%">Rozmiar:</th>
             <td width="20%">@item.Size</td>
-            <td><a href="@item.Url" class="myButton" style="width:100%;text-align:center">Link</a></td>
+            <td><a href="@item.Url" class="btn btn-outline-light" style="width:100%;text-align:center;font-weight:bold;border: solid 2px white">Link</a></td>
         </tr>
         <tr>
             <th>Data pierwszej obserwacji:</th>

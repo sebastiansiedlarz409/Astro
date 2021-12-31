@@ -32,21 +32,21 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
+                <input asp-for="Password" class="form-control" style="background-color:transparent" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="NewPassword" class="control-label"></label>
-                <input asp-for="NewPassword" class="form-control" />
+                <input asp-for="NewPassword" class="form-control"  style="background-color:transparent" />
                 <span asp-validation-for="NewPassword" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ConfirmPassword" class="control-label"></label>
-                <input asp-for="ConfirmPassword" class="form-control" />
+                <input asp-for="ConfirmPassword" class="form-control" style="background-color:transparent"  />
                 <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Zapisz" class="myButton" />
+                <input type="submit" value="Zapisz" class="btn btn-outline-light" />
             </div>
         </form>
     </div>
@@ -57,17 +57,17 @@
         <form enctype="multipart/form-data" asp-controller="Account" asp-action="AddAvatar" class="md-form">
             <div class="input-group">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" id="inputGroupFileAddon01">Dodaj</span>
+                    <span class="input-group-text" id="inputGroupFileAddon01" style="background-color:transparent" >Dodaj</span>
                 </div>
                 <div class="custom-file">
                     <input type="file" name="image" class="custom-file-input" id="inputGroupFile01"
-                           aria-describedby="inputGroupFileAddon01">
-                    <label class="custom-file-label" for="inputGroupFile01">Wybierz plik</label>
+                           aria-describedby="inputGroupFileAddon01"  style="background-color:transparent" >
+                    <label class="custom-file-label" for="inputGroupFile01" style="background-color:transparent" >Wybierz plik</label>
                 </div>
             </div>
             <br />
             <div class="form-group">
-                <input type="submit" value="Dodaj" class="myButton" />
+                <input type="submit" value="Dodaj" class="btn btn-outline-light" />
             </div>
         </form>
     </div>

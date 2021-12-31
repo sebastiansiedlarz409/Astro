@@ -43,7 +43,7 @@
     }
 
     .next {
-        right: 0;
+        right: 11%;
         border-radius: 3px 0 0 3px;
     }
 
@@ -199,14 +199,14 @@
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <div class="form-group">
                         <label class="control-label">Temat:</label>
-                        <input name="Topic" class="form-control" />
+                        <input name="Topic" class="form-control"  style="background-color:transparent;border: 2px solid white;" />
                     </div>
                     <div class="form-group">
                         <label class="control-label">Treść</label>
-                        <textarea name="Comment" class="form-control"></textarea>
+                        <textarea name="Comment" class="form-control"  style="background-color:transparent;border: 2px solid white;" ></textarea>
                     </div>
                     <div class="form-group">
-                        <input type="submit" value="Dodaj" class="myButton" style="width:300px"/>
+                        <input type="submit" value="Dodaj" class="btn btn-outline-light" style="width:300px;border: 2px solid white;font-weight:bold;"/>
                     </div>
                 </form>
             </div>
