@@ -20,8 +20,8 @@
             android:layout_marginStart="20dp"
             android:layout_marginBottom="12dp"
             android:layout_marginEnd="12dp"
-            android:layout_marginTop="12dp"
-            android:textSize="35sp"
+            android:layout_marginTop="36dp"
+            android:textSize="45sp"
             android:textStyle="bold"
             android:textColor="#FFFFFF"
             android:text="Astro Mobile" />
@@ -34,73 +34,33 @@
             android:weightSum="2"
             android:visibility="gone">
 
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/emailLabel"
+            <Button
+                android:id="@+id/loggedUser"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="10dp"
-                android:elevation="8dp"
-                tools:ignore="MissingConstraints"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="5dp"
                 android:layout_weight="1"
-                card_view:cardCornerRadius="2dp">
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                android:background="#88000080"
+                android:text="Email: " />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="#0d0d0d">
-
-                    <TextView
-                        android:id="@+id/loggedUser"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
-                        android:layout_marginBottom="2dp"
-                        android:layout_marginTop="0dp"
-                        android:textSize="24sp"
-                        android:textStyle="bold"
-                        android:textColor="#FFFFFF"
-                        android:layout_weight="1"
-                        android:text="Email:" />
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
+            <Button
                 android:id="@+id/loginOut"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="10dp"
-                android:elevation="8dp"
-                tools:ignore="MissingConstraints"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="5dp"
                 android:layout_weight="1"
-                card_view:cardCornerRadius="2dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="#0d0d0d">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
-                        android:layout_marginBottom="2dp"
-                        android:layout_marginTop="0dp"
-                        android:textSize="24sp"
-                        android:layout_gravity="center"
-                        android:textColor="#FFFFFF"
-                        android:text="Wyloguj" />
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                android:background="#88000080"
+                android:text="Wyloguj" />
 
         </LinearLayout>
 
@@ -109,74 +69,36 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_margin="12dp"
+            android:layout_margin="8dp"
             android:weightSum="2">
 
-            <com.google.android.material.card.MaterialCardView
+            <Button
                 android:id="@+id/login"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="10dp"
-                android:elevation="8dp"
-                tools:ignore="MissingConstraints"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="5dp"
                 android:layout_weight="1"
-                card_view:cardCornerRadius="2dp">
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                android:background="#88000080"
+                android:text="Logowanie" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="#0d0d0d">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
-                        android:layout_marginBottom="2dp"
-                        android:layout_marginTop="0dp"
-                        android:textSize="24sp"
-                        android:layout_gravity="center"
-                        android:textColor="#FFFFFF"
-                        android:text="Logowanie" />
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
-
-            <com.google.android.material.card.MaterialCardView
+            <Button
                 android:id="@+id/register"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_margin="10dp"
-                android:elevation="8dp"
-                tools:ignore="MissingConstraints"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginBottom="2dp"
+                android:layout_marginTop="5dp"
                 android:layout_weight="1"
-                card_view:cardCornerRadius="2dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:background="#0d0d0d">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="12dp"
-                        android:layout_marginRight="12dp"
-                        android:layout_marginBottom="2dp"
-                        android:layout_marginTop="0dp"
-                        android:textSize="24sp"
-                        android:layout_gravity="center"
-                        android:textColor="#FFFFFF"
-                        android:text="Rejestracja" />
-
-                </LinearLayout>
-
-            </com.google.android.material.card.MaterialCardView>
+                android:textColor="#FFFFFF"
+                android:textSize="24sp"
+                android:background="#88000080"
+                android:text="Rejestracja" />
 
         </LinearLayout>
 

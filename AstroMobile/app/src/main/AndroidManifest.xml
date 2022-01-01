@@ -11,6 +11,7 @@
         android:roundIcon="@drawable/main_icon"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
+        android:fitsSystemWindows="true"
         android:usesCleartextTraffic="true">
         <activity android:name=".AddCommentActivity" />
         <activity android:name=".ShowTopicActivity" />

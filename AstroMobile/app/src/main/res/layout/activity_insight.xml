@@ -15,11 +15,20 @@
         android:layout_marginLeft="12dp"
         android:layout_marginRight="12dp"
         android:layout_marginBottom="4dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="36dp"
         android:textSize="25sp"
         android:textStyle="bold"
         android:textColor="#FFFFFF"
         android:text="Dane pogodowe z Marsa:" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:textSize="20dp"
+        android:textColor="#FFFFFF"
+        android:text="Usługa niedostępna :(" />
 
     <ListView
         android:id="@+id/insight"

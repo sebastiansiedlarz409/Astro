@@ -9,18 +9,19 @@
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="160dp"
         android:orientation="vertical"
         android:layout_margin="10dp"
+        android:padding="3dp"
         android:elevation="8dp"
         tools:ignore="MissingConstraints"
         card_view:cardCornerRadius="6dp">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="3dp"
+            android:padding="6dp"
             android:weightSum="4"
             android:background="#0d0d0d">
 
@@ -37,7 +38,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="#FFFFFF"
                     android:layout_margin="3dp"
-                    android:textSize="18sp"
+                    android:textSize="22sp"
                     android:layout_weight="1"
                     android:text="Autor: " />
 
@@ -47,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="#FFFFFF"
                     android:layout_margin="3dp"
-                    android:textSize="18sp"
+                    android:textSize="22sp"
                     android:layout_weight="1"
                     android:text="Data: " />
 
@@ -75,7 +76,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="#FFFFFF"
                     android:layout_margin="3dp"
-                    android:textSize="18sp"
+                    android:textSize="21sp"
                     android:layout_weight="1" />
 
                 <TextView
@@ -84,7 +85,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="#FFFFFF"
                     android:layout_margin="3dp"
-                    android:textSize="18sp"
+                    android:textSize="21sp"
                     android:layout_weight="1"/>
 
                 <TextView
@@ -98,7 +99,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textColor="#FFFFFF"
-                android:layout_margin="3dp"
+                android:paddingLeft="4dp"
+                android:paddingRight="4dp"
                 android:singleLine="true"
                 android:ellipsize="end"
                 android:padding="3dp"

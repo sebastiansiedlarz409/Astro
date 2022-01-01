@@ -27,6 +27,9 @@ class InsightActivity : AppCompatActivity() {
         sharedPreferences = getSharedPreferences("ASTRO", Context.MODE_PRIVATE);
         apiClient = ApiClientNasa(sharedPreferences)
 
+        //data is no longer available
+        return;
+
         var adapter = InsightAdapter(this, arrayListOf())
         val listItems: ArrayList<Insight> = arrayListOf()
 

@@ -10,14 +10,14 @@ import java.util.concurrent.TimeUnit
 open class ApiClient(sharedPreferences: SharedPreferences) {
 
     protected val JSON = "application/json; charset=utf-8".toMediaTypeOrNull()
-    protected var urlMain: String = "http://192.168.1.2:5001"
+    protected var urlMain: String = "http://192.168.1.13:5001"
 
     protected var client: OkHttpClient = OkHttpClient.Builder()
         .connectTimeout(2000, TimeUnit.MILLISECONDS)
         .connectionSpecs(arrayListOf(ConnectionSpec.MODERN_TLS, ConnectionSpec.CLEARTEXT)).build()
 
     init {
-        urlMain = "http://"+sharedPreferences.getString("address", "192.168.1.2:5001");
+        urlMain = "http://"+sharedPreferences.getString("address", "192.168.1.13:5001");
     }
 
     suspend fun connectionTest() : Boolean{
