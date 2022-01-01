@@ -18,5 +18,5 @@ It is web app written in ASP.NET CORE 6 and their mobile client for android writ
 
 # Mobile app
 
-<img src="https://github.com/sebastiansiedlarz409/Astro/blob/master/s3.png"/>
-<img src="https://github.com/sebastiansiedlarz409/Astro/blob/master/s4.png"/>
+<img align="left"  src="https://github.com/sebastiansiedlarz409/Astro/blob/master/s3.jpg"/>
+<img align="left"  src="https://github.com/sebastiansiedlarz409/Astro/blob/master/s4.jpg"/>
