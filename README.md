@@ -1,15 +1,11 @@
 # Astro
-It is web app written in ASP.NET CORE 6 and their mobile client for android written in Kotlin. This app is dedicated for fans of astronomy. It let users see data from Open NASA API and discuss on forum.
+An old project from college. It has been written in ASP.NET CORE 6 (webapp) and Kotlin (android app). Project exponses resources from NASA's api.
 
 # Technologies
 
 * Kotlin
-* Kotlin-Coroutines
-* REST API
-* okhttp3
 * ASP.NET 6
 * Entity Framework CORE
-* JWT
 
 # How it looks like?
 
